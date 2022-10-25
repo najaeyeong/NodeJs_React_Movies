@@ -1,0 +1,8 @@
+body {
+    background: rgb(216, 232, 237); /* fallback for old browsers */
+    background: rgb(216, 232, 237);
+    
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;      
+  } 
