@@ -21,11 +21,10 @@ class MovieInfostorage{
         })
     }
 
-    static async create(column,values){
-
+    static async create(table,column,values){
 
         return new Promise( async (resolve, reject) => {
-            const sql = `INSERT INTO movie_info${column}`
+            const sql = `INSERT INTO ${table}${column}`
             await db.query(sql,values,(err,result) =>{
                 if(err) {
                     console.log(err)

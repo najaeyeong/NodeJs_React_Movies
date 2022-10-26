@@ -26,10 +26,17 @@ class MovieInfo {
                 return {success:true , message:'success', data:response.data[0].visitcount+1}
 
             }else{
-
+                const table = `movie_info`
                 const column = `(movieID,image,title,summary,runtime,language,rate,year,visitcount) values (?,?,?,?,?,?,?,?,?)`
                 const values = [body.movieID,body.image,body.title,body.summary,body.runtime,body.language,body.rate,body.year,1]
-                const res = await MovieInfostorage.create(column, values)
+                const res = await MovieInfostorage.create(table,column, values)
+
+                body.genres.map(async (g)=>{
+                    const table2 =`movie_genre`
+                    const column2 = `(movieID,genre) values(?,?)`
+                    const values2 = [body.movieID, g]
+                    const res = await MovieInfostorage.create(table2,column2, values2)
+                })
                 return {success:true , message:'success', data:1}
             }
             

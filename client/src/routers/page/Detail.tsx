@@ -13,9 +13,8 @@ import { MovieRate } from "../../component/MovieRate";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
-import { IconButton } from "@mui/material";
+
 //import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 
 
@@ -39,6 +38,7 @@ export function Detail(){
     const updateMovieInfo = async () => {
       await Axios.post(`http://localhost:3001/api/movieinfo/update`, {
         movieID:movie.id,
+        image:movie.medium_cover_image,
         title:movie.title,
         year:movie.year,
         runtime:movie.runtime,
@@ -68,6 +68,7 @@ export function Detail(){
     },[])
 
     useEffect(()=>{
+      
       if(movie !== undefined){
         updateMovieInfo()
       }
@@ -114,26 +115,22 @@ export function Detail(){
                    </ul>
                    <h3>summary</h3>
                    <p>{sessionStorage.getItem('movie_summary')}</p>
-                   <Box sx={{display:"flex" ,flexDirection:'row',  alignItems: 'center' , alignSelf:'flex-start'}}>
-                   <Box width="30%">
-                      <MovieRate movieID={movie.id} visitCount={visitCount}/>
-                   </Box>
-                   <Box width="30%"sx={{fontWeight:'bold', ml:5}}>
-                      <VisibilityTwoToneIcon  />visited: {visitCount}  
-                   </Box>
-                   <Box width="40%" sx={{fontWeight:'bold', }}>
-                      <CommentTwoToneIcon sx={{ml:2}}/>comments:0  
-                   </Box>
-                   <Box sx={{alignSelf: 'flex-end'}}>
-                        <Link to={`/home/movie/`}>
-                          <KeyboardReturnRoundedIcon sx={{ fontSize: 60,alignSelf: 'flex-end'}}/>
-                        </Link> 
-                   </Box>
+                    <Box sx={{display:"flex" ,flexDirection:'row',  alignItems: 'center' , alignSelf:'flex-start'}}>
+                      <Box width="30%">
+                          <MovieRate movieID={movie.id} visitCount={visitCount}/>
+                      </Box>
+                      <Box width="70%"sx={{fontWeight:'bold', ml:5}}>
+                          <VisibilityTwoToneIcon  />visited: {visitCount}  
+                      </Box>
+                      <Box sx={{alignSelf: 'flex-end'}}>
+                            <Link to={`/home/movie/`}>
+                              <KeyboardReturnRoundedIcon sx={{ fontSize: 60,alignSelf: 'flex-end'}}/>
+                            </Link> 
+                      </Box>
                     </Box>
                  </div>
 
              </div>
-             <Link to={`/home/movie/`}>LIST</Link> 
              
              <MovieReviewList id={movieID}/>
             

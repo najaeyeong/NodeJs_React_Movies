@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
+import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import Box from '@mui/material/Box';
 
 export function MovieReviewList(props:{id:string}){
     interface ReviewData{ID:any, userID:string|null, movieReview:string, date:Date, updated:string}
@@ -20,6 +22,7 @@ export function MovieReviewList(props:{id:string}){
     const [movieReview,setMovieReview] = useState('')
     const [movieReviewList,setMovieReviewList] = useState<ReviewData[]>([])
     const [newReviewList,setNewReviewList] = useState<ReviewData[]>([])
+    const [reviewCount,setReviewCount] = useState<number>(0)
 
 
     const getReviewData =  ()=>{
@@ -39,6 +42,10 @@ export function MovieReviewList(props:{id:string}){
     useEffect(()=>{
       setMovieReviewList(newReviewList)
     },[newReviewList])
+
+    useEffect(()=>{
+      setReviewCount(movieReviewList.length)
+    },[movieReviewList])
 
     const submitReview = async ()=>{
         const nowDATE = new Date();
@@ -73,6 +80,9 @@ export function MovieReviewList(props:{id:string}){
 
 
     return <>
+        <Box width="40%" sx={{fontWeight:'bold',ml:5 }}>
+          <CommentTwoToneIcon/>comments: {reviewCount}  
+        </Box>
         <Typography component="div" sx={{minWidth:750, backgroundColor:'white', m:5,boxShadow: 1 ,borderRadius: 1}}>
           <FormControl fullWidth sx={{ m: 1,maxWidth:'98.8%'}} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Review</InputLabel>
