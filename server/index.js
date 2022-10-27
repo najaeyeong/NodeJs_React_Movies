@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const router = require('./src/routes/login_register/index')
+const router = require('./src/routes/control/index')
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv')
@@ -9,11 +9,11 @@ dotenv.config();
 //.env 잘 안읽어지면 파일 밖으로 뺏다가 다시 넣어본다. 경로를 수정해본다. 
 //dotenv를 설치후에 파일을 만들어 줘야한다 .
 const db = require('./src/config/db')
-const ctrl = require('./src/routes/login_register/home.ctrl')
-const review_ctrl = require('./src/routes/login_register/review.ctrl')
-const movierate_ctrl = require('./src/routes/login_register/movierate.ctrl')
-const movieinfo_ctrl = require('./src/routes/login_register/movieinfo.ctrl')
-
+const ctrl = require('./src/routes/control/home.ctrl')
+const review_ctrl = require('./src/routes/control/review.ctrl')
+const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
+const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
+const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 
 
 
@@ -53,6 +53,9 @@ app.post('/api/movie/rate/confirmuser',movierate_ctrl.process.confirm)
 
 //info
 app.post('/api/movieinfo/update', movieinfo_ctrl.process.create_update)
+
+//genre
+app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
 app.listen(3001 , ()=> {console.log("3001 server" )})
 

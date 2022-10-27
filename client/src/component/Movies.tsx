@@ -7,6 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Grid from '@mui/material/Grid';
+
 
 interface MoviesProps{
     rating:string
@@ -18,7 +20,7 @@ interface MoviesProps{
 export function Movies(props:MoviesProps){
     
     const [loading, setLoading] = useState<boolean>(true)
-    const [searched,setSearched] = useState<boolean>(true)
+    const [searched,setSearched] = useState<boolean>(false)
     const [movies,setMovies] = useState<any[]>([])
     const [movieCount,setMovieCount] = useState<number>(0)
     const [pageCount,setPageCount] = useState<number>(0)
@@ -48,6 +50,7 @@ export function Movies(props:MoviesProps){
       setMovieCount(json.data.movie_count)
       setPageCount(json.data.movie_count/50)
       setLoading(false)
+      setSearched(true)
     }
 
 
@@ -71,40 +74,61 @@ export function Movies(props:MoviesProps){
       window.scrollTo(0, 0)
       getMovies()
       NextPageList()
-    },[loading,page,props.rating,props.sort,props.year,props.genre,props.term])
+    },[ loading,page])
+
 
     useEffect(()=>{
-        setPage(lastNumber-9)
+      setSearched(false)
+      setLoading(true)
+      setPage(1)
+      setLastNumber(10)
+    },[props.rating, props.sort, props.year, props.genre, props.term])
+
+    useEffect(()=>{
+      setPage(lastNumber-9)
+      NextPageList()
     },[lastNumber])
+
+    useEffect(()=>{
+      setSearched(true)
+    },[pageList])
 
 
 
     return (//이유는 모르겟지만 typescript 에선 map 사용시  &&  사용하면 any type 에러 사라짐 
       <>
         {searched?<>
-                    <Box display="grid" gridTemplateColumns="repeat(12,1fr)" columnGap={1}>
-                        <Box gridColumn="2/span 1" >
-                            {movieCount}개
-                        </Box>
-                        <Box gridColumn="4/span 5">
-                            <ButtonGroup>
-                                {(lastNumber>10)?<>
-                                                    <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
-                                                </>
-                                                :<></>}
-                                {pageList.map(n=>{
-                                    return<Button onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
-                                })}
-                                {(lastNumber>pageCount)?<>
-                                                        </>
-                                                       :<>
-                                                       <Button onClick={()=>{setLastNumber(lastNumber+10);setLoading(true);}}>Next</Button>
-                                                        </>}
-                            </ButtonGroup>
-                        </Box>
-                    </Box>
+            <Grid container spacing={3} direction="row"
+                                        justifyContent="center"
+                                        alignItems="center">
+            <Grid item xs={1}></Grid>
+              <Grid item xs>총 {movieCount}개</Grid>
+              <Grid item xs={6}>
+                <ButtonGroup>
+                    {(lastNumber>10)?<>
+                                        <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
+                                    </>
+                                    :<></>}
+                    {pageList.map(n=>{
+                      if(n===page){
+                        return<Button key={n} disabled>{n}</Button>
+                      }else{
+                        return<Button onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                      }
+                    })}
+                    {(lastNumber>pageCount)?<>
+                                            </>
+                                            :<>
+                                            <Button onClick={()=>{setLastNumber(lastNumber+10);setLoading(true);}}>Next</Button>
+                                            </>}
+                </ButtonGroup>
+              </Grid>
+              <Grid item xs></Grid>
+            </Grid>
+
                   </>
                  :<>
+                 Search....
                   </>
         }
                 
@@ -124,7 +148,7 @@ export function Movies(props:MoviesProps){
                                     :<>
                                       
                                       {movies.map(m =><>
-                                              <Movie     
+                                              <Movie     key={m.id}
                                               m_id ={m.id}
                                               m_image ={m.medium_cover_image}
                                               m_title ={m.title}
@@ -140,6 +164,44 @@ export function Movies(props:MoviesProps){
             
           }
         </div>
+
+
+        {searched?<>
+                    <Box display="grid" gridTemplateColumns="repeat(12,1fr)" columnGap={1}>
+                        <Box gridColumn="2/span 1" >
+                        </Box>
+                        <Box gridColumn="5/span 5">
+                            <ButtonGroup>
+                                {(lastNumber>10)?<>
+                                                    <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
+                                                </>
+                                                :<></>}
+                                {pageList.map(n=>{
+                                                  if(n===page){
+                                                    return<Button disabled>{n}</Button>
+                                                  }else{
+                                                    return<Button onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                                                  }
+                                })}
+                                {(lastNumber>pageCount)?<>
+                                                        </>
+                                                       :<>
+                                                       <Button onClick={()=>{setLastNumber(lastNumber+10);setLoading(true);}}>Next</Button>
+                                                        </>}
+                            </ButtonGroup>
+                        </Box>
+                    </Box>
+                    <br/>
+                    <br/>
+                    <br/>
+                  </>
+                 :<>
+                  </>
+        }
+
+
+
+
       </>
     );
 

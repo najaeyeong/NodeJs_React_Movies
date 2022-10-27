@@ -1,11 +1,12 @@
 //react
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
+import Axios from 'axios'
 
 //dir
 import Movies from "../component/Movies"
 
 //mui
-import { Button } from '@mui/material';
+
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
@@ -13,15 +14,57 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 export function Search(){
+    interface GenreList{
+        genre:string
+        ID:number
+    }
+    const [search,setSearch] = useState<boolean>(false)
+
+    const [genreList,setGenreList]= useState<GenreList[]>([])
+
     const [genre,setGenre] = useState<string>('')
-    const [rating,setRating] = useState<string>('9')
-    const [year,setYear]= useState<string>('2022')
+    const [rating,setRating] = useState<string>('')
+    const [year,setYear]= useState<string>('')
     const [sort,setSort] = useState<string>('')
     const [term,setTerm] = useState<string>('')
+    const [GenreRef,setGenreRef] = useState<string>('')
+    const [RatingRef,setRatingRef] =useState<string>('')
+    const [YearRef,setYearRef] =useState<string>('')
+    const [SortRef,setSortRef] =useState<string>('')
+    const [TermRef,setTermRef] =useState<string>('')
 
-    
+    const getGenreList= async()=>{
+        Axios.get(`http://localhost:3001/api/movieinfo/genres`).then((res)=>{
+            if(res.data.success){
+                setGenreList(res.data.data)
+            }else{
+                console.log("err")
+            }
+        }).catch(()=>{
+            console.log("err")
+        })
+    }
+
+    const SubmitSearchData = ()=>{
+        if(genre === "All"){ setGenreRef("")}else{setGenreRef(genre)}
+        if(year === "All"){setYearRef("")}else{setYearRef(year)}
+        if(sort === "All"){setSortRef("")}else{setSortRef(sort)}
+        if(rating === "All"){setRatingRef("")}else{setRatingRef(rating)}
+        setTermRef(term)
+        setSearch(true)
+    }
+
+
+    useEffect(()=>{
+        getGenreList()
+        
+    },[])
+
 
     return <>
 
@@ -33,10 +76,11 @@ export function Search(){
                 Search
             </Box>
             <Box gridColumn="2/span 3">
-                <TextField fullWidth id="outlined-basic" label="Search" variant="outlined" value={term} onChange={(e)=>{setTerm(e.target.value)}}/>
+                <TextField fullWidth id="outlined-basic" label="Search" variant="outlined" value={term} onChange={(e)=>{setTerm( e.target.value)}}/>
             </Box>
             <Box gridColumn="5/span 1">
-                <Button>Search</Button>
+
+                <IconButton onClick={()=>{SubmitSearchData()}}><SearchIcon color="primary"/>Search</IconButton>
             </Box>
             <Box gridColumn="2/span 1">
                 Genre
@@ -61,8 +105,17 @@ export function Search(){
                         label="Genre"
                         onChange={(e)=>{setGenre(e.target.value)}}
                         >
-                        <MenuItem value={"Drama"}>Drama</MenuItem>
+                        <MenuItem value={"All"}>All</MenuItem>
+                        {genreList?.map((g)=>{
+                            return <MenuItem key={g.ID} value={`${g.genre}`}>{g.genre}</MenuItem>
+                        })}
+                        {/* <MenuItem value={"Drama"}>Drama</MenuItem>
                         <MenuItem value={"Action"}>Action</MenuItem>
+                        <MenuItem value={"War"}>War</MenuItem>
+                        <MenuItem value={"Western"}>Western</MenuItem>
+                        <MenuItem value={"Talk-Show"}>Talk-Show</MenuItem>
+                        <MenuItem value={"Game-Show"}>Game-Show</MenuItem>
+                        <MenuItem value={"Film-Noir"}>Film-Noir</MenuItem> */}
                         </Select>
                     </FormControl>
                 </Box>
@@ -78,11 +131,13 @@ export function Search(){
                         label="Rate"
                         onChange={(e)=>{setRating(e.target.value)}}
                         >
+                        <MenuItem value={"All"}>All</MenuItem>
                         <MenuItem value={"9"}>9+</MenuItem>
                         <MenuItem value={"8"}>8+</MenuItem>
                         <MenuItem value={"7"}>7+</MenuItem>
                         <MenuItem value={"6"}>6+</MenuItem>
                         <MenuItem value={"5"}>5+</MenuItem>
+                        <MenuItem value={"4"}>4+</MenuItem>
     
                         </Select>
                     </FormControl>
@@ -97,9 +152,9 @@ export function Search(){
                         id="Year"
                         value={year}
                         label="Year"
-                        onChange={(e)=>{setYear(e.target.value);}}
+                        onChange={(e)=>{setYear(e.target.value)}}
                         >
-                        <MenuItem value={""}>ALL</MenuItem>
+                        <MenuItem value={"All"}>All</MenuItem>
                         <MenuItem value={"2022"}>2022</MenuItem>
                         <MenuItem value={"2021"}>2021</MenuItem>
                         <MenuItem value={"2020"}>2020</MenuItem>
@@ -130,6 +185,7 @@ export function Search(){
                         label="Sord"
                         onChange={(e)=>{setSort(e.target.value)}}
                         >
+                        <MenuItem value={"All"}>All</MenuItem>
                         <MenuItem value={"rating"}>Rating</MenuItem>
                         <MenuItem value={"title"}>Title</MenuItem>
                         <MenuItem value={"seeds"}>Seeds</MenuItem>
@@ -140,13 +196,18 @@ export function Search(){
                 </Box>
             </Box>
         </Box>
-        {console.log(year,sort,rating,genre,term)}
-        <Movies rating={rating}
-                sort={sort}
-                genre={genre}
-                term={term}
-                year={year}
-                />
+
+        {(search)?<>
+                    <Movies rating={RatingRef}
+                            sort={SortRef}
+                            genre={GenreRef}
+                            term={TermRef}
+                            year={YearRef}
+                            />
+                 </>
+                :<>
+
+                 </>}
     </>
 
 

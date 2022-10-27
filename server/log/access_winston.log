@@ -86,3 +86,5 @@
 2022-10-24 19:11:58 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-10-25 11:04:24 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-10-26 11:57:41 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-10-27 10:12:30 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2022-10-27 10:12:34 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
