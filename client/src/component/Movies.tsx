@@ -111,9 +111,9 @@ export function Movies(props:MoviesProps){
                                     :<></>}
                     {pageList.map(n=>{
                       if(n===page){
-                        return<Button key={n} disabled>{n}</Button>
+                        return<Button variant="contained" key={n} disabled>{n}</Button>
                       }else{
-                        return<Button onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                        return<Button variant="contained" key={n} onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
                       }
                     })}
                     {(lastNumber>pageCount)?<>
@@ -178,9 +178,9 @@ export function Movies(props:MoviesProps){
                                                 :<></>}
                                 {pageList.map(n=>{
                                                   if(n===page){
-                                                    return<Button disabled>{n}</Button>
+                                                    return<Button key={n} disabled>{n}</Button>
                                                   }else{
-                                                    return<Button onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                                                    return<Button key={n} onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
                                                   }
                                 })}
                                 {(lastNumber>pageCount)?<>

@@ -6,6 +6,21 @@ class MovieInfo {
         this.Info = new MovieInfostorage(body)
     }
 
+    async read_years(){
+        const body = this.body
+        try{
+            const column = "year"
+            const where = "group by year order by year asc"
+            const value = []
+
+            const response =  await MovieInfostorage.read(column,where,value)
+            return {success:true , message:'read success', data:response.data}
+        }catch(err){
+            console.log(err)
+            return {success:false, message: 'read error', err:err}
+        }
+    }
+
 
 
     async create_update(){

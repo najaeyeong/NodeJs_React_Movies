@@ -11,6 +11,12 @@ const process = {
         return res.json(response);
     },
 
+    read_years: async (req,res)=>{
+        const movieInfo = new MovieInfo(req.body)
+        const response = await movieInfo.read_years()
+        return res.json(response);
+    }
+
 }
 
 module.exports = {

@@ -54,6 +54,8 @@ app.post('/api/movie/rate/confirmuser',movierate_ctrl.process.confirm)
 //info
 app.post('/api/movieinfo/update', movieinfo_ctrl.process.create_update)
 
+app.get('/api/movieinfo/years', movieinfo_ctrl.process.read_years)
+
 //genre
 app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
