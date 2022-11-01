@@ -16,7 +16,7 @@ const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 
 require("dotenv/config");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT2 || 5000;
 const config = require("./config/key");
 
 app.use(express.static(path.join(__dirname, "../client/build")));
