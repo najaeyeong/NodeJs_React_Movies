@@ -76,3 +76,18 @@ app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 app.listen(PORT2 , ()=> {console.log("3001 server" )})
 
 //같은것 선택 컨트롤 + D , 알트 + 마우스 클릭 
+
+
+
+
+//실행순서 
+
+// client 폴더로 이동
+// npm ci 
+// npm run build
+// client/build 파일 -> server/build 폴더로 이동
+
+// server 폴더로 이동 
+// npm ci
+// tsc
+// node app.jh 실행 

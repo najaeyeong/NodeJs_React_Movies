@@ -1,0 +1,23 @@
+{
+  "name": "nodejs_react2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "heroku-prebuild":" cd client&& npm ci && npm run build && mv build ../server",
+    "start":"cd server && npm ci && tsc && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/na-jae-young/NodeJs_React_Movies.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/na-jae-young/NodeJs_React_Movies/issues"
+  },
+  "homepage": "https://github.com/na-jae-young/NodeJs_React_Movies#readme"
+}
+
+
