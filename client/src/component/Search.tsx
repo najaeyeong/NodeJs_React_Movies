@@ -12,11 +12,11 @@ import Paper from '@mui/material/Paper';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { isVariableStatement } from 'typescript/lib/tsserverlibrary';
+
 
 
 export function Search(){
@@ -30,10 +30,10 @@ export function Search(){
     const [genreList,setGenreList]= useState<GenreList[]>([])
     const [yearList,setYearList] = useState<string[]>([])
     
-    const [genre,setGenre] = useState<string>('')
-    const [rating,setRating] = useState<string>('')
-    const [year,setYear]= useState<string>('')
-    const [sort,setSort] = useState<string>('')
+    const [genre,setGenre] = useState<string>("All")
+    const [rating,setRating] = useState<string>("All")
+    const [year,setYear]= useState<string>("All")
+    const [sort,setSort] = useState<string>("year")
     const [term,setTerm] = useState<string>('')
     const [GenreRef,setGenreRef] = useState<string>('')
     const [RatingRef,setRatingRef] =useState<string>('')
@@ -75,8 +75,8 @@ export function Search(){
     const SubmitSearchData = ()=>{
         if(genre === "All"){ setGenreRef("")}else{setGenreRef(genre)}
         if(year === "All"){setYearRef("")}else{setYearRef(year)}
-        if(sort === "All"){setSortRef("")}else{setSortRef(sort)}
         if(rating === "All"){setRatingRef("")}else{setRatingRef(rating)}
+        setSortRef(sort)
         setTermRef(term)
         setSearch(true)
     }
@@ -191,7 +191,6 @@ export function Search(){
                                     label="Sord"
                                     onChange={(e)=>{setSort(e.target.value)}}
                                     >
-                                    <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"rating"}>Rating</MenuItem>
                                     <MenuItem value={"title"}>Title</MenuItem>
                                     <MenuItem value={"seeds"}>Seeds</MenuItem>
@@ -218,7 +217,7 @@ export function Search(){
                             />
                  </>
                 :<>
-
+                    인기 추천 
                  </>}
     </>
 
