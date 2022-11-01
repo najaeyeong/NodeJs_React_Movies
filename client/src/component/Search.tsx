@@ -35,6 +35,7 @@ export function Search(){
     const [year,setYear]= useState<string>("All")
     const [sort,setSort] = useState<string>("year")
     const [term,setTerm] = useState<string>('')
+    
     const [GenreRef,setGenreRef] = useState<string>('')
     const [RatingRef,setRatingRef] =useState<string>('')
     const [YearRef,setYearRef] =useState<string>('')
