@@ -1,7 +1,7 @@
 "use strict"
 
 //await  는 항상 promise를 반환하는 애 앞에 , async(비동기) 함수 안에서 사용된다. 
-const UserStorage = require("./UserStorage")
+const UserStorage = require("./Userstorage")
 
 class User {
     constructor(body){
