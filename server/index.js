@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const router = require('./src/routes/control/index')
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -15,17 +16,12 @@ const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
 const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 
-require("dotenv/config");
-const PORT = process.env.PORT || 3001;
-const config = require("./config/key");
-
-
+// require("dotenv/config");
+ const PORT = process.env.PORT || 3001;
 //react 의 build 폴더 복사해서 server 로 갖어온 다음에 아래 코드로 view연결 
-
-app.use(express.static(__dirname, "/build")); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname, "/build", "index.html");   // __dirname = root 
+ app.use(express.static(path.join(__dirname, "../client/build"))); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
+ app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));   // __dirname = root 
 });
 
 
@@ -73,11 +69,9 @@ app.get('/api/movieinfo/years', movieinfo_ctrl.process.read_years)
 //genre
 app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
-app.listen(PORT , ()=> {console.log("3001 server" )})
+app.listen(PORT , ()=> {console.log(`${PORT} server` )})
 
 //같은것 선택 컨트롤 + D , 알트 + 마우스 클릭 
-
-
 
 
 //실행순서 
@@ -91,3 +85,7 @@ app.listen(PORT , ()=> {console.log("3001 server" )})
 // npm ci
 // tsc
 // node app.jh 실행 
+
+// "client-build": "cd client && npm ci && npm run build && cd ../",
+// "server-build": "cd server && npm ci --dev && cd ../",
+// "heroku-prebuild":"npm run client-build && npm run server-build && mv ./client/build ./server",
