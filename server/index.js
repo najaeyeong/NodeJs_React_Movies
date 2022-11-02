@@ -71,7 +71,7 @@ app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
 
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    res.sendFile(path.join(__dirname, './build/index.html'));
   });
 
 
