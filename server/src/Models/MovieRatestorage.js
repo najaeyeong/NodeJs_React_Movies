@@ -1,5 +1,5 @@
 
-
+const moment = require('moment');
 const db = require("../config/db");
 
 class MovieRatestorage{
@@ -21,10 +21,11 @@ class MovieRatestorage{
         const userID = body.userID
         const movieID = body.movieID
         const rate = body.rate
+        const date =  moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
         return new Promise( async (resolve, reject) => {
-            const sql = "INSERT INTO movie_rate(userID,movieID,rate) values (?,?,?);"
-            await db.query(sql,[userID,movieID,rate],(err,result) =>{
+            const sql = "INSERT INTO movie_rate(userID,movieID,rate,date) values (?,?,?,?);"
+            await db.query(sql,[userID,movieID,rate,date],(err,result) =>{
                 if(err) {reject(`${err}`) }
                 else{
                     resolve ({success: true,message: 'success', data: result})
@@ -37,10 +38,11 @@ class MovieRatestorage{
         const userID = body.userID
         const movieID = body.movieID
         const rate = body.rate
+        const date =  moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
         return new Promise( async (resolve, reject) => {
-            const sql = "update movie_rate set rate = ? where userID = ? and movieID = ?"
-            await db.query(sql,[rate,userID,movieID],(err, result)=>{
+            const sql = "update movie_rate set rate = ? , date = ? where userID = ? and movieID = ?"
+            await db.query(sql,[rate,date,userID,movieID],(err, result)=>{
                 if(err){reject(`${err}`)}
                 else{
                     resolve({success: true,message: 'success', data: result})
