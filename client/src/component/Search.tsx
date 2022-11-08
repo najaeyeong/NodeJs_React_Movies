@@ -4,6 +4,8 @@ import Axios from 'axios'
 
 //dir
 import Movies from "../component/Movies"
+import RecommendMovies from "./RecommendMovies"
+import BestMovies  from './BestMovies'
 
 //mui
 
@@ -24,6 +26,10 @@ export function Search(){
         genre:string
         ID:number
     }
+
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
+
     const [search,setSearch] = useState<boolean>(false)
     const [getList,setGetList] = useState<boolean>(false)
 
@@ -43,7 +49,7 @@ export function Search(){
     const [TermRef,setTermRef] =useState<string>('')
 
     const getGenreList= async()=>{
-        await Axios.get(`http://localhost:3001/api/movieinfo/genres`).then((res)=>{
+        await Axios.get(`${url}/api/movieinfo/genres`).then((res)=>{
             if(res.data.success){
                 setGenreList(res.data.data)
             }else{
@@ -56,7 +62,7 @@ export function Search(){
     const getYearList = async ()=>{
         var list: {year:string}[] = []
         var newlist:string[] = []
-        await Axios.get(`http://localhost:3001/api/movieinfo/years`).then((res)=>{
+        await Axios.get(`${url}/api/movieinfo/years`).then((res)=>{
             if(res.data.success){
                 list = res.data.data
                 //setYearList(res.data.data)
@@ -192,6 +198,8 @@ export function Search(){
                                     label="Sord"
                                     onChange={(e)=>{setSort(e.target.value)}}
                                     >
+                                    <MenuItem value={"&order_by desc"}>Lastest</MenuItem>
+                                    <MenuItem value={"&order_by asc"}>Oldest</MenuItem>
                                     <MenuItem value={"rating"}>Rating</MenuItem>
                                     <MenuItem value={"title"}>Title</MenuItem>
                                     <MenuItem value={"seeds"}>Seeds</MenuItem>
@@ -218,7 +226,8 @@ export function Search(){
                             />
                  </>
                 :<>
-                    인기 추천 
+                    <RecommendMovies/>
+                    <BestMovies/>
                  </>}
     </>
 

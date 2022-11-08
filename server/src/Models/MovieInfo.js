@@ -6,7 +6,7 @@ class MovieInfo {
         this.Info = new MovieInfostorage(body)
     }
 
-    async read_years(){
+    async read_years(){ // 영화정보의 년도리스트 
         const body = this.body
         try{
             const column = "year"
@@ -21,9 +21,24 @@ class MovieInfo {
         }
     }
 
+    async read_best(){
+        const body = this.body
+        try{
+            const column = "movie_info.movieID , movie_info.image, movie_info.title,movie_info.summary, movie_info.year, movie_info.visitcount, RATE.count"
+            const where = "INNER join (SELECT movieID, count(movieID) as count FROM crud.movie_rate where rate = 'like' group by movieID order by count desc  limit 10) RATE on movie_info.movieID = RATE.movieID;"
+            const value = []
+
+            const response = await MovieInfostorage.read(column,where,value)
+            return {success: true,message:"top movies read success", data:response.data}
+        }catch(err){
+            console.log(err)
+            return{success:false,message:"top movies read error",err:err}
+        }
+    }
 
 
-    async create_update(){
+
+    async create_update(){  //새로운 영화라면 데이터베이스에 담기 
         const body = this.body
         try{
             const where=`where movieID = ?`
