@@ -17,6 +17,9 @@ import Box from '@mui/material/Box';
 export function MovieReviewList(props:{id:string}){
     interface ReviewData{ID:any, userID:string|null, movieReview:string, date:Date, updated:string}
 
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
+
     const [movieId, setMovieId] = useState(props.id)
     const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
     const [movieReview,setMovieReview] = useState('')
@@ -26,7 +29,7 @@ export function MovieReviewList(props:{id:string}){
 
 
     const getReviewData =  ()=>{
-        Axios.post(`http://localhost:3001/api/movie/reviews/get`,{movieID:movieId}).then((res)=>{
+        Axios.post(`${url}/api/movie/reviews/get`,{movieID:movieId}).then((res)=>{
          if(res.data.success){
            setMovieReviewList(res.data.data)
          }else{
@@ -54,7 +57,7 @@ export function MovieReviewList(props:{id:string}){
           return alert('login이 필요합니다.')
         }
         if(movieReview === '') return alert('리뷰를 입력하세요') 
-        Axios.post(`http://localhost:3001/api/insert`,{
+        Axios.post(`${url}/api/insert`,{
           movieName:'',
           movieID:movieId,
           movieReview:movieReview,

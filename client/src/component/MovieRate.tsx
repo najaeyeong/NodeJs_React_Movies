@@ -24,6 +24,9 @@ export function MovieRate(props:MovieRateProps){
     interface Rate {like_count:number ,hate_count:number }
     interface ConfirmUserRate{rateID:number,rate:string}
 
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
+
     const [movieRate,setMovieRate]= useState<Rate[]>([])
     const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
     const [movieID] = useState(props.movieID)
@@ -36,7 +39,7 @@ export function MovieRate(props:MovieRateProps){
 
 
     const getMovieRate = async ()=>{
-        await Axios.post(`http://localhost:3001/api/movie/rate`,{movieID:movieID}).then((res)=>{
+        await Axios.post(`${url}/api/movie/rate`,{movieID:movieID}).then((res)=>{
             if(res.data.success){
              setMovieRate(res.data.data)        
             }else{
@@ -47,7 +50,7 @@ export function MovieRate(props:MovieRateProps){
 
     const Confirm_user = async ()=>{
 
-        await Axios.post('http://localhost:3001/api/movie/rate/confirmuser',{userID:userID,movieID:movieID}).then((res)=>{
+        await Axios.post(`${url}/api/movie/rate/confirmuser`,{userID:userID,movieID:movieID}).then((res)=>{
             if(res.data.success){
                 setUserRate(res.data.data)
             }else{
@@ -74,7 +77,7 @@ export function MovieRate(props:MovieRateProps){
 
     const CreateMovieRate = async (rate:string)=>{
         if(sessionStorage.getItem("user_id") === null)return alert('먼저 로그인을 하세요.')
-        await Axios.post('http://localhost:3001/api/movie/rate/insert',{userID:userID, movieID:movieID, rate:rate}).then((res)=>{
+        await Axios.post(`${url}/api/movie/rate/insert`,{userID:userID, movieID:movieID, rate:rate}).then((res)=>{
             if(res.data.success){
                 setRated(true); 
                 if(rate === "like"){
@@ -93,7 +96,7 @@ export function MovieRate(props:MovieRateProps){
 
     const UpdateMovieRate = async (rate:string)=>{
         if(sessionStorage.getItem("user_id")===null)return alert('먼저 로그인을 하세요.')
-        await Axios.put('http://localhost:3001/api/movie/rate/update',{userID:userID,movieID:movieID,rate:rate}).then((res)=>{
+        await Axios.put(`${url}/api/movie/rate/update`,{userID:userID,movieID:movieID,rate:rate}).then((res)=>{
             if(res.data.success){
                 if(rate==="like"){
                     setLike(true)
@@ -115,7 +118,7 @@ export function MovieRate(props:MovieRateProps){
     //Axios.delete에 params (/:id)가 아니라 body 에 넣어서 보내고 싶을때 {data:{}} 사용 , 서버에서 req.body{} 사용해서 꺼내서 사용가능  
     const DeleteMovieRate = async (like:boolean)=>{
         if(sessionStorage.getItem("user_id")===null)return alert('먼저 로그인을 하세요.')
-        await Axios.delete(`http://localhost:3001/api/movie/rate/delete/`,{data:{userID:userID,movieID:movieID}}).then((res)=>{
+        await Axios.delete(`${url}/api/movie/rate/delete/`,{data:{userID:userID,movieID:movieID}}).then((res)=>{
             if(res.data.success){
                 if(like){
                     setLikeCount(likeCount-1)

@@ -2,20 +2,35 @@ import styles from "../css/Register.module.css"
 import React,{useState} from "react"
 import axios from 'axios'
 
+import {useDispatch} from "react-redux"
+import {RootState,AppDispatch} from '../../store/store'
+import userIdSlice from "../../store/userIdSlice"
+
+
+
+
 export default function Login(){
+
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
     const [id,setId] = useState("")
     const [psword,setPsword] = useState('')
 
-    const LoginSubmit = ()=>{
+    //const UserId =  useSelector((state:RootState)=>{return state.userId.Id})
+    const dispatch= useDispatch();
+
+    const LoginSubmit = async ()=>{
+        
         if(!id){return alert("id를 입력하세요.")}
         if(!psword){return alert("password를 입력하세요.")}
         const req = {
                 id : id,
                 psword : psword
             }
-        axios.post(`http://localhost:3001/api/login`,req).then((res)=>{
+        await axios.post(`${url}/api/login`,req).then((res)=>{
             if(res.data.success){
                 sessionStorage.setItem('user_id',id )
+                dispatch(userIdSlice.actions.login('user1'))
                 window.location.replace("/home/movie")
             }else{
                 alert(res.data.message)
@@ -27,6 +42,7 @@ export default function Login(){
     }
 
     return <>
+    
         <div className={styles.login_page}>
             <div className={styles.form}>
                 <form className={styles.login_form}>
@@ -36,10 +52,11 @@ export default function Login(){
                     <input id="psword" type="password" placeholder="password" value={psword} onChange={
                         (e)=>{setPsword(e.target.value)}
                     }/>
-                    <p id={styles.button} onClick={LoginSubmit}>login</p>
+                    <p id={styles.button} onClick={()=>{LoginSubmit()}}>login</p>
                     <p className={styles.message}>Not registered? <a href="/register">Create an account</a></p>
                 </form>
             </div>
         </div>
+    
     </>
 }

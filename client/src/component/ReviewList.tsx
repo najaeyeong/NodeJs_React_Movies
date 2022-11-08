@@ -10,7 +10,8 @@ type ReviewProps = {
 }
 //{list}:{list:ReviewProps}
 export function ReviewList(props:ReviewProps){
-   console.log(1,props.list)
+  const url = "http://localhost:3001"
+  //const url = "https://movietest2.herokuapp.com"
     const [movieList,setMovieList] = useState<movieData[]>(props.list)
     const [newReview, setNewReview] = useState('')
     useEffect(()=>{
@@ -21,7 +22,7 @@ export function ReviewList(props:ReviewProps){
 
     const updateReview = (ID:number,newReview:string):any=> { 
         if(!newReview)return alert('리뷰를 입력하세요')
-        Axios.put(`http://localhost:3001/api/update`,{ID:ID,newReview:newReview})
+        Axios.put(`${url}/api/update`,{ID:ID,newReview:newReview})
         .then((res)=>{
           if(res.data.success){
             // eslint-disable-next-line array-callback-return
@@ -39,7 +40,7 @@ export function ReviewList(props:ReviewProps){
       console.log(2,movieList)
       
       const deleteReview = (ID:number):any => {
-        Axios.delete(`http://localhost:3001/api/delete/${ID}`)
+        Axios.delete(`${url}/api/delete/${ID}`)
         .then((res)=>{alert(res.data.message)})
         .catch(()=>{alert('delete error 관리자에 문의')})
         const newMovieList=movieList.filter((val)=>{return val.ID !== ID});

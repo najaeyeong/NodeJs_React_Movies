@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
-    "start":"cd server && npm ci && node index.js",
+    "start": "cd server && nodemon node index.js && cd .. && cd client && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +16,8 @@
   "bugs": {
     "url": "https://github.com/na-jae-young/NodeJs_React_Movies/issues"
   },
-  "homepage": "https://github.com/na-jae-young/NodeJs_React_Movies#readme"
+  "homepage": "https://github.com/na-jae-young/NodeJs_React_Movies#readme",
+  "dependencies": {
+    "react-slick": "^0.29.0"
+  }
 }
-
-

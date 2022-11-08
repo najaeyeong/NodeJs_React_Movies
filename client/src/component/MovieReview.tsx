@@ -22,6 +22,9 @@ interface MovieReviewProps{
 
 
 export function MovieReview(props:MovieReviewProps){
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
+
     const [movieID,setMovieID] = useState(props.movieID)
     const [userID,setUserID] = useState(props.userID)
     const [reviewID,setReviewID] = useState(props.reviewID)
@@ -35,7 +38,7 @@ export function MovieReview(props:MovieReviewProps){
 
 
     const deleteReview = (ID:number):any => {
-        Axios.delete(`http://localhost:3001/api/delete/${ID}`)
+        Axios.delete(`${url}/api/delete/${ID}`)
         .then((res)=>{alert(res.data.message)})
         .catch(()=>{alert('delete error 관리자에 문의')})
         // const newMovieList=movieReviewList.filter((val)=>{return val.ID !== ID});
@@ -44,7 +47,7 @@ export function MovieReview(props:MovieReviewProps){
 
     const updateReview = (ID:number,newReview:string):any=> { 
       if(!newReview)return alert('리뷰를 입력하세요')
-      Axios.put(`http://localhost:3001/api/update`,{ID:ID,newReview:newReview})
+      Axios.put(`${url}/api/update`,{ID:ID,newReview:newReview})
       .then((res)=>{
         if(res.data.success){
         //   const newList = movieReviewList.map(val=>{if(val.ID === ID){val.movieReview = newReview} return val})

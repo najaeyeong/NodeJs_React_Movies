@@ -6,6 +6,8 @@ import Card from '../../component/card'
 import MenuBar from '../../component/MenuBar';
 
 export function ReviewForm(){
+  const url = "http://localhost:3001"
+  //const url = "https://movietest2.herokuapp.com"
   interface movieData{ID:number,movieName:string,movieReview:string}
   const [movieName,setMovieName] = useState('')
   const [movieReview,setMovieReview] = useState('')
@@ -13,7 +15,7 @@ export function ReviewForm(){
  
  
   useEffect( ()=>{
-     Axios.get(`http://localhost:3001/api/get`).then((res)=>{
+     Axios.get(`${url}/api/get`).then((res)=>{
       if(res.data.success){
         setMovieReviewList(res.data.data)
       }else{
@@ -25,7 +27,7 @@ export function ReviewForm(){
   const submitReview =  ()=>{
     if(movieName === '') return alert('영화제목을 입력하세요')
     if(movieReview === '') return alert('리뷰를 입력하세요') 
-     Axios.post(`http://localhost:3001/api/insert`,{
+     Axios.post(`${url}/api/insert`,{
       movieName:movieName,
       movieReview:movieReview
     }).then((res)=>{
@@ -49,7 +51,7 @@ export function ReviewForm(){
 
 
   const deleteReview = (ID:number):any => {
-    Axios.delete(`http://localhost:3001/api/delete/${ID}`)
+    Axios.delete(`${url}/api/delete/${ID}`)
     .then((res)=>{alert(res.data.message)})
     .catch(()=>{alert('delete error 관리자에 문의')})
     const newMovieList=movieReviewList.filter((val)=>{return val.ID !== ID});

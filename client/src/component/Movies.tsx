@@ -44,7 +44,7 @@ export function Movies(props:MoviesProps){
     const getMovies = async ()=>{
       
       const response = await fetch(
-        `https://yts.mx/api/v2/list_movies.json?minimum_rating=${props.rating}&sort_by=${props.sort}&limit=50&page=${page}&genre=${props.genre}&query_term=${props.term} ${props.year}`)
+        `https://yts.mx/api/v2/list_movies.json?minimum_rating=${props.rating}&limit=50&page=${page}&genre=${props.genre}&query_term=${props.term} ${props.year}&sort_by=${props.sort}`)
       const json = await response.json()
       setMovies(json.data.movies)
       setMovieCount(json.data.movie_count)
@@ -176,6 +176,7 @@ export function Movies(props:MoviesProps){
                                                     <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
                                                 </>
                                                 :<></>}
+
                                 {pageList.map(n=>{
                                                   if(n===page){
                                                     return<Button key={n} disabled>{n}</Button>
@@ -183,6 +184,7 @@ export function Movies(props:MoviesProps){
                                                     return<Button key={n} onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
                                                   }
                                 })}
+
                                 {(lastNumber>pageCount)?<>
                                                         </>
                                                        :<>
@@ -195,6 +197,7 @@ export function Movies(props:MoviesProps){
                     <br/>
                     <br/>
                   </>
+                 
                  :<>
                   </>
         }

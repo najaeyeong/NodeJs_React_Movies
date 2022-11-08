@@ -19,7 +19,8 @@ import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded
 
 
 export function Detail(){
-
+  const url = "http://localhost:3001"
+  //const url = "https://movietest2.herokuapp.com"
    // const id = useParams().id
     const {id} = useParams()
     const [movie,setMovie] = useState<any>()
@@ -36,7 +37,7 @@ export function Detail(){
     }
 
     const updateMovieInfo = async () => {
-      await Axios.post(`http://localhost:3001/api/movieinfo/update`, {
+      await Axios.post(`${url}/api/movieinfo/update`, {
         movieID:movie.id,
         image:movie.medium_cover_image,
         title:movie.title,

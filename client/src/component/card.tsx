@@ -7,6 +7,9 @@ type CardProps= {
 }
 
 export default function Card(props:CardProps){
+  const url = "http://localhost:3001"
+  //const url = "https://movietest2.herokuapp.com"
+  
     const [newReview,setNewReview] = useState('')
     const [value,setValue] = useState(props.value)
     useEffect(()=>{
@@ -16,7 +19,7 @@ export default function Card(props:CardProps){
 
     const updateReview = (ID:number,newReview:string):any=> { 
         if(!newReview)return alert('리뷰를 입력하세요')
-        Axios.put(`http://localhost:3001/api/update`,{ID:ID,newReview:newReview})
+        Axios.put(`${url}/api/update`,{ID:ID,newReview:newReview})
         .then((res)=>{
             console.log(res.data)
           if(res.data.success){

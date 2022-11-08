@@ -76,7 +76,7 @@ class Reviewstorage{
         const sqlUpdate = `update movie_review set movieReview = ?,updated=? where ID = ?`
 
         return new Promise((resolve, reject) => {
-            db.query(sqlUpdate,[movieReview,true,ID],(err, result)=>{
+            db.query(sqlUpdate,[movieReview,"y",ID],(err, result)=>{
                 if(err){
                     reject(`${err}`)
                 }else{

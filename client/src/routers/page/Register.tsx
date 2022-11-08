@@ -5,6 +5,8 @@ import axios from 'axios';
 
 
 export default function Register(){
+    const url = "http://localhost:3001"
+    //const url = "https://movietest2.herokuapp.com"
     const [id, setId] = useState('')
     const [name,setName] = useState('')
     const [psword , setPsword] = useState('')
@@ -19,7 +21,7 @@ export default function Register(){
             psword: psword,
             name: name,
         };
-        axios.post(`http://localhost:3001/api/register`,req)
+        axios.post(`${url}/api/register`,req)
         .then((res)=>{
             console.log(res.data)
             if(res.data.success){
