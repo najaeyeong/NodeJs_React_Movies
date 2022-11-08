@@ -10,22 +10,23 @@ import Login from "./routers/page/Login"
 
 function App() {
 
-
   return (
+ 
     <div className="App">
       <Router>
-
           <Routes>
-            <Route path={"/"} element={<Home/>}/>
-            <Route path={"/home/movie"} element={<Home/>}/>
-            <Route path={"/home/movie/:id"} element={<Detail/>}/>
-            <Route path={"/home/movie/review"} element={<ReviewForm/>}/>
 
-            <Route path={"/register"} element={<Register/>}/>
-            <Route path={"/login"} element={<Login/>}/>
+              <Route path={"/"} element={<Home/>}/>
+              <Route path={"/home/movie"} element={<Home/>}/>
+              <Route path={"/home/movie/:id"} element={<Detail/>}/>
+              <Route path={"/home/movie/review"} element={<ReviewForm/>}/>
+              <Route path={"/register"} element={<Register/>}/>
+              <Route path={"/login"} element={<Login/>}/>
+            
           </Routes>
       </Router>
     </div> 
+
   );
 }
 

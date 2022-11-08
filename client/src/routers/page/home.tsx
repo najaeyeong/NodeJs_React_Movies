@@ -9,6 +9,10 @@ import styles from "../css/Home.module.css";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+//redux store
+import {Provider} from 'react-redux';
+import store from '../../store/store'
+
 export function Home(){
     
     const [loading, setLoading] = useState<boolean>(true)
@@ -32,8 +36,10 @@ export function Home(){
 
 
     return <>
-        <MenuBar />
-        <Search/>
+          <Provider store={store}>
+            <MenuBar />
+            <Search/>
+          </Provider>
 
       </>
 
