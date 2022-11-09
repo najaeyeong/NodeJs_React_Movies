@@ -1,23 +1,28 @@
 import styles from "../css/Register.module.css"
 import React,{useState} from "react"
 import axios from 'axios'
+import { Link} from "react-router-dom"
 
-import {useDispatch} from "react-redux"
+
+import {useDispatch,useSelector} from "react-redux"
 import {RootState,AppDispatch} from '../../store/store'
 import userIdSlice from "../../store/userIdSlice"
+import { Identity } from "@mui/base"
 
 
 
 
 export default function Login(){
+    //sessionStorage.removeItem('user_id')
 
     const url = "http://localhost:3001"
     //const url = "https://movietest2.herokuapp.com"
     const [id,setId] = useState("")
     const [psword,setPsword] = useState('')
 
-    //const UserId =  useSelector((state:RootState)=>{return state.userId.Id})
-    const dispatch= useDispatch();
+    //const UserId =  useSelector<RootState,string>((state)=>{return state.userId.Id})
+    // console.log(UserId)
+    // const dispatch= useDispatch();
 
     const LoginSubmit = async ()=>{
         
@@ -29,9 +34,10 @@ export default function Login(){
             }
         await axios.post(`${url}/api/login`,req).then((res)=>{
             if(res.data.success){
-                sessionStorage.setItem('user_id',id )
-                dispatch(userIdSlice.actions.login('user1'))
-                window.location.replace("/home/movie")
+                //dispatch(userIdSlice.actions.login(id));
+                sessionStorage.setItem('user_id',id );
+                window.location.replace("/home/movie"); //새로고침 이동
+                //window.location.href='/home/movie'
             }else{
                 alert(res.data.message)
             }
@@ -52,7 +58,7 @@ export default function Login(){
                     <input id="psword" type="password" placeholder="password" value={psword} onChange={
                         (e)=>{setPsword(e.target.value)}
                     }/>
-                    <p id={styles.button} onClick={()=>{LoginSubmit()}}>login</p>
+                    <button id={styles.button}  onClick={()=>{LoginSubmit()}}>login</button>
                     <p className={styles.message}>Not registered? <a href="/register">Create an account</a></p>
                 </form>
             </div>

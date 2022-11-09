@@ -8,6 +8,7 @@ import MenuBar from '../../component/MenuBar';
 export function ReviewForm(){
   const url = "http://localhost:3001"
   //const url = "https://movietest2.herokuapp.com"
+  
   interface movieData{ID:number,movieName:string,movieReview:string}
   const [movieName,setMovieName] = useState('')
   const [movieReview,setMovieReview] = useState('')

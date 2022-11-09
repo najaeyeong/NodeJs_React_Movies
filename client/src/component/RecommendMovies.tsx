@@ -18,6 +18,10 @@ import { CardActionArea } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
+
 export function RecommendMovies(){
     interface Moive{
         movieID:number,
@@ -32,11 +36,12 @@ export function RecommendMovies(){
     const url = "http://localhost:3001"
     //const url = "https://movietest2.herokuapp.com"
 
-    const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
+    //const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
+    const UserId =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movies,setMovies] = useState<Moive[]>([])
-    useEffect(()=>{
-      setUserId(sessionStorage.getItem("user_id"))
-    },[sessionStorage.getItem("user_id")])
+    // useEffect(()=>{
+    //   setUserId(sessionStorage.getItem("user_id"))
+    // },[sessionStorage.getItem("user_id")])
     
     const settings = {
         dots: true,
@@ -105,7 +110,7 @@ export function RecommendMovies(){
     {(UserId === null)? <></>
                       : <Box sx={{m:10}}>
                           <Typography gutterBottom variant="h4" component="div">
-                            Recommend Movies
+                            Recommend Movies ({UserId})
                           </Typography>
                           <Slider {...settings}>
                               {movies.map((m)=>{

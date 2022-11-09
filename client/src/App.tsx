@@ -6,25 +6,26 @@ import Home from "./routers/page/home"
 import { ReviewForm } from './routers/page/ReviewForm';
 import Register from './routers/page/Register';
 import Login from "./routers/page/Login"
-
+import {Provider} from 'react-redux';
+import store from './store/store'
 
 function App() {
 
   return (
  
     <div className="App">
-      <Router>
-          <Routes>
-
-              <Route path={"/"} element={<Home/>}/>
-              <Route path={"/home/movie"} element={<Home/>}/>
-              <Route path={"/home/movie/:id"} element={<Detail/>}/>
-              <Route path={"/home/movie/review"} element={<ReviewForm/>}/>
-              <Route path={"/register"} element={<Register/>}/>
-              <Route path={"/login"} element={<Login/>}/>
-            
-          </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+            <Routes>
+                <Route path={"/"} element={<Home/>}/>
+                <Route path={"/home/movie"} element={<Home/>}/>
+                <Route path={"/home/movie/:id"} element={<Detail/>}/>
+                <Route path={"/home/movie/review"} element={<ReviewForm/>}/>
+                <Route path={"/register"} element={<Register/>}/>
+                <Route path={"/login"} element={<Login/>}/>
+            </Routes>
+        </Router>
+      </Provider>
     </div> 
 
   );

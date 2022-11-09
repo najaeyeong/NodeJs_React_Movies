@@ -10,6 +10,9 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import { IconButton } from "@mui/material";
 
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
 
 
 
@@ -28,7 +31,8 @@ export function MovieRate(props:MovieRateProps){
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieRate,setMovieRate]= useState<Rate[]>([])
-    const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    //const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movieID] = useState(props.movieID)
     const [likeCount,setLikeCount] = useState<number>(0)
     const [hateCount,setHateCount] = useState<number>(0)
@@ -76,7 +80,7 @@ export function MovieRate(props:MovieRateProps){
 
 
     const CreateMovieRate = async (rate:string)=>{
-        if(sessionStorage.getItem("user_id") === null)return alert('먼저 로그인을 하세요.')
+        if(userID === null)return alert('먼저 로그인을 하세요.')
         await Axios.post(`${url}/api/movie/rate/insert`,{userID:userID, movieID:movieID, rate:rate}).then((res)=>{
             if(res.data.success){
                 setRated(true); 
@@ -95,7 +99,7 @@ export function MovieRate(props:MovieRateProps){
     }
 
     const UpdateMovieRate = async (rate:string)=>{
-        if(sessionStorage.getItem("user_id")===null)return alert('먼저 로그인을 하세요.')
+        if(userID === null)return alert('먼저 로그인을 하세요.')
         await Axios.put(`${url}/api/movie/rate/update`,{userID:userID,movieID:movieID,rate:rate}).then((res)=>{
             if(res.data.success){
                 if(rate==="like"){
@@ -117,7 +121,7 @@ export function MovieRate(props:MovieRateProps){
 
     //Axios.delete에 params (/:id)가 아니라 body 에 넣어서 보내고 싶을때 {data:{}} 사용 , 서버에서 req.body{} 사용해서 꺼내서 사용가능  
     const DeleteMovieRate = async (like:boolean)=>{
-        if(sessionStorage.getItem("user_id")===null)return alert('먼저 로그인을 하세요.')
+        if(userID === null)return alert('먼저 로그인을 하세요.')
         await Axios.delete(`${url}/api/movie/rate/delete/`,{data:{userID:userID,movieID:movieID}}).then((res)=>{
             if(res.data.success){
                 if(like){

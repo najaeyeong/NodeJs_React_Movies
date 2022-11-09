@@ -17,9 +17,16 @@ import userIdSlice from '../store/userIdSlice';
 
 export default function MenuBar() {
   //const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
-  const UserId =  useSelector<RootState,string>(state=>{return state.userId.Id})
+  const UserId =  useSelector<RootState,string|null>(state=>{return state.userId.Id})
   const dispatch = useDispatch()
   const [logined,setLogined] = useState<boolean>(false)
+
+  useEffect(()=>{
+    if(UserId === null && (sessionStorage.getItem("user_id") !== null)){
+      dispatch(userIdSlice.actions.login(sessionStorage.getItem("user_id")))
+      sessionStorage.removeItem('user_id')
+    }
+  })
 
   useEffect(()=>{
     if(UserId === null){
@@ -29,9 +36,13 @@ export default function MenuBar() {
     }
   },[UserId])
 
+
+
+
+
   //dispatch({type:'userIdSlice/login',payload:{id:id}})
   //dispatch(userIdSlice.actions.logout(null))
-  console.log(UserId)
+
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -50,7 +61,7 @@ export default function MenuBar() {
             </Typography>
             {(logined)?<>
                         <Button color="inherit">{UserId}</Button>
-                        <Button color="inherit" onClick={()=>{ dispatch(userIdSlice.actions.logout('.')); console.log(UserId); sessionStorage.removeItem('user_id') }}>Logout</Button>
+                        <Button color="inherit" onClick={()=>{ dispatch(userIdSlice.actions.login(null))}}>Logout</Button>
                       </>
                       :<>
                         <Button color="inherit" href='/login'>Login</Button>

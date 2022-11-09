@@ -14,6 +14,11 @@ import SendIcon from '@mui/icons-material/Send';
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import Box from '@mui/material/Box';
 
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
+
+
 export function MovieReviewList(props:{id:string}){
     interface ReviewData{ID:any, userID:string|null, movieReview:string, date:Date, updated:string}
 
@@ -21,7 +26,8 @@ export function MovieReviewList(props:{id:string}){
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieId, setMovieId] = useState(props.id)
-    const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    //const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movieReview,setMovieReview] = useState('')
     const [movieReviewList,setMovieReviewList] = useState<ReviewData[]>([])
     const [newReviewList,setNewReviewList] = useState<ReviewData[]>([])
@@ -52,7 +58,7 @@ export function MovieReviewList(props:{id:string}){
 
     const submitReview = async ()=>{
         const nowDATE = new Date();
-        if(sessionStorage.getItem("user_id") === null){ 
+        if(userID === null){ 
           setMovieReview('')
           return alert('login이 필요합니다.')
         }
