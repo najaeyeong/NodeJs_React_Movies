@@ -15,13 +15,18 @@ import Box from '@mui/material/Box';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 
-//import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
+//redux store
+import {useSelector} from "react-redux"
+import {RootState} from '../../store/store'
+
 
 
 export function Detail(){
-  const url = "http://localhost:3001"
+
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
   //const url = "https://movietest2.herokuapp.com"
    // const id = useParams().id
+   
     const {id} = useParams()
     const [movie,setMovie] = useState<any>()
     const [loading,setLoading] =useState<boolean>(true)

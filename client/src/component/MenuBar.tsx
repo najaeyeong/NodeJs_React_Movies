@@ -21,12 +21,12 @@ export default function MenuBar() {
   const dispatch = useDispatch()
   const [logined,setLogined] = useState<boolean>(false)
 
-  useEffect(()=>{
-    if(UserId === null && (sessionStorage.getItem("user_id") !== null)){
-      dispatch(userIdSlice.actions.login(sessionStorage.getItem("user_id")))
-      sessionStorage.removeItem('user_id')
-    }
-  })
+  // useEffect(()=>{
+  //   if(UserId === null && (sessionStorage.getItem("user_id") !== null)){
+  //     dispatch(userIdSlice.actions.login(sessionStorage.getItem("user_id")))
+  //     sessionStorage.removeItem('user_id')
+  //   }
+  // })
 
   useEffect(()=>{
     if(UserId === null){
