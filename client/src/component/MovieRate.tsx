@@ -27,7 +27,7 @@ export function MovieRate(props:MovieRateProps){
     interface Rate {like_count:number ,hate_count:number }
     interface ConfirmUserRate{rateID:number,rate:string}
 
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieRate,setMovieRate]= useState<Rate[]>([])

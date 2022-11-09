@@ -5,8 +5,12 @@ import styles from '../css/ReviewForm.module.css'
 import Card from '../../component/card'
 import MenuBar from '../../component/MenuBar';
 
+//redux store
+import {useSelector} from "react-redux"
+import {RootState} from '../../store/store'
+
 export function ReviewForm(){
-  const url = "http://localhost:3001"
+  const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
   //const url = "https://movietest2.herokuapp.com"
   
   interface movieData{ID:number,movieName:string,movieReview:string}

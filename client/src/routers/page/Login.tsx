@@ -15,7 +15,7 @@ import { Identity } from "@mui/base"
 export default function Login(){
     //sessionStorage.removeItem('user_id')
 
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
     const [id,setId] = useState("")
     const [psword,setPsword] = useState('')

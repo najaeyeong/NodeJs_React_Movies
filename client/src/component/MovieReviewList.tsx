@@ -22,7 +22,7 @@ import {RootState} from '../store/store'
 export function MovieReviewList(props:{id:string}){
     interface ReviewData{ID:any, userID:string|null, movieReview:string, date:Date, updated:string}
 
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieId, setMovieId] = useState(props.id)

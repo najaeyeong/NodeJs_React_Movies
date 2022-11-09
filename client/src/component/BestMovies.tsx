@@ -18,6 +18,10 @@ import { CardActionArea } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
+
 export function BestMovies(){
     interface Moive{
         movieID:number,
@@ -29,7 +33,7 @@ export function BestMovies(){
         count:number
     }
 
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
     const [movies,setMovies] = useState<Moive[]>([])
 

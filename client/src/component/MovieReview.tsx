@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 
 //redux store
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {RootState} from '../store/store'
 
 interface MovieReviewProps{
@@ -25,7 +25,7 @@ interface MovieReviewProps{
 
 
 export function MovieReview(props:MovieReviewProps){
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieID,setMovieID] = useState(props.movieID)
@@ -90,7 +90,7 @@ export function MovieReview(props:MovieReviewProps){
                             {(updated === 'y')?<Box sx={{ textAlign:'left', fontWeight: 'light',fontSize: 9, ml: 3 }}>(수정됨)</Box> : <></>}
                             {(update_textbox)? <></>
                             :
-                                <Box sx={{ textAlign:'left', fontWeight: 'Medium',fontSize:16,  ml:3,mr:3 ,mb:3, minWidth:400,wordWrap: "break-word" } }>{movieReview}</Box>
+                                <Box sx={{ textAlign:'left', fontWeight: 'Medium',fontSize:16,  ml:5,mr:3 ,mb:3, minWidth:400,wordWrap: "break-word" } }>{movieReview}</Box>
                             }
                         </Typography>
                         

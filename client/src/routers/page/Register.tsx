@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styles from "../css/Register.module.css"
 import axios from 'axios';
 
-
+//redux store
+import {useSelector} from "react-redux"
+import {RootState} from '../../store/store'
 
 export default function Register(){
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
     const [id, setId] = useState('')
     const [name,setName] = useState('')

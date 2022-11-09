@@ -19,7 +19,9 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
 
 export function Search(){
     interface GenreList{
@@ -27,7 +29,7 @@ export function Search(){
         ID:number
     }
 
-    const url = "http://localhost:3001"
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
 
     const [search,setSearch] = useState<boolean>(false)
