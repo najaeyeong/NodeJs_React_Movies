@@ -74,13 +74,13 @@ export function BestMovies(){
               initialSlide: 2
             }
           },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
+        //   {
+        //     breakpoint: 480,
+        //     settings: {
+        //       slidesToShow: 1,
+        //       slidesToScroll: 1
+        //     }
+        //   }
         ]
       }
 
@@ -100,14 +100,14 @@ export function BestMovies(){
         getBestMovies()
     })
 
-    return <Box sx={{m:10}}>
+    return <Box sx={{m:10, width:'auto',minWidth:'500px'}}>
         <Typography gutterBottom variant="h4" component="div">
             Top Movies
         </Typography>
         <Slider {...settings}>
             {movies.map((m)=>{
                 return<Box key={m.movieID} sx={{ maxWidth: 400 ,minWidth:150}} > 
-                    <Card  sx={{ maxWidth: 345 }}>
+                    <Card  sx={{ maxWidth: 345, }}>
                         <CardActionArea component={Link} 
                                         to={`/home/movie/${m.movieID}`} 
                                         onClick={()=>{sessionStorage.removeItem('movie_summary'); 

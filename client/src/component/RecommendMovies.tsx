@@ -108,7 +108,7 @@ export function RecommendMovies(){
 
     return <>
     {(UserId === null)? <></>
-                      : <Box sx={{m:10}}>
+                      : <Box sx={{m:10,width:'auto',minWidth:'500px'}}>
                           <Typography gutterBottom variant="h4" component="div">
                             Recommend Movies ({UserId})
                           </Typography>

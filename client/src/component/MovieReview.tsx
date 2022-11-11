@@ -83,7 +83,7 @@ export function MovieReview(props:MovieReviewProps){
     return <>
         {(!IsDeleted)? 
 
-                    <Card sx={{ minWidth: 600, minHeight:150, boxShadow: 1, ml:15,mr:15,mb:2,mt:2  }}>
+                    <Card sx={{ minWidth: 300, minHeight:150, boxShadow: 1, ml:10,mr:10,mb:2,mt:2  }}>
                         <Typography component="div" key={reviewID}>
                             <Box sx={{ textAlign:'left', fontWeight: 'bold', fontSize: 20, ml:3,mb:1,mt:3 }}><AccountCircleIcon sx={{fontSize: 20}}/> <Box sx={{mt:0,display: 'inline'}}>{userID}</Box></Box>
                             <Box sx={{ textAlign:'left', fontWeight: 'light',fontSize: 13, ml: 3 ,mb:2}}><QueryBuilderIcon sx={{ fontSize: 13,mr:0.5 }} />{date.toLocaleString()} </Box>

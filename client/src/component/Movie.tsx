@@ -15,7 +15,7 @@ interface Movie_props{
 export function Movie(props:Movie_props){
 
     return (
-    <div key={props.m_id} className={styles.movie}>
+    <div  className={styles.movie}>
         <img src={props.m_image} alt={props.m_title} className={styles.movie__img}></img>
         <div>
           <h2 className={styles.movie__title}>

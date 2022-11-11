@@ -92,8 +92,8 @@ export function MovieReviewList(props:{id:string}){
         <Box width="40%" sx={{fontWeight:'bold',ml:5 }}>
           <CommentTwoToneIcon/>comments: {reviewCount}  
         </Box>
-        <Typography component="div" sx={{minWidth:750, backgroundColor:'white', m:5,boxShadow: 1 ,borderRadius: 1}}>
-          <FormControl fullWidth sx={{ m: 1,maxWidth:'98.8%'}} variant="outlined">
+        <Typography component="div" sx={{minWidth:450, backgroundColor:'white', m:5,boxShadow: 1 ,borderRadius: 1}}>
+          <FormControl fullWidth sx={{ m: 1,maxWidth:'97%'}} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Review</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -122,15 +122,17 @@ export function MovieReviewList(props:{id:string}){
 
 
         <div >
-            {movieReviewList.map((value)=>{return(<>
-              <MovieReview movieID={movieId} 
-                          reviewID = {value.ID} 
-                          userID={value.userID} 
-                          movieReview={value.movieReview}
-                          date={value.date} 
-                          updated={value.updated}
-                          />
-            </>)})}
+            {movieReviewList.map((value)=>{return(
+                    <div key={value.ID}>
+                      <MovieReview movieID={movieId} 
+                                  reviewID = {value.ID} 
+                                  userID={value.userID} 
+                                  movieReview={value.movieReview}
+                                  date={value.date} 
+                                  updated={value.updated}
+                                  />
+                    </div>
+            )})}
         </div>
     
     </>
