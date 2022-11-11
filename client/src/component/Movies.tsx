@@ -9,6 +9,11 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 
+//redux store
+import { useSelector,useDispatch} from 'react-redux';
+import {RootState} from '../store/store'
+import searchDataSlice, {update_page,update_lastpagenumber  } from '../store/searchDateSlice'
+
 
 interface MoviesProps{
     rating:string
@@ -19,22 +24,19 @@ interface MoviesProps{
 }
 export function Movies(props:MoviesProps){
     
-    const [loading, setLoading] = useState<boolean>(true)
-    const [searched,setSearched] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true) //영화리스트 받아오기
+    const [searched,setSearched] = useState<boolean>(false)  //페이지리스트 받아오기 
     const [movies,setMovies] = useState<any[]>([])
-    const [movieCount,setMovieCount] = useState<number>(0)
-    const [pageCount,setPageCount] = useState<number>(0)
-    const [lastNumber,setLastNumber] = useState<number>(10)
-    const [pageList,setPageList] = useState<number[]>([])
-    const [page,setPage] = useState<number>(1)
+    const [movieCount,setMovieCount] = useState<number>(0)  //영화 갯수 
+    const [pageCount,setPageCount] = useState<number>(0)    // 검색결과를 페이지로 나누웠을때 나오는 마지막 페이지 숫자 
+    //const [lastNumber,setLastNumber] = useState<number>(10) //페이지리스트의 마지막에 올 숫자  
+    const [pageList,setPageList] = useState<number[]>([])  //그러져야할 페이지 숫자 리스트  1~10 , 11~20 ... 
+    //const [page,setPage] = useState<number>(1)
+    const lastNumber = useSelector<RootState,number>(state=>{return state.search.lastpagenumber})
+    const page = useSelector<RootState,number>(state=>{return state.search.page})
+    const dispatch = useDispatch()
 
-    //props
-    const [rating,setRating] =useState(props.rating)
-    const [sort,setSort] = useState(props.sort)
-    const [year,setYear] = useState(props.year)
-    const [term,setTerm] = useState(props.term)
-    const [genre,setGenre] = useState(props.genre)
-
+    
 
 
 
@@ -53,7 +55,7 @@ export function Movies(props:MoviesProps){
       setSearched(true)
     }
 
-
+    //페이지 숫자 리스트를 만드는 함수 
     const NextPageList = ()=>{
         if(lastNumber  > pageCount){
             var m = []
@@ -74,18 +76,23 @@ export function Movies(props:MoviesProps){
       window.scrollTo(0, 0)
       getMovies()
       NextPageList()
-    },[ loading,page])
+    },[loading, page])
 
 
     useEffect(()=>{
       setSearched(false)
       setLoading(true)
-      setPage(1)
-      setLastNumber(10)
+      //setPage(1)
+      //dispatch(update_page(1))
+      if(page === 1){
+        //setLastNumber(10)
+        dispatch(update_lastpagenumber(10))
+      }
     },[props.rating, props.sort, props.year, props.genre, props.term])
 
     useEffect(()=>{
-      setPage(lastNumber-9)
+      //setPage(lastNumber-9)
+      dispatch(update_page(lastNumber-9))
       NextPageList()
     },[lastNumber])
 
@@ -94,7 +101,7 @@ export function Movies(props:MoviesProps){
     },[pageList])
 
 
-
+//setPage(n);
     return (//이유는 모르겟지만 typescript 에선 map 사용시  &&  사용하면 any type 에러 사라짐 
       <>
         {searched?<>
@@ -106,20 +113,22 @@ export function Movies(props:MoviesProps){
               <Grid item xs={6}>
                 <ButtonGroup>
                     {(lastNumber>10)?<>
-                                        <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
+                                        <Button onClick={()=>{dispatch(update_lastpagenumber(lastNumber-10));setLoading(true)
+                                                        }}>Pre</Button>
                                     </>
                                     :<></>}
                     {pageList.map(n=>{
                       if(n===page){
                         return<Button variant="contained" key={n} disabled>{n}</Button>
                       }else{
-                        return<Button variant="contained" key={n} onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                        return<Button variant="contained" key={n} onClick={()=>{dispatch(update_page(n));setLoading(true);}}>{n}</Button>
                       }
                     })}
                     {(lastNumber>pageCount)?<>
                                             </>
                                             :<>
-                                            <Button onClick={()=>{setLastNumber(lastNumber+10);setLoading(true);}}>Next</Button>
+                                            <Button onClick={()=>{dispatch(update_lastpagenumber(lastNumber+10));setLoading(true)
+                                                            }}>Next</Button>
                                             </>}
                 </ButtonGroup>
               </Grid>
@@ -147,8 +156,8 @@ export function Movies(props:MoviesProps){
               {movies === undefined ? <><div>검색결과가 없습니다.</div></>
                                     :<>
                                       
-                                      {movies.map(m =><>
-                                              <Movie     key={m.id}
+                                      {movies.map(m =><div key={m.id}>
+                                              <Movie 
                                               m_id ={m.id}
                                               m_image ={m.medium_cover_image}
                                               m_title ={m.title}
@@ -156,7 +165,7 @@ export function Movies(props:MoviesProps){
                                               m_genres ={m.genres}
                                               m_year = {m.year}
                                               />
-                                            </>
+                                            </div>
                                       )}
                                     </>
               }
@@ -173,7 +182,7 @@ export function Movies(props:MoviesProps){
                         <Box gridColumn="5/span 5">
                             <ButtonGroup>
                                 {(lastNumber>10)?<>
-                                                    <Button onClick={()=>{setLastNumber(lastNumber-10);setLoading(true);}}>Pre</Button>
+                                                    <Button onClick={()=>{(update_lastpagenumber(lastNumber-10));setLoading(true);}}>Pre</Button>
                                                 </>
                                                 :<></>}
 
@@ -181,14 +190,14 @@ export function Movies(props:MoviesProps){
                                                   if(n===page){
                                                     return<Button key={n} disabled>{n}</Button>
                                                   }else{
-                                                    return<Button key={n} onClick={()=>{setPage(n);setLoading(true);}}>{n}</Button>
+                                                    return<Button key={n} onClick={()=>{dispatch(update_page(n));setLoading(true);}}>{n}</Button>
                                                   }
                                 })}
 
                                 {(lastNumber>pageCount)?<>
                                                         </>
                                                        :<>
-                                                       <Button onClick={()=>{setLastNumber(lastNumber+10);setLoading(true);}}>Next</Button>
+                                                       <Button onClick={()=>{(update_lastpagenumber(lastNumber+10));setLoading(true);}}>Next</Button>
                                                         </>}
                             </ButtonGroup>
                         </Box>

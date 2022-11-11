@@ -8,10 +8,13 @@ import styles from "../css/Home.module.css";
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 
 //redux store
 import {Provider} from 'react-redux';
 import store from '../../store/store'
+import Footer from '../../component/Footer';
+
 
 export function Home(){
     
@@ -35,15 +38,17 @@ export function Home(){
 
 
 
-    return <>
-          <Provider store={store}>
-            <MenuBar />
-            <Search/>
-          </Provider>
-
-      </>
-
+    return<Provider store={store}>
+      <MenuBar />
+      <Search/>
+      <Footer/>
+    </Provider> 
 
 }
 
 export default Home;
+//<Provider store={store}></Provider>
+          {/* <Provider store={store}>
+            <MenuBar />
+            <Search/>
+          </Provider> */}

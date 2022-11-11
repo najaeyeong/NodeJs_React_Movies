@@ -2,7 +2,9 @@ import React, {  useEffect, useState } from 'react';
 import Axios from 'axios'
 import styles from './css/Movie.module.css'
 
-
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
 
 interface movieData{ID:number,movieName:string,movieReview:string}
 type ReviewProps = {
@@ -10,8 +12,10 @@ type ReviewProps = {
 }
 //{list}:{list:ReviewProps}
 export function ReviewList(props:ReviewProps){
-  const url = "http://localhost:3001"
-  //const url = "https://movietest2.herokuapp.com"
+  
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
+    //const url = "https://movietest2.herokuapp.com"
+
     const [movieList,setMovieList] = useState<movieData[]>(props.list)
     const [newReview, setNewReview] = useState('')
     useEffect(()=>{

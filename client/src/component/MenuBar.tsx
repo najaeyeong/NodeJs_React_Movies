@@ -1,23 +1,26 @@
 
 import React, {  useState,useEffect } from 'react';
+import { Link} from "react-router-dom"
+
+//mui
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
+//redux store
 import { useSelector,useDispatch } from 'react-redux';
 import {RootState} from '../store/store'
 import userIdSlice from '../store/userIdSlice';
-
-
+import {reset} from '../store/searchDateSlice'
 
 export default function MenuBar() {
   //const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
   const UserId =  useSelector<RootState,string|null>(state=>{return state.userId.Id})
+  const genre = useSelector<RootState,string|null>(state=>{return state.search.genre})
   const dispatch = useDispatch()
   const [logined,setLogined] = useState<boolean>(false)
 
@@ -57,7 +60,7 @@ export default function MenuBar() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              blog
+              <Link style={{ textDecoration: 'none', color:"inherit" }} to={'/'} onClick={()=>{dispatch(reset('')); console.log(genre)}} > Home </Link>
             </Typography>
             {(logined)?<>
                         <Button color="inherit">{UserId}</Button>
@@ -75,3 +78,4 @@ export default function MenuBar() {
   }
 
 
+  
