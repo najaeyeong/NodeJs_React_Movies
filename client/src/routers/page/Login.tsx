@@ -34,9 +34,9 @@ export default function Login(){
             }
         await axios.post(`${url}/api/login`,req).then((res)=>{
             if(res.data.success){
-                dispatch(userIdSlice.actions.login(id));
-                dispatch(reset(''))
-                //sessionStorage.setItem('user_id',id );
+                // dispatch(userIdSlice.actions.login(id));
+                // dispatch(reset(''))
+                sessionStorage.setItem('user_id',id );
                 window.location.replace("/home/movie"); //새로고침 이동
                 //window.location.href='/home/movie'
             }else{

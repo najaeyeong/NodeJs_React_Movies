@@ -34,8 +34,8 @@ export function MovieReview(props:MovieReviewProps){
     const [movieReview,setMovieReview] = useState(props.movieReview)
     const [date,setDate]=useState(props.date)
     const [update_textbox,setUpdate_textbox] = useState(false)
-    //const [loginID,setLoginID]= useState(sessionStorage.getItem("user_id"))
-    const loginID =  useSelector<RootState,string>(state=>{return state.userId.Id})
+    const [loginID,setLoginID]= useState(sessionStorage.getItem("user_id"))
+    //const loginID =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [newReview, setNewReview] = useState('')
     const [IsDeleted,setIsDeleted] = useState<boolean>(false)
     const [updated,setUpdated] = useState<string>(props.updated) //수정여부

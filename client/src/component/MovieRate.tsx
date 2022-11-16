@@ -31,8 +31,8 @@ export function MovieRate(props:MovieRateProps){
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieRate,setMovieRate]= useState<Rate[]>([])
-    //const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
-    const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
+    const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    //const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movieID] = useState(props.movieID)
     const [likeCount,setLikeCount] = useState<number>(0)
     const [hateCount,setHateCount] = useState<number>(0)
@@ -140,12 +140,12 @@ export function MovieRate(props:MovieRateProps){
 
 
 
-    
+
 
     useEffect(()=>{
         getMovieRate()
         Confirm_user()
-    },[userID])
+    },[sessionStorage.getItem("user_id")])
 
     useEffect(()=>{
         setLikeCount(movieRate[0]?.like_count)

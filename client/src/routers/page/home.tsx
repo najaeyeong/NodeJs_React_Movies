@@ -39,10 +39,10 @@ export function Home(){
 
 
     return<Provider store={store}>
-      <MenuBar />
-      <Search/>
-      <Footer/>
-    </Provider> 
+            <MenuBar />
+            <Search/>
+            <Footer/>
+          </Provider> 
 
 }
 

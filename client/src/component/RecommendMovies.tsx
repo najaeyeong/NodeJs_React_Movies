@@ -36,8 +36,8 @@ export function RecommendMovies(){
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
 
-    //const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
-    const UserId =  useSelector<RootState,string>(state=>{return state.userId.Id})
+    const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
+    //const UserId =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movies,setMovies] = useState<Moive[]>([])
     // useEffect(()=>{
     //   setUserId(sessionStorage.getItem("user_id"))

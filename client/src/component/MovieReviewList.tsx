@@ -26,8 +26,8 @@ export function MovieReviewList(props:{id:string}){
     //const url = "https://movietest2.herokuapp.com"
 
     const [movieId, setMovieId] = useState(props.id)
-    //const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
-    const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
+    const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    //const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
     const [movieReview,setMovieReview] = useState('')
     const [movieReviewList,setMovieReviewList] = useState<ReviewData[]>([])
     const [newReviewList,setNewReviewList] = useState<ReviewData[]>([])

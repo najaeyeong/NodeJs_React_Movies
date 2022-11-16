@@ -67,7 +67,8 @@ export function MovieDetail(props:{id:string}){
     useEffect(()=>{
       window.scrollTo(0, 0)
       getMovieDate()
-
+      sessionStorage.setItem("backlist","y")
+      console.log(sessionStorage.getItem('backlist'))
     //   if(id !== undefined){
     //     setMovieID(id)
     //   }

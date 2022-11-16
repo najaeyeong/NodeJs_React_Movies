@@ -22,7 +22,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
 import {update_genre,update_rate,update_year,update_sort,update_term,update_searched,update_page,reset } from '../store/searchDateSlice'
-import { Grid } from '@mui/material'
+
 
 
 export function Search(){
@@ -40,26 +40,20 @@ export function Search(){
     const [genreList,setGenreList]= useState<GenreList[]>([])
     const [yearList,setYearList] = useState<string[]>([])
     
-    const [genre,setGenre] = useState<string>("All")
-    const [rating,setRating] = useState<string>("All")
-    const [year,setYear]= useState<string>("All")
-    const [sort,setSort] = useState<string>("year")
-    const [term,setTerm] = useState<string>('')
-    // const [search,setSearch] = useState<boolean>(false)   
-    // const [GenreRef,setGenreRef] = useState<string>('')
-    // const [RatingRef,setRatingRef] =useState<string>('')
-    // const [YearRef,setYearRef] =useState<string>('')
-    // const [SortRef,setSortRef] =useState<string>('')
-    // const [TermRef,setTermRef] =useState<string>('')
+    const [genre,setGenre] = useState<any>("All")
+    const [rating,setRating] = useState<any>("All")
+    const [year,setYear]= useState<any>("All")
+    const [sort,setSort] = useState<any>("year")
+    const [term,setTerm] = useState<any>('')
     
-    const GenreRef = useSelector<RootState,string>(state=>{return state.search.genre})
-    const RatingRef = useSelector<RootState,string>(state=>{return state.search.rate})
-    const YearRef = useSelector<RootState,string>(state=>{return state.search.year})
-    const SortRef = useSelector<RootState,string>(state=>{return state.search.sort})
-    const TermRef = useSelector<RootState,string>(state=>{return state.search.term})
-    const search = useSelector<RootState,boolean>(state=>{return state.search.searched})
+    const [GenreRef,setGenreRef] = useState(sessionStorage.getItem('genre'))//useSelector<RootState,string>(state=>{return state.search.genre})
+    const [RatingRef,setRatingRef] = useState(sessionStorage.getItem('rating'))//useSelector<RootState,string>(state=>{return state.search.rate})
+    const [YearRef,setYearRef]= useState(sessionStorage.getItem('year'))//useSelector<RootState,string>(state=>{return state.search.year})
+    const [SortRef,setSortRef] = useState(sessionStorage.getItem('sort'))//useSelector<RootState,string>(state=>{return state.search.sort})
+    const [TermRef,setTermRef] = useState(sessionStorage.getItem('term'))//useSelector<RootState,string>(state=>{return state.search.term})
+    const [search,setSearch] = useState<boolean>(false)//useSelector<RootState,boolean>(state=>{return state.search.searched})
 
-    const dispatch= useDispatch();
+
 
     const getGenreList= async()=>{
         await Axios.get(`${url}/api/movieinfo/genres`).then((res)=>{
@@ -94,16 +88,18 @@ export function Search(){
 
 
     const SubmitSearchData = ()=>{
-        if(genre === "All"){dispatch(update_genre(""))}else{dispatch(update_genre(genre))}
-        if(year === "All"){dispatch(update_year(""))}else{dispatch(update_year(year))}
-        if(rating === "All"){dispatch(update_rate(""))}else{dispatch(update_rate(rating))}
-        dispatch(update_sort(sort));
-        dispatch(update_term(term));
-        dispatch(update_searched(true));
-        dispatch(update_page(1));
-        // setSortRef(sort)
-        // setTermRef(term)
-        // setSearch(true)
+        if(genre === "All"){ sessionStorage.removeItem('genre'); setGenreRef('')}else{sessionStorage.setItem('genre',genre);setGenreRef(genre) }/*{dispatch(update_genre(""))}else{dispatch(update_genre(genre))*/
+        if(year === "All"){ sessionStorage.removeItem('year');setYearRef('')}else{sessionStorage.setItem('year',year);setYearRef(year) }/*{dispatch(update_year(""))}else{dispatch(update_year(year))}*/
+        if(rating === "All"){ sessionStorage.removeItem('rating');setRatingRef('')}else{sessionStorage.setItem('rating',rating);setRatingRef(rating) }/*{dispatch(update_rate(""))}else{dispatch(update_rate(rating))}*/
+        sessionStorage.setItem('sort',sort);
+        setSortRef(sort)
+        sessionStorage.setItem('term',term)
+        setTermRef(term)
+        setSearch(true)
+        sessionStorage.removeItem('page')
+        sessionStorage.removeItem('lastpagenumber')
+        sessionStorage.removeItem('backlist')
+        console.log(genre,year,rating,sort,term)
     }
 
 
@@ -113,21 +109,55 @@ export function Search(){
         setGetList(true)
     },[])
 
+    //초기값 세팅
     useEffect(()=>{
-        if(GenreRef !=="" || RatingRef !=="" || YearRef!=="" || SortRef!=="" || TermRef !== ""){
-            if(GenreRef === ''){setGenre("All");}else{setGenre(GenreRef);}
-            if(RatingRef === ''){setRating("All");}else{setRating(RatingRef);}
-            if(YearRef === ''){setYear("All");}else{setYear(YearRef);}
-            if(SortRef === ''){setSort("year");}else{setSort(SortRef);}
-            setTerm(TermRef);
+        if(sessionStorage.getItem('genre') !== null || sessionStorage.getItem('rating') !== null ||
+        sessionStorage.getItem('year') !== null || sessionStorage.getItem('sort') !== null || sessionStorage.getItem('term') !== null){
+            setSearch(true)
         }else{
-            setGenre(GenreRef);
-            setRating(RatingRef);
-            setYear(YearRef);
-            setSort("year");
-            setTerm(TermRef);
+            setSearch(false)
         }
-    },[GenreRef ,RatingRef ,YearRef, SortRef, TermRef,search])
+        //장르
+        if(sessionStorage.getItem('genre') === null){
+            setGenre("All");
+            setGenreRef("")
+        }else{
+            setGenre(sessionStorage.getItem('genre'));
+            setGenreRef(sessionStorage.getItem('genre'));
+        }
+        //평점
+        if(sessionStorage.getItem('rating') === null){
+            setRating("All");
+            setRatingRef('');
+        }else{
+            setRating(sessionStorage.getItem('rating'));
+            setRatingRef(sessionStorage.getItem('rating'));
+        }
+        //년도
+        if(sessionStorage.getItem('year') === null){
+            setYear("All");
+            setYearRef('');
+        }else{
+            setYear(sessionStorage.getItem('year'));
+            setYearRef(sessionStorage.getItem('year'));
+        }
+        //정렬
+        if(sessionStorage.getItem('sort') === null){
+            setSort("year");
+            setSortRef('')
+        }else{
+            setSort(sessionStorage.getItem('sort'));
+            setSortRef(sessionStorage.getItem('sort'))
+        }
+        //검색어
+        if(sessionStorage.getItem('term') === null){
+            setTerm('')
+            setTermRef('')
+        }else{
+            setTerm(sessionStorage.getItem('term'))
+            setTermRef(sessionStorage.getItem('term'))
+        }
+    },[])
 
     useEffect(()=>{
         setGetList(true)
