@@ -59,7 +59,6 @@ export function MovieDetail(props:{id:string}){
       }).catch(()=>{
         alert('InfoUpdate error 관리자에 문의')
       })
-
     }
 
 
@@ -68,7 +67,6 @@ export function MovieDetail(props:{id:string}){
       window.scrollTo(0, 0)
       getMovieDate()
       sessionStorage.setItem("backlist","y")
-      console.log(sessionStorage.getItem('backlist'))
     //   if(id !== undefined){
     //     setMovieID(id)
     //   }

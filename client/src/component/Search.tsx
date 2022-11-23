@@ -6,6 +6,7 @@ import Axios from 'axios'
 import Movies from "../component/Movies"
 import RecommendMovies from "./RecommendMovies"
 import BestMovies  from './BestMovies'
+import LanguageMovies from './LanguageMoives'
 
 //mui
 import Box from '@mui/material/Box';
@@ -22,6 +23,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
 import {update_genre,update_rate,update_year,update_sort,update_term,update_searched,update_page,reset } from '../store/searchDateSlice'
+import GenreMovies from './GenreMovies'
+
 
 
 
@@ -33,8 +36,8 @@ export function Search(){
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     //const url = "https://movietest2.herokuapp.com"
-
-
+    const [logined,setLogined] = useState(false)
+    const [userID ,setUserID] = useState(sessionStorage.getItem("user_id"))
     const [getList,setGetList] = useState<boolean>(false)
 
     const [genreList,setGenreList]= useState<GenreList[]>([])
@@ -99,7 +102,6 @@ export function Search(){
         sessionStorage.removeItem('page')
         sessionStorage.removeItem('lastpagenumber')
         sessionStorage.removeItem('backlist')
-        console.log(genre,year,rating,sort,term)
     }
 
 
@@ -108,6 +110,14 @@ export function Search(){
         getYearList()
         setGetList(true)
     },[])
+
+    useEffect(()=>{
+        if(userID === null){
+          setLogined(false)
+        }else{
+          setLogined(true)
+        }
+      },[sessionStorage.getItem("user_id")])
 
     //초기값 세팅
     useEffect(()=>{
@@ -178,7 +188,7 @@ export function Search(){
                         </Box>
                         <Box gridColumn="5/span 1">
 
-                            <IconButton onClick={()=>{SubmitSearchData()}}><SearchIcon color="primary"/>Search</IconButton>
+                            <IconButton onClick={()=>{SubmitSearchData();}}><SearchIcon color="primary"/>Search</IconButton>
                         </Box>
                         <Box gridColumn="2/span 1">
                             Genre
@@ -296,13 +306,20 @@ export function Search(){
                             year={YearRef}
                             />
                  </Box>
-                :<Box>
-                    <RecommendMovies/>
-                    <BestMovies/>
-                 </Box>}
+                :<>
+                {(logined)?<Box>
+                        <GenreMovies/>
+                        <LanguageMovies/>
+                        <BestMovies/>
+                     </Box>
+                    :<Box>
+                        <BestMovies/>
+                     </Box>
+                    }
+                </>
+        }
+
     </Box>
-
-
 
 }
 export default Search; 

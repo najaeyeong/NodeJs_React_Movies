@@ -9,7 +9,8 @@ class MovieGenrestorage{
     static async read(column,where,value){
 
         return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_genre ${where}` 
+            const sqlselect = `select ${column} from crud.movie_genre ${where}` 
+
             await db.query(sqlselect,value, (err, result) => {  
                 if(err) {
                     console.log(err)

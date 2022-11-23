@@ -59,18 +59,30 @@ app.delete('/api/movie/rate/delete',movierate_ctrl.process.delete)
 
 app.post('/api/movie/rate/confirmuser',movierate_ctrl.process.confirm)
 
+app.post('/api/get/movies/user_rate',movierate_ctrl.process.read_user_like) // user가 좋아한 영화 id 목록 반환!0.
+
 //info
 app.post('/api/movieinfo/update', movieinfo_ctrl.process.create_update)
 
 app.get('/api/movieinfo/years', movieinfo_ctrl.process.read_years)
 
+app.post(`/api/get/movies/user/language`, movieinfo_ctrl.process.read_movies_user_language)//! 0 .
+app.post(`/api/get/movies/user/first/genre`, movieinfo_ctrl.process.read_movies_user_first_genre)//!0.
+app.post(`/api/get/movies/user/second/genre`, movieinfo_ctrl.process.read_movies_user_second_genre)//!0.
+app.post(`/api/get/movies/user/genre`, movieinfo_ctrl.process.read_movies_user_genre)//!0.
+
+app.post(`/api/get/user/language`, movieinfo_ctrl.process.read_user_like_language)//유저가 좋아하는 언어권 목록! 0.
+app.post('/api/get/user/year',movieinfo_ctrl.process.read_user_like_year)//유저가 좋아하는 년도 목록! 0.
+
 //genre
-app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read)
+app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read) // 장르 목록 반환 0
+
+app.post('/api/movieinfo/user/genre', movieinfo_genre_ctrl.process.read_user_genre) // user의 최신 선호장르 2개 반환 !0.
 
 //mainhome(best,recommend)
-app.get('/api/get/movies/best', movieinfo_ctrl.process.read_best)
+app.get('/api/get/movies/best', movieinfo_ctrl.process.read_best) //가장 평가 높은 영화데이터 10개 반환 
 
-
+app.post('/app/get/movies/recommend', movieinfo_ctrl.process.read_recommend) //!
 
 
 app.get('*', function (req, res) {

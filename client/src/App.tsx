@@ -7,6 +7,7 @@ import { ReviewForm } from './routers/page/ReviewForm';
 import Register from './routers/page/Register';
 import Login from "./routers/page/Login"
 
+
 //redux
 import {Provider} from 'react-redux';
 import store from './store/store'
@@ -28,6 +29,7 @@ function App() {
                   <Route path={"/home/movie/review"} element={<ReviewForm/>}/>
                   <Route path={"/register"} element={<Register/>}/>
                   <Route path={"/login"} element={<Login/>}/>
+
               </Routes>
           </Router>
           </PersistGate>

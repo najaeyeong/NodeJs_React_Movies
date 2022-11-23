@@ -69,11 +69,11 @@ export default function MenuBar() {
                                                                                   sessionStorage.removeItem('lastpagenumber')
                                                                                   sessionStorage.removeItem('backlist')
                                                                                   window.location.replace("/home/movie");}}>home</Button>
-              <Link style={{ textDecoration: 'none', color:"inherit" }} to={'/'} onClick={()=>{sessionStorage.removeItem('genre');
+              {/* <Link style={{ textDecoration: 'none', color:"inherit" }} to={'/'} onClick={()=>{sessionStorage.removeItem('genre');
                                                                                               sessionStorage.removeItem('sort');
                                                                                               sessionStorage.removeItem('rating');
                                                                                               sessionStorage.removeItem('term');
-                                                                                              sessionStorage.removeItem('year')}} > Home </Link>
+                                                                                              sessionStorage.removeItem('year')}} > Home </Link> */}
             </Typography>
             {(logined)?<>
                         <Button color="inherit">{UserId}</Button>

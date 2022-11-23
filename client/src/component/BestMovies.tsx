@@ -30,7 +30,7 @@ export function BestMovies(){
         summary:string,
         year:string,
         visitcount:number,
-        count:number
+        count:number //like 갯수
     }
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
@@ -40,19 +40,19 @@ export function BestMovies(){
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 1000,
         slidesToShow: 5,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         initialSlide: 0,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 3000,
         pauseOnHover: true,
         responsive: [
             {
                 breakpoint: 1600,
                 settings: {
                   slidesToShow: 4,
-                  slidesToScroll: 1,
+                  slidesToScroll: 2,
                   infinite: true,
                   dots: true
                 }
@@ -61,7 +61,7 @@ export function BestMovies(){
             breakpoint: 1200,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
               infinite: true,
               dots: true
             }
@@ -70,7 +70,7 @@ export function BestMovies(){
             breakpoint: 800,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
               initialSlide: 2
             }
           },
@@ -123,7 +123,7 @@ export function BestMovies(){
                                     {m.title}({m.year})
                                 </Typography>
                                 <Typography gutterBottom component="div">
-                                    <ThumbUpIcon sx={{ fontSize: 15, ml:1}}/>{m.count}
+                                    <ThumbUpIcon sx={{ fontSize: 15, ml:1}}/>{m.count} 
                                     <VisibilityIcon sx={{ fontSize: 15, ml:1}}/>{m.visitcount} 
                                 </Typography>
                             </CardContent>

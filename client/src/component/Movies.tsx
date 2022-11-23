@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Movie from "../component/Movie";
 import styles from "../routers/css/Home.module.css"
+import Axios from 'axios'
+
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -15,6 +17,8 @@ import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
 import searchDataSlice, {update_page,update_lastpagenumber  } from '../store/searchDateSlice'
 import session from 'redux-persist/lib/storage/session';
+import { isNullishCoalesce } from 'typescript/lib/tsserverlibrary';
+import { devNull } from 'os';
 
 
 interface MoviesProps{
@@ -25,7 +29,8 @@ interface MoviesProps{
     year:string|null
 }
 export function Movies(props:MoviesProps){
-    
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
+  
     const [loading, setLoading] = useState<boolean>(true) //영화리스트 받아오기
     const [searched,setSearched] = useState<boolean>(false)  //페이지리스트 받아오기 
     const [movies,setMovies] = useState<any[]>([])
@@ -37,7 +42,7 @@ export function Movies(props:MoviesProps){
     const [comeBackList,setComeBackList] = useState<boolean>()
     //const lastNumber = useSelector<RootState,number>(state=>{return state.search.lastpagenumber})
     //const page = useSelector<RootState,number>(state=>{return state.search.page})
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
     
     
@@ -72,30 +77,60 @@ export function Movies(props:MoviesProps){
             }
             setPageList(m) 
           } 
-        }
+    }
+
+    const updateMovieInfo = async (movie:any) => { // 영화데이터 insert 
+      await Axios.post(`${url}/api/movieinfo/update`, {
+        movieID:movie.id,
+        image:movie.medium_cover_image,
+        title:movie.title,
+        year:movie.year,
+        runtime:movie.runtime,
+        rate:movie.rating,
+        language:movie.language,
+        summary:movie.summary,
+        genres:movie.genres}
+        ).then((res)=>{
+          if(res.data.success){
+          }
+      }).catch(()=>{
+        alert('InfoUpdate error 관리자에 문의')
+      })
+    }
         
     //page초기세팅값    
     useEffect(()=>{
 
       if(sessionStorage.getItem("backlist") === null){
         setComeBackList(false)
-        console.log(comeBackList,sessionStorage.getItem("backlist"),"false")
+        // console.log(comeBackList,sessionStorage.getItem("backlist"),"false")
       }else{
         setComeBackList(true)
-        console.log(comeBackList,sessionStorage.getItem("backlist"),"true")
+        // console.log(comeBackList,sessionStorage.getItem("backlist"),"true")
       }
 
-      if(sessionStorage.getItem("lastpagenumber")=== null){
+      if(sessionStorage.getItem("lastpagenumber") === null){
         setLastNumber(10)
+        setPage(1)
+        // console.log(lastNumber)
+        // console.log(sessionStorage.getItem("lastpagenumber"))
       }else{
         setLastNumber(Number(sessionStorage.getItem("lastpagenumber")))
+        // console.log(lastNumber) // 0 
+        // console.log(sessionStorage.getItem("lastpagenumber"))  // null 
       }
   
       if(sessionStorage.getItem('page') === null){
+        setLastNumber(10)
         setPage(1)
+        console.log(page) // 0 
+        console.log(sessionStorage.getItem("page"))  // null 
       }else{
         setPage(Number(sessionStorage.getItem('page')))
+        // console.log(page) // 0 
+        // console.log(sessionStorage.getItem("page"))  // null 
       }
+      
     },[])
 
     //page변경시 새로 그림
@@ -103,18 +138,19 @@ export function Movies(props:MoviesProps){
       window.scrollTo(0, 0)
       getMovies()
       NextPageList()
+      movies.map(movie =>{updateMovieInfo(movie)})
     },[ loading, page])
 
     //검색data 변경시 새로그림
     useEffect(()=>{
       setSearched(false)
       setLoading(true)
-      //setPage(1)
-      //dispatch(update_page(1))
-      if(page === 1){
+      if(sessionStorage.getItem('lastpagenumber') === null){
         setLastNumber(10)
-        //dispatch(update_lastpagenumber(10))
         sessionStorage.setItem('lastpagenumber','10')
+      }if(sessionStorage.getItem('page')=== null){
+        setPage(1)
+        sessionStorage.setItem('page','1')
       }
     },[props.rating, props.sort, props.year, props.genre, props.term])
     
@@ -123,19 +159,25 @@ export function Movies(props:MoviesProps){
       if(comeBackList !== undefined){
         if(comeBackList){ //리스트로 돌아온것
           setPage(Number(sessionStorage.getItem("page")))
+          setLastNumber(Number(sessionStorage.getItem("lastpagenumber")))
           NextPageList()
           //sessionStorage.removeItem("backlist")
-          console.log(page,lastNumber,"안바뀜",comeBackList)
+          //console.log(page,lastNumber,"안바뀜",comeBackList)
         }else{//리스트로 돌아온것 아니라면
-          setPage(lastNumber-9) 
-          sessionStorage.setItem('page',`${lastNumber-9}`)
-          NextPageList()
-          //sessionStorage.removeItem("backlist")
-          console.log(page,lastNumber,"바뀜",comeBackList)
+          if(lastNumber === 0){//검색 후 첫 화면이라면 
+            setPage(1);
+            setLastNumber(10);
+            NextPageList()
+          }else{//next,prev 라면 
+            setPage(lastNumber-9)
+            sessionStorage.setItem('page',`${lastNumber-9}`)
+            NextPageList()
+          }
+          //console.log(page,lastNumber,"바뀜",comeBackList)
         }
-        console.log(page,lastNumber)
+        //console.log(page,lastNumber)
       }
-    },[lastNumber,comeBackList])
+    },[lastNumber,comeBackList,])
 
     //페이지목록 저장후 그림 
     useEffect(()=>{
@@ -231,6 +273,7 @@ export function Movies(props:MoviesProps){
                             <ButtonGroup>
                                 {(lastNumber>10)?<>
                                                     <Button onClick={()=>{sessionStorage.setItem("lastpagenumber",`${lastNumber-10}`);
+                                                                          setComeBackList(false);
                                                                           setLastNumber(lastNumber-10)
                                                                           setLoading(true);}}>Pre</Button>
                                                 </>
@@ -250,6 +293,7 @@ export function Movies(props:MoviesProps){
                                                         </>
                                                        :<>
                                                        <Button onClick={()=>{sessionStorage.setItem('lastpagenumber',`${lastNumber+10}`);
+                                                                            setComeBackList(false);
                                                                             setLastNumber(lastNumber+10);
                                                                             setLoading(true)}}>Next</Button>
                                                         </>}
@@ -264,10 +308,6 @@ export function Movies(props:MoviesProps){
                  :<>
                   </>
         }
-
-
-
-
       </>
     );
 

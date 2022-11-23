@@ -3,19 +3,32 @@ const moment = require('moment');
 const db = require("../config/db");
 
 class MovieRatestorage{
+    static async read(column , where, value){
 
-
-    static async GetRate(column,where){
-        return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_rate ${where}` 
-            await db.query(sqlselect, (err, result) => {  
-                if(err) {reject(`${err}`) }
-                else{
-                    resolve ({success: true,message: 'success', data: result})
+        return new Promise(async (resolve, reject) =>{
+            const sqlselect = `select ${column} from movie_rate ${where} `
+            await db.query(sqlselect ,value,(err, result) =>{
+                if(err){
+                    console.log(err)
+                    reject(`${err}`)
+                }else{
+                    resolve({success:true , message:'success',data:result})
                 }
             })
         })
     }
+
+    // static async GetRate(column,where){
+    //     return new Promise(async(resolve,reject) => {
+    //         const sqlselect = `select ${column} from movie_rate ${where}` 
+    //         await db.query(sqlselect, (err, result) => {  
+    //             if(err) {reject(`${err}`) }
+    //             else{
+    //                 resolve ({success: true,message: 'success', data: result})
+    //             }
+    //         })
+    //     })
+    // }
 
     static async create(body){
         const userID = body.userID
@@ -65,19 +78,21 @@ class MovieRatestorage{
             })
     }
 
-    static async confirm(column,where){
-        return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from movie_rate ${where}` 
-            await db.query(sqlselect, (err, result) => {  
-                if(err) {
-                    console.log(err)
-                    reject(`${err}`) }
-                else{
-                    resolve ({success: true,message: 'success', data: result})
-                }
-            })
-        })
-    }
+    // static async confirm(column,where){
+    //     return new Promise(async(resolve,reject) => {
+    //         const sqlselect = `select ${column} from movie_rate ${where}` 
+    //         await db.query(sqlselect, (err, result) => {  
+    //             if(err) {
+    //                 console.log(err)
+    //                 reject(`${err}`) }
+    //             else{
+    //                 resolve ({success: true,message: 'success', data: result})
+    //             }
+    //         })
+    //     })
+    // }
+
+
 
 
 }

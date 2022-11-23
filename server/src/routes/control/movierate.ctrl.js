@@ -33,6 +33,11 @@ const process = {
         const movieRate = new MovieRate(req.body)
         const response = await movieRate.confirm()
         return res.json(response)
+    },
+    read_user_like:async(req,res)=>{
+        const movieRate = new MovieRate(req.body)
+        const response = await movieRate.read_user_like()
+        return res.json(response)
     }
 
 }
