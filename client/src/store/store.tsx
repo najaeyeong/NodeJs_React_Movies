@@ -14,13 +14,15 @@ import storage from 'redux-persist/lib/storage'; // localstorage
 import searchDataSlice from './searchDateSlice';
 import userIdSlice from './userIdSlice';
 import serverUrlSlice from './urlSlice';
+import menuSlice from './menuSlice';
 
 
 //slice의 reducer들 통합 
 const rootReducer = combineReducers({
   search:searchDataSlice.reducer,
   userId:userIdSlice.reducer,
-  serverUrl:serverUrlSlice.reducer
+  serverUrl:serverUrlSlice.reducer,
+  menu:menuSlice.reducer
 });
 
 const persistConfig: any = {

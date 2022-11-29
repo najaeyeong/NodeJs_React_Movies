@@ -138,7 +138,7 @@ export function Movies(props:MoviesProps){
       window.scrollTo(0, 0)
       getMovies()
       NextPageList()
-      movies.map(movie =>{updateMovieInfo(movie)})
+     // movies.map(movie =>{updateMovieInfo(movie)})
     },[ loading, page])
 
     //검색data 변경시 새로그림

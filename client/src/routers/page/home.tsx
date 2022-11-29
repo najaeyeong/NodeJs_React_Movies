@@ -5,6 +5,9 @@ import Movie from "../../component/Movie";
 import Movies from "../../component/Movies"
 import Search from "../../component/Search"
 import styles from "../css/Home.module.css";
+import Footer from '../../component/Footer';
+import UserInfo from '../../component/UserInfo';
+
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -13,11 +16,14 @@ import { Grid } from '@mui/material';
 //redux store
 import {Provider} from 'react-redux';
 import store from '../../store/store'
-import Footer from '../../component/Footer';
+import {useSelector,useDispatch} from "react-redux"
+import {RootState} from '../../store/store'
 
 
 export function Home(){
-    
+
+    const menu = useSelector<RootState,string>(state=>{return state.menu.menu})
+
     const [loading, setLoading] = useState<boolean>(true)
     const [movies,setMovies] = useState<any[]>([])
     const [movieCount,setMovieCount] = useState<number>(0)
@@ -40,10 +46,19 @@ export function Home(){
 
     return<Provider store={store}>
             <MenuBar />
-            <Search/>
+            <>
+              {(menu === "search")
+                  ?<Search/>
+                  :<>
+                    {(menu==="userInfo")
+                        ?<UserInfo/>
+                        :<>not</>
+                    }
+                  </>
+              }
+            </>
             <Footer/>
           </Provider> 
-
 }
 
 export default Home;

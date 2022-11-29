@@ -79,7 +79,7 @@ export function Detail(){
                                 <Box></Box>
                             </Grid>
                             <Grid item xs={8}>
-                                <Box>             
+                                <Box >             
                                   {(loading)?
                                             <></>
                                           :<>

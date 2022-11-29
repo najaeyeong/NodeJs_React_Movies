@@ -14,7 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 //redux store
 import { useSelector,useDispatch } from 'react-redux';
 import {RootState} from '../store/store'
-import userIdSlice from '../store/userIdSlice';
+import menuSlice from '../store/menuSlice';
 import {reset} from '../store/searchDateSlice'
 
 export default function MenuBar() {
@@ -76,7 +76,7 @@ export default function MenuBar() {
                                                                                               sessionStorage.removeItem('year')}} > Home </Link> */}
             </Typography>
             {(logined)?<>
-                        <Button color="inherit">{UserId}</Button>
+                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{UserId}</Button>
                         <Button color="inherit" onClick={()=>{ setUserId(null); sessionStorage.removeItem("user_id") }}>Logout</Button>
                       </>
                       :<>

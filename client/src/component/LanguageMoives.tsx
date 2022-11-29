@@ -127,7 +127,7 @@ export function LanguageMovies(){
             ?<>
                 <Box sx={{m:10, width:'auto',minWidth:'500px'}}>
                     <Typography gutterBottom variant="h4" component="div">
-                    {(userLanguage[1])?<>Language Movie ({userLanguage[0].language})</>:<>Language</>}
+                    {(userLanguage[0])?<>Language Movie ({userLanguage[0].language})</>:<>Language</>}
                     </Typography>
                     <Slider {...settings}>
                         {movies.map((m)=>{

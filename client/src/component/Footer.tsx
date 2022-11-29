@@ -9,7 +9,8 @@ export function Footer(){
             justifyContent="center"
             alignItems="center"
             height={200}
-            sx={{bgcolor: "#c5cae9"}}
+            sx={{mt:30, bgcolor: "#c5cae9"}}
+            
             >
         <Box >
             주소: 번호: 팩스: 이메일:
