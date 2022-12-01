@@ -100,7 +100,7 @@ class MovieInfo {
         const body = this.body
         try{
             const column = "A.year , count(A.year) as count "
-            const where = `INNER JOIN (SELECT movieID FROM crud.movie_rate where userID= '123' and rate = 'like' order by date desc limit 10) Rate 
+            const where = `INNER JOIN (SELECT movieID FROM crud.movie_rate where userID= ? and rate = 'like' order by date desc limit 10) Rate 
             ON A.movieID = Rate.movieID group by A.year order by count desc`
             const value = [body.userID]
             const response = await MovieInfostorage.read(column,where,value)
@@ -191,9 +191,10 @@ class MovieInfo {
 
     async read_user_like_movies(){
         const body = this.body
+        const db = 'crud'
         try{
             const column = ` A.movieID, A.image, A.title, A.summary, A.language, A.year, Rate.date `
-            const where = `inner join (select * from crud.movie_rate  where userID = ? and rate = 'like' order by date desc) as Rate 
+            const where = `inner join (select * from ${db}.movie_rate  where userID = ? and rate = 'like' order by date desc) as Rate 
             on A.movieID = Rate.movieID order by Rate.date desc`
             const value = [body.userID]
 
@@ -205,7 +206,6 @@ class MovieInfo {
             return{success:false,message:"error",err:err}
         }
     }
-
 
 }
 
