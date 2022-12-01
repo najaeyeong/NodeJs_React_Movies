@@ -35,5 +35,15 @@ class User {
             return {success : false ,message:'error' , err : err}
         }
      }
+
+     async read(){
+        const body = this.body
+        try{
+            const response = await UserStorage.read(body);
+            return response;
+        }catch(err){
+            return {success : false ,message:'error' , err : err}
+        }
+     }
 }
 module.exports = User

@@ -94,7 +94,7 @@ class MovieInfo {
         }catch(err){
             console.log('read_user_like_language error')
         }
-    }s
+    }
 
     async read_user_like_year(){
         const body = this.body
@@ -186,6 +186,23 @@ class MovieInfo {
         }catch(err){
             console.log('user two genre movies read error')
             console.log(err)
+        }
+    }
+
+    async read_user_like_movies(){
+        const body = this.body
+        try{
+            const column = ` A.movieID, A.image, A.title, A.summary, A.language, A.year, Rate.date `
+            const where = `inner join (select * from crud.movie_rate  where userID = ? and rate = 'like' order by date desc) as Rate 
+            on A.movieID = Rate.movieID order by Rate.date desc`
+            const value = [body.userID]
+
+            const response = await MovieInfostorage.read(column,where,value)
+
+            return {success : true , message:'success',data:response.data}
+        }catch(err){
+            console.log(err)
+            return{success:false,message:"error",err:err}
         }
     }
 

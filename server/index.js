@@ -31,9 +31,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 //login
-app.post('/api/login', ctrl.process.login)
+app.post('/api/login', ctrl.process.login)//로그인
 
-app.post('/api/register', ctrl.process.register) 
+app.post('/api/register', ctrl.process.register) //회원가입
+app.post(`/api/get/user/info`, ctrl.process.read) // 회원정보 조회
 
 //review
 //app.get('/',(req,res)=>{res.send('hello world')})
@@ -70,9 +71,10 @@ app.post(`/api/get/movies/user/language`, movieinfo_ctrl.process.read_movies_use
 app.post(`/api/get/movies/user/first/genre`, movieinfo_ctrl.process.read_movies_user_first_genre)//!0.
 app.post(`/api/get/movies/user/second/genre`, movieinfo_ctrl.process.read_movies_user_second_genre)//!0.
 app.post(`/api/get/movies/user/genre`, movieinfo_ctrl.process.read_movies_user_genre)//!0.
-
 app.post(`/api/get/user/language`, movieinfo_ctrl.process.read_user_like_language)//유저가 좋아하는 언어권 목록! 0.
 app.post('/api/get/user/year',movieinfo_ctrl.process.read_user_like_year)//유저가 좋아하는 년도 목록! 0.
+app.post(`/api/get/user/movies`,movieinfo_ctrl.process.read_user_like_movies)
+
 
 //genre
 app.get('/api/movieinfo/genres', movieinfo_genre_ctrl.process.read) // 장르 목록 반환 0

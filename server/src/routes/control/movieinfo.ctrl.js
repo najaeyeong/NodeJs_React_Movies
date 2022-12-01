@@ -60,6 +60,11 @@ const process = {
         const response = await movieInfo.read_movies_user_genre()
         return res.json(response); 
     },
+    read_user_like_movies:async(req,res)=>{
+        const movieInfo = new MovieInfo(req.body)
+        const response = await movieInfo.read_user_like_movies()
+        return res.json(response); 
+    }
 
 
 

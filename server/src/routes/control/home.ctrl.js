@@ -33,6 +33,11 @@ const process = {
         const response = await user.register();
         logger.info(`POST / REGISTER 200 RESPONSE: ${response.success}, msg: ${response.message}`)
         return res.json(response); 
+    },
+    read: async (req,res)=>{
+        const user = new User(req.body)
+        const response = await user.read()
+        return res.json(response); 
     }
 }
 

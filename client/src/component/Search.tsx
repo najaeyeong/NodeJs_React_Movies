@@ -7,6 +7,7 @@ import Movies from "../component/Movies"
 import RecommendMovies from "./RecommendMovies"
 import BestMovies  from './BestMovies'
 import LanguageMovies from './LanguageMoives'
+import GenreMovies from './GenreMovies'
 
 //mui
 import Box from '@mui/material/Box';
@@ -23,7 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
 import {update_genre,update_rate,update_year,update_sort,update_term,update_searched,update_page,reset } from '../store/searchDateSlice'
-import GenreMovies from './GenreMovies'
+
 
 
 

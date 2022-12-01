@@ -33,7 +33,7 @@ export function RecommendMovies(){
         summary:string,
         year:string,
         visitcount:number,
-        count:number
+
     }
     interface genre{genre:string,count:number}
     interface userLikeMovies{movieID:any}

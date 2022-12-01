@@ -3,6 +3,8 @@ import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import Axios from 'axios'
 import { Link} from "react-router-dom"
+
+//dir
 import MenuBar from '../../component/MenuBar';
 import styles from "../../component/css/Movie.module.css"
 import styles1 from "../css/Home.module.css";

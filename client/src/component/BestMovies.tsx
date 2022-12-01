@@ -85,20 +85,23 @@ export function BestMovies(){
       }
 
     const getBestMovies = async()=>{
+        console.log(url)
         await Axios.get(`${url}/api/get/movies/best`).then((res)=>{
             if(res.data.success){
                 setMovies(res.data.data)
             }else{
-                alert("top Movie list error")
+                console.log(res.data.data.err)
+                alert("top Movie list false")
             }
         }).catch((err)=>{
             alert("BestMovie list error 관리자에 문의")
+            console.log(err)
         })
     }
 
     useEffect(()=>{
         getBestMovies()
-    })
+    },[])
 
     return <Box sx={{m:10, width:'auto',minWidth:'500px'}}>
         <Typography gutterBottom variant="h4" component="div">

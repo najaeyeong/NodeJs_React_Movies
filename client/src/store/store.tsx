@@ -28,7 +28,7 @@ const rootReducer = combineReducers({
 const persistConfig: any = {
   key: "root",
   storage, // 사용할 스토리지를 정의해요.
-  whitelist: ["search","userId","serverUrl"], // 유지 할 데이터를 정의해요
+  whitelist: ["search","userId"], // 유지 할 데이터를 정의해요
   //blacklist // 제외 할 데이터를 정의해요
 };
 
