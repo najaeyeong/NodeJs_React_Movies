@@ -320,3 +320,24 @@
 2022-12-02 13:07:32 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-12-27 14:13:51 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-12-27 14:13:54 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 16:54:35 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: false, msg: Login failed : 틀린 password error
+2022-12-27 16:54:40 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: false, msg: Login failed : 틀린 password error
+2022-12-27 16:54:44 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: false, msg: Login failed : 틀린 password error
+2022-12-27 16:54:56 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: false, msg: Login failed : 틀린 password error
+2022-12-27 16:55:21 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: false, msg: Login failed : 틀린 password error
+2022-12-27 16:57:07 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 16:57:12 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 16:57:46 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 16:59:49 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:02:08 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:02:12 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:05:55 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:05:57 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:11:59 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:12:03 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:14:40 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:14:45 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:28:45 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:28:47 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:29:20 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 17:30:48 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful

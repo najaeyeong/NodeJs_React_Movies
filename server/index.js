@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const router = require('./src/routes/control/index')
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv')
@@ -27,12 +28,16 @@ const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 //app.use('/',router)
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser()); // server client 통신에 쿠키 사용
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
 //login
 app.post('/api/login', ctrl.process.login)//로그인
-
+app.get('/api/logout',ctrl.process.logout)// 토큰 제거
+app.get('/api/accessToken',ctrl.process.accessToken)// access token 발급
+app.get('/api/refreshToken',ctrl.process.refreshToken)//refresh token 발급
+app.get('/api/loginSuccess',ctrl.process.loginSuccess) // access token 사용 user데이터 반환
 app.post('/api/register', ctrl.process.register) //회원가입
 app.post(`/api/get/user/info`, ctrl.process.read) // 회원정보 조회
 
@@ -90,7 +95,6 @@ app.post('/app/get/movies/recommend', movieinfo_ctrl.process.read_recommend) //!
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, './build/index.html'));
   });
-
 
 app.listen(PORT1 , ()=> {console.log(`${PORT1} server` )})
 

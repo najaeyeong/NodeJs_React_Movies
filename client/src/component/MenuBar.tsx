@@ -15,12 +15,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector,useDispatch } from 'react-redux';
 import {RootState} from '../store/store'
 import menuSlice from '../store/menuSlice';
-import {reset} from '../store/searchDateSlice'
+import userIdSlice from '../store/userIdSlice';
 
 export default function MenuBar() {
   const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
   //const UserId =  useSelector<RootState,string|null>(state=>{return state.userId.Id})
   const genre = useSelector<RootState,string|null>(state=>{return state.search.genre})
+  const userId = useSelector<RootState,string>(state=>{return state.userId.id})
   const dispatch = useDispatch()
   const [logined,setLogined] = useState<boolean>(false)
 
@@ -76,11 +77,13 @@ export default function MenuBar() {
                                                                                               sessionStorage.removeItem('year')}} > Home </Link> */}
             </Typography>
             {(logined)?<>
-                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{UserId}</Button>
-                        <Button color="inherit" onClick={()=>{ setUserId(null); sessionStorage.removeItem("user_id") }}>Logout</Button>
+                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{UserId} , {userId}</Button>
+                        <Button color="inherit" onClick={()=>{ setUserId(null); 
+                          sessionStorage.removeItem("user_id");
+                          dispatch(userIdSlice.actions.logout()) }}>Logout</Button>
                       </>
                       :<>
-                        <Button color="inherit" href='/login'>Login</Button>
+                        <Button color="inherit" href='/login'>Login{userId}</Button>
                         <Button color="inherit" href='/register'>register</Button>
                       </>}
           </Toolbar>

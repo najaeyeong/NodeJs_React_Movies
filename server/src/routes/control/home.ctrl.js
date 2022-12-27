@@ -23,8 +23,8 @@ const output = {
 
 const process = { 
     login : async (req, res) => {
-        const user = new User(req)
-        const response = await user.login();
+        const user = new User(req,res)
+        const response = await user.login2();
         logger.info(`POST / LOGIN 200 RESPONSE: ${response.success}, msg: ${response.message}`)
         return res.json(response);     
     },
@@ -38,7 +38,23 @@ const process = {
         const user = new User(req.body)
         const response = await user.read()
         return res.json(response); 
-    }
+    },
+    logout: async (req,res)=>{
+        const user = new User(req,res)
+        const response = await user.logout()
+        return res.json(response); 
+    },
+    loginSuccess: async (req,res)=>{},
+    accessToken: async (req,res)=>{
+        const user = new User(req,res)
+        const response = await user.accessToken()
+        return res.json(response); 
+    },
+    refreshToken: async (req,res)=>{
+        const user = new User(req,res)
+        const response = await user.refreshToken()
+        return res.json(response);
+    },
 }
 
 module.exports = {
