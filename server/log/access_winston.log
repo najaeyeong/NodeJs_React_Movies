@@ -314,3 +314,9 @@
 2022-12-01 16:10:05 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-12-01 16:31:50 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
 2022-12-01 16:49:27 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-02 12:27:31 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-02 12:27:33 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-02 13:07:23 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2022-12-02 13:07:32 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 14:13:51 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful
+2022-12-27 14:13:54 [nodeJS-login] info: POST / LOGIN 200 RESPONSE: true, msg: login successful

@@ -112,7 +112,7 @@ export function GenreMovies(){
             if(res.data.success){
                 setFirstGenreMovies(res.data.data)
             }else{
-                alert("First Genre movie list false")
+                //alert("First Genre movie list false")
                 console.log(res)
                 setUserData(false)
             }
@@ -128,7 +128,7 @@ export function GenreMovies(){
                 setSecondGenreMovies(res.data.data)
                 console.log(secondGenreMovies)
             }else{
-                alert("Second Genre movie list false")
+                //alert("Second Genre movie list false")
                 console.log(res)
                 setUserData(false)
             }
@@ -144,7 +144,7 @@ export function GenreMovies(){
                 setGenreMovies(res.data.data)
                 console.log(genreMovies)
             }else{
-                alert("Genre movie list false")
+                //alert("Genre movie list false")
                 console.log(res)
                 setUserData(false)
             }
