@@ -55,6 +55,7 @@ const process = {
         const response = await user.refreshToken()
         return res.json(response);
     },
+
 }
 
 module.exports = {

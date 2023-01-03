@@ -1,5 +1,7 @@
 "use strict"
 const jwt = require('jsonwebtoken')
+
+
 //await  는 항상 promise를 반환하는 애 앞에 , async(비동기) 함수 안에서 사용된다. 
 const UserStorage = require("./Userstorage")
 
@@ -10,23 +12,23 @@ class User {
         this.user = new UserStorage(req)
 
     }
-    async login(){
-        const body = this.req.body
-        const res = this.res
-        try{
-            const {id,psword} = await UserStorage.getUserInfo(body.id)
-            if(id){
-                if(id === body.id && psword === body.psword){
-                    return {success: true ,message: 'login successful'}
-                }
-                return {success: false , message: 'Login failed : 틀린 password error'};
-            }
-            return {success: false, message: 'Login failed : 존재하지 않는 id error'};
-        } catch(err){
-            console.log(err)
-            return {success: false, err: err};
-        }
-    }
+    // async login(){
+    //     const body = this.req.body
+    //     const res = this.res
+    //     try{
+    //         const {id,psword} = await UserStorage.getUserInfo(body.id)
+    //         if(id){
+    //             if(id === body.id && psword === body.psword){
+    //                 return {success: true ,message: 'login successful'}
+    //             }
+    //             return {success: false , message: 'Login failed : 틀린 password error'};
+    //         }
+    //         return {success: false, message: 'Login failed : 존재하지 않는 id error'};
+    //     } catch(err){
+    //         console.log(err)
+    //         return {success: false, err: err};
+    //     }
+    // }
     async login2(){
         const body = this.req.body
         const res = this.res
@@ -68,7 +70,6 @@ class User {
                             httpOnly: true 
                         })
                         //res.status(200).json('login successful')
-                        console.log(response ,accessToken,refreshToken )
                         return {success: true ,message: 'login successful',data:response.data[0]}
                     } catch (error) {
                         //res.status(500).json('login failed')
@@ -162,5 +163,7 @@ class User {
             return {success : false ,message:'error' , err : err}
         }
      }
+
+   
 }
 module.exports = User

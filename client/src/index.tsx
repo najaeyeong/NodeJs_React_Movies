@@ -14,6 +14,8 @@ import App from './App';
   //   return state.search.value;
   // })
 
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -21,9 +23,15 @@ const root = ReactDOM.createRoot(
 
 root.render(
   //<React.StrictMode>
-
+<>
       <App />
 
+      
+      {/* <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+      
+      <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script> */}
+</>
   //</React.StrictMode>
+
 );
 
