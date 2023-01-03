@@ -12,6 +12,7 @@ dotenv.config();
 //dotenv를 설치후에 파일을 만들어 줘야한다 .
 const db = require('./src/config/db')
 const ctrl = require('./src/routes/control/home.ctrl')
+const service_ctrl = require('./src/routes/control/Appservice.ctrl')
 const review_ctrl = require('./src/routes/control/review.ctrl')
 const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
 const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
@@ -20,13 +21,17 @@ const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 // require("dotenv/config");
  const PORT1 = process.env.PORT1 || 3001;
 //react 의 build 폴더 복사해서 server 로 갖어온 다음에 아래 코드로 view연결 
-//  app.use(express.static(path.join(__dirname, "./build"))); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
-//  app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, './build/index.html'));   // __dirname = root 
-// });
+app.use(express.static(path.join(__dirname, "./build"))); //폴더안의 것들을 꺼내어 써도 좋다 라는 것 
+app.get("/", (req, res) => {
+ res.sendFile(path.join(__dirname, "./build/index.html"));   // __dirname = root    , / 로 접속하면 build의 index를 출력해주어라 
+});
 
 //app.use('/',router)
-app.use(cors())
+app.use(cors({ //client,server간 origin이 다른경우 통신하기위해 
+  origin:'http://localhost:3001',
+  methods:['GET', 'POST'],
+  credentials:true // c-s 통신에서 쿠키 사용 위해 
+}))
 app.use(express.json())
 app.use(cookieParser()); // server client 통신에 쿠키 사용
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -40,6 +45,9 @@ app.get('/api/refreshToken',ctrl.process.refreshToken)//refresh token 발급
 app.get('/api/loginSuccess',ctrl.process.loginSuccess) // access token 사용 user데이터 반환
 app.post('/api/register', ctrl.process.register) //회원가입
 app.post(`/api/get/user/info`, ctrl.process.read) // 회원정보 조회
+
+//register
+app.post(`/api/phonenumber`,service_ctrl.process.PhoneConfirm) //본인인증 sms발송 
 
 //review
 //app.get('/',(req,res)=>{res.send('hello world')})
