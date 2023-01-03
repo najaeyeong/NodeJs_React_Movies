@@ -1,7 +1,18 @@
 import {createSlice, PayloadAction}from '@reduxjs/toolkit'
 import axios from 'axios';
+//redux store
+import { useSelector} from 'react-redux';
+import {RootState} from '../store/store'
+//const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
 
 export type  userId = string|null  ;
+interface userInfo{
+  id:string,
+  name:string,
+  age:number,
+  email:string,
+  phonenumber:string
+}
 //userID 관련 store slice
 const userIdSlice = createSlice({
     name:'userId',
@@ -12,31 +23,13 @@ const userIdSlice = createSlice({
                   phonenumber:null
      } as any,
     reducers:{
-      login:(state)=>{
-        axios.get(``).then((res)=>{
-          if(res.data.success){
-            state.id = res.data.data[0].id
-            state.name = res.data.data[0].name
-            state.email = res.data.data[0].email
-            state.age = res.data.data[0].age
-            state.phonenumber = res.data.data[0].phonenumber
-          }else{
-            state.id = null
-            state.name = null
-            state.email = null
-            state.age = null
-            state.phonenumber = null
-          }
-        }).catch((err)=>{
-          state.id = null
-          state.name = null
-          state.email = null
-          state.age = null
-          state.phonenumber = null
-          console.log(err)
-        })
-        },
-
+      login:(state,action:PayloadAction<userInfo>)=>{
+            state.id = action.payload.id
+            state.name = action.payload.name
+            state.email = action.payload.email
+            state.age = action.payload.age
+            state.phonenumber = action.payload.phonenumber
+          },
       logout:(state)=>{
         state.id = null
         state.name = null

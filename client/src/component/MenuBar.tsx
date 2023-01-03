@@ -16,29 +16,46 @@ import { useSelector,useDispatch } from 'react-redux';
 import {RootState} from '../store/store'
 import menuSlice from '../store/menuSlice';
 import userIdSlice from '../store/userIdSlice';
+import axios from 'axios';
+import { makeStyles } from '@mui/material';
+
+
+
 
 export default function MenuBar() {
-  const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
+  //const [UserId ,setUserId] = useState(sessionStorage.getItem("user_id"))
   //const UserId =  useSelector<RootState,string|null>(state=>{return state.userId.Id})
   const genre = useSelector<RootState,string|null>(state=>{return state.search.genre})
+  const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
   const userId = useSelector<RootState,string>(state=>{return state.userId.id})
   const dispatch = useDispatch()
   const [logined,setLogined] = useState<boolean>(false)
 
-  useEffect(()=>{
-    if(UserId === null && (sessionStorage.getItem("user_id") !== null)){
-      //dispatch(userIdSlice.actions.login(sessionStorage.getItem("user_id")))
-      sessionStorage.removeItem('user_id')
-    }
-  })
+  const logout = async () => {
+    await axios.get(`${url}/api/logout`).then((res)=>{
+      if(res.data.success){
+        setLogined(false)
+      }else{
+
+      }
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+  // useEffect(()=>{
+  //   if(UserId === null && (sessionStorage.getItem("user_id") !== null)){
+  //     //dispatch(userIdSlice.actions.login(sessionStorage.getItem("user_id")))
+  //     sessionStorage.removeItem('user_id')
+  //   }
+  // })
 
   useEffect(()=>{
-    if(UserId === null){
+    if(userId === null){
       setLogined(false)
     }else{
       setLogined(true)
     }
-  },[sessionStorage.getItem("user_id")])
+  },[userId])//[sessionStorage.getItem("user_id")])
 
 
 
@@ -49,7 +66,7 @@ export default function MenuBar() {
 
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar sx={{width:"100%"}} position="static">
           <Toolbar>
             <IconButton
               size="large"
@@ -69,7 +86,8 @@ export default function MenuBar() {
                                                                                   sessionStorage.removeItem('page');
                                                                                   sessionStorage.removeItem('lastpagenumber')
                                                                                   sessionStorage.removeItem('backlist')
-                                                                                  window.location.replace("/home/movie");}}>home</Button>
+                                                                                  window.location.replace("/home/movie");
+                                                                                  dispatch(menuSlice.actions.search())}}>home</Button>
               {/* <Link style={{ textDecoration: 'none', color:"inherit" }} to={'/'} onClick={()=>{sessionStorage.removeItem('genre');
                                                                                               sessionStorage.removeItem('sort');
                                                                                               sessionStorage.removeItem('rating');
@@ -77,13 +95,15 @@ export default function MenuBar() {
                                                                                               sessionStorage.removeItem('year')}} > Home </Link> */}
             </Typography>
             {(logined)?<>
-                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{UserId} , {userId}</Button>
-                        <Button color="inherit" onClick={()=>{ setUserId(null); 
-                          sessionStorage.removeItem("user_id");
-                          dispatch(userIdSlice.actions.logout()) }}>Logout</Button>
+                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{userId}</Button>
+                        <Button color="inherit" onClick={()=>{ //setUserId(null); 
+                          //sessionStorage.removeItem("user_id");
+                          logout();
+                          dispatch(userIdSlice.actions.logout());
+                          dispatch(menuSlice.actions.search()) }}>Logout</Button>
                       </>
                       :<>
-                        <Button color="inherit" href='/login'>Login{userId}</Button>
+                        <Button color="inherit" href='/login'>Login</Button>
                         <Button color="inherit" href='/register'>register</Button>
                       </>}
           </Toolbar>

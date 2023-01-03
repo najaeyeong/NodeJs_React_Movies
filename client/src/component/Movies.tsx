@@ -15,10 +15,7 @@ import Grid from '@mui/material/Grid';
 //redux store
 import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
-import searchDataSlice, {update_page,update_lastpagenumber  } from '../store/searchDateSlice'
-import session from 'redux-persist/lib/storage/session';
-import { isNullishCoalesce } from 'typescript/lib/tsserverlibrary';
-import { devNull } from 'os';
+
 
 
 interface MoviesProps{

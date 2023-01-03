@@ -2,6 +2,8 @@ import styles from "../css/Register.module.css"
 import {useState} from "react"
 import axios from 'axios'
 
+//mui
+import Box from '@mui/material/Box';
 
 //redux store
 import {useSelector,useDispatch} from "react-redux"
@@ -36,7 +38,7 @@ export default function Login(){
             if(res.data.success){
                 // dispatch(userIdSlice.actions.login(id));
                 // dispatch(reset(''))
-                sessionStorage.setItem('user_id',id );
+                //sessionStorage.setItem('user_id',id );
                 window.location.replace("/home/movie"); //새로고침 이동
                 //window.location.href='/home/movie'
             }else{
@@ -56,9 +58,11 @@ export default function Login(){
                     <input id="id" type="text" placeholder="id" value = {id} onChange={
                         (e)=>{setId(e.target.value)}
                     }/>
+                    <Box sx={{ml:2, mb:2}} textAlign="start" ></Box>
                     <input id="psword" type="password" placeholder="password" value={psword} onChange={
                         (e)=>{setPsword(e.target.value)}
                     }/>
+                    <Box sx={{ml:2, mb:2}} textAlign="start" ></Box>
                     <button id={styles.button}  onClick={()=>{LoginSubmit()}}>login</button>
                     <p className={styles.message}>Not registered? <a href="/register">Create an account</a></p>
                 </form>

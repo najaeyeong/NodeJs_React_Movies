@@ -38,9 +38,10 @@ export function LanguageMovies(){
     }
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+    const userID = useSelector<RootState,string>(state=>{return state.userId.id})
+
     const [movies,setMovies] = useState<Moive[]>([])
-    const [userID] = useState(sessionStorage.getItem('user_id'))
+    //const [userID] = useState(sessionStorage.getItem('user_id'))
     const [userLanguage,setUserLanguage] = useState<UserLanguage[]>([])
     const [userData,setUserData] = useState<boolean>(true) // user 데이터가 충분하지 않을 때 추천 안함 
 

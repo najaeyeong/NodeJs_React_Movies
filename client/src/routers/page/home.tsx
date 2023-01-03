@@ -7,6 +7,7 @@ import Search from "../../component/Search"
 import styles from "../css/Home.module.css";
 import Footer from '../../component/Footer';
 import UserInfo from '../../component/UserInfo';
+import axios from 'axios';
 
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
@@ -18,23 +19,58 @@ import {Provider} from 'react-redux';
 import store from '../../store/store'
 import {useSelector,useDispatch} from "react-redux"
 import {RootState} from '../../store/store'
+import userIdSlice from '../../store/userIdSlice';
 
 
 export function Home(){
-
+    const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     const menu = useSelector<RootState,string>(state=>{return state.menu.menu})
-
+    const userId = useSelector<RootState,string>(state=>{return state.userId.id})
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState<boolean>(true)
     const [movies,setMovies] = useState<any[]>([])
     const [movieCount,setMovieCount] = useState<number>(0)
-    //비동기적 함수 async   기다리게 만드는 await     async 함수 반환값은 promise 
-    const getMovies = async ()=>{
-      const response = await fetch('https://yts.mx/api/v2/list_movies.json?minimum_rating=5.8&sort_by=year&limit=50&page=1')
-      const json = await response.json()
-      setMovies(json.data.movies)
-      setMovieCount(json.data.movie_count)
-      setLoading(false)
+
+    const getUserData = ()=>{
+      axios.get(`${url}/api/accessToken`).then((res)=>{
+        console.log(res.data)
+        if(res.data.success){
+          console.log(res)
+          dispatch(userIdSlice.actions.login(res.data.data[0]))//login   store에 정보 변경 
+        }else{
+          if(res.data.err.name === 'TokenExpiredError'){//토큰기간 말료
+            //refresh
+            getAccessToken()
+          }else if(res.data.err.name === 'JsonWebTokenError' ){ //토큰없음
+            dispatch(userIdSlice.actions.logout())//logout  store에 정보 삭제 
+          }
+          console.log(res)
+          //refresh 토큰 으로 확인 
+          //setLogin(false)
+        }
+      }).catch((err)=>{
+        console.log(err)
+      })
     }
+  
+    const getAccessToken = ()=>{
+      axios.get(`${url}/api/refreshToken`).then((res)=>{
+        if(res.data.success){
+          console.log(res)
+          getUserData()
+        }else{
+          console.log(res)
+          dispatch(userIdSlice.actions.logout())//logout store에 정보 삭제 
+        }
+      }).catch((err)=>{
+        console.log(err)
+        dispatch(userIdSlice.actions.logout())//logout store에 정보 삭제 
+      })
+    }
+    
+    useEffect(()=>{
+      getUserData()
+    })
     
     useEffect(()=>{
       window.scrollTo(0, 0)

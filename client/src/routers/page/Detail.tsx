@@ -1,7 +1,7 @@
 
 import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
-import Axios from 'axios'
+import axios from 'axios'
 import { Link} from "react-router-dom"
 
 //dir
@@ -21,8 +21,9 @@ import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 
 //redux store
-import {useSelector} from "react-redux"
+import {useSelector,useDispatch} from "react-redux"
 import {RootState} from '../../store/store'
+import userIdSlice from '../../store/userIdSlice';
 
 
 
@@ -33,6 +34,7 @@ export function Detail(){
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
   //const url = "https://movietest2.herokuapp.com"
    // const id = useParams().id
+    const dispatch = useDispatch()
 
     const {id} = useParams()
     const [movie,setMovie] = useState<any>()
@@ -41,7 +43,46 @@ export function Detail(){
     const [visitCount, setVisitCount] = useState<number>(-1)
 
 
-
+    const getUserData = ()=>{
+      axios.get(`${url}/api/accessToken`).then((res)=>{
+        console.log(res.data)
+        if(res.data.success){
+          console.log(res)
+          dispatch(userIdSlice.actions.login(res.data.data[0]))//login   store에 정보 변경 
+        }else{
+          if(res.data.err.name === 'TokenExpiredError'){//토큰기간 말료
+            //refresh
+            getAccessToken()
+          }else if(res.data.err.name === 'JsonWebTokenError' ){ //토큰없음
+            dispatch(userIdSlice.actions.logout())//logout  store에 정보 삭제 
+          }
+          console.log(res)
+          //refresh 토큰 으로 확인 
+          //setLogin(false)
+        }
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+  
+    const getAccessToken = ()=>{
+      axios.get(`${url}/api/refreshToken`).then((res)=>{
+        if(res.data.success){
+          console.log(res)
+          getUserData()
+        }else{
+          console.log(res)
+          dispatch(userIdSlice.actions.logout())//logout store에 정보 삭제 
+        }
+      }).catch((err)=>{
+        console.log(err)
+        dispatch(userIdSlice.actions.logout())//logout store에 정보 삭제 
+      })
+    }
+    
+    useEffect(()=>{
+      getUserData()
+    })
 
 
 

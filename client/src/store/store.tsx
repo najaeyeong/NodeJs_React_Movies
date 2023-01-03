@@ -28,8 +28,8 @@ const rootReducer = combineReducers({
 const persistConfig: any = {
   key: "root",
   storage, // 사용할 스토리지를 정의해요.
-  whitelist: ["search","userId"], // 유지 할 데이터를 정의해요
-  //blacklist // 제외 할 데이터를 정의해요
+  whitelist: ["search","menu","userId"], //브라우저 새로고침 후에도  유지 할 데이터를 정의해요  state들은 원래 새로고침하면 초기상태로 돌아감 
+  //blacklist: ["userId"] // 제외 할 데이터를 정의해요
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -63,3 +63,6 @@ export const store = configureStore({
 // })
 
 
+
+
+// sessionStorage 에서는 탭마다   redux는 브라우저 마다  같은 브라우저 내의 탭에서는 모두 바뀜 , 로그인시 한 브라우저 내에서 동시 접속 불가능 

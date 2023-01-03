@@ -37,10 +37,10 @@ export function GenreMovies(){
     }
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+    const userID = useSelector<RootState,string>(state=>{return state.userId.id})
 
     const [movies,setMovies] = useState<Moive[]>([])
-    const [userID] = useState(sessionStorage.getItem('user_id'))
+    //const [userID] = useState(sessionStorage.getItem('user_id'))
     const [userGenre,setUserGenre] = useState<UserGenre[]>([{genre:'',count:0}])
     const [genreMovies,setGenreMovies] = useState<Moive[]>([])
     const [firstGenreMovies, setFirstGenreMovies] = useState<Moive[]>([])

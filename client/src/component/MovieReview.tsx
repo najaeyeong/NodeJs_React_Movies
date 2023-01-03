@@ -26,16 +26,15 @@ interface MovieReviewProps{
 
 export function MovieReview(props:MovieReviewProps){
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+    const loginID = useSelector<RootState,string>(state=>{return state.userId.id}) //현재 로그인 중인 ID
 
     const [movieID,setMovieID] = useState(props.movieID)
-    const [userID,setUserID] = useState(props.userID)
+    const [userID,setUserID] = useState(props.userID) //리뷰를 작성한 USER의 ID 
     const [reviewID,setReviewID] = useState(props.reviewID)
     const [movieReview,setMovieReview] = useState(props.movieReview)
     const [date,setDate]=useState(props.date)
     const [update_textbox,setUpdate_textbox] = useState(false)
-    const [loginID,setLoginID]= useState(sessionStorage.getItem("user_id"))
-    //const loginID =  useSelector<RootState,string>(state=>{return state.userId.Id})
+    //const [loginID,setLoginID]= useState(sessionStorage.getItem("user_id"))
     const [newReview, setNewReview] = useState('')
     const [IsDeleted,setIsDeleted] = useState<boolean>(false)
     const [updated,setUpdated] = useState<string>(props.updated) //수정여부

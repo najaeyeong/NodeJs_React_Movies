@@ -4,7 +4,6 @@ import Axios from 'axios'
 
 //dir
 import Movies from "../component/Movies"
-import RecommendMovies from "./RecommendMovies"
 import BestMovies  from './BestMovies'
 import LanguageMovies from './LanguageMoives'
 import GenreMovies from './GenreMovies'
@@ -36,9 +35,10 @@ export function Search(){
     }
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+    const userID = useSelector<RootState,string>(state=>{return state.userId.id})
+
     const [logined,setLogined] = useState(false)
-    const [userID ,setUserID] = useState(sessionStorage.getItem("user_id"))
+    //const [userID ,setUserID] = useState(sessionStorage.getItem("user_id"))
     const [getList,setGetList] = useState<boolean>(false)
 
     const [genreList,setGenreList]= useState<GenreList[]>([])
@@ -118,7 +118,7 @@ export function Search(){
         }else{
           setLogined(true)
         }
-      },[sessionStorage.getItem("user_id")])
+      },[userID])//[sessionStorage.getItem("user_id")])
 
     //초기값 세팅
     useEffect(()=>{
@@ -204,7 +204,7 @@ export function Search(){
                             Sort
                         </Box>
                         <Box gridColumn="2/span 1">
-                            <Box sx={{ minWidth: 120 }}>
+                            <Box sx={{ minWidth: 10 }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="genre">Genre</InputLabel>
                                     <Select
@@ -224,7 +224,7 @@ export function Search(){
                             </Box>
                         </Box>
                         <Box gridColumn="3/span 1">
-                            <Box sx={{ minWidth: 120 }}>
+                            <Box sx={{ minWidth: 10 }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="Rate">Rate</InputLabel>
                                     <Select
@@ -247,7 +247,7 @@ export function Search(){
                             </Box>
                         </Box>
                         <Box gridColumn="4/span 1">
-                            <Box sx={{ minWidth: 120 }}>
+                            <Box sx={{ minWidth: 10 }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="Year">Year</InputLabel>
                                     <Select
@@ -269,7 +269,7 @@ export function Search(){
                             </Box>
                         </Box>
                         <Box gridColumn="5/span 1">
-                            <Box sx={{ minWidth: 120 }}>
+                            <Box sx={{ minWidth: 10 }}>
                                 <FormControl fullWidth>
                                     <InputLabel id="Sort">Sort</InputLabel>
                                     <Select

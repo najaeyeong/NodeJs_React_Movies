@@ -1,5 +1,4 @@
 import { useEffect,useState } from "react";
-import styles from '../routers/css/ReviewForm.module.css'
 import Axios from 'axios'
 import { MovieReview } from "./MovieReview";
 
@@ -23,16 +22,14 @@ export function MovieReviewList(props:{id:string}){
     interface ReviewData{ID:any, userID:string|null, movieReview:string, date:Date, updated:string}
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+    const userID = useSelector<RootState,string>(state=>{return state.userId.id})
 
     const [movieId, setMovieId] = useState(props.id)
-    const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
-    //const userID =  useSelector<RootState,string>(state=>{return state.userId.Id})
-    const [movieReview,setMovieReview] = useState('')
-    const [movieReviewList,setMovieReviewList] = useState<ReviewData[]>([])
-    const [newReviewList,setNewReviewList] = useState<ReviewData[]>([])
+    //const [userID,setUserID] = useState(sessionStorage.getItem("user_id"))
+    const [movieReview,setMovieReview] = useState('') //사용자에게 입력받은 리뷰내용
+    const [movieReviewList,setMovieReviewList] = useState<ReviewData[]>([]) //영화에 달린 리뷰 리스트 
+    const [newReviewList,setNewReviewList] = useState<ReviewData[]>([]) //새로운 리뷰가 추가된 리뷰 리스트
     const [reviewCount,setReviewCount] = useState<number>(0)
-
 
     const getReviewData =  ()=>{
         Axios.post(`${url}/api/movie/reviews/get`,{movieID:movieId}).then((res)=>{
@@ -44,7 +41,7 @@ export function MovieReviewList(props:{id:string}){
        })
     }
 
-     useEffect(()=>{
+    useEffect(()=>{
         getReviewData()
     },[])
 

@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 //redux store
 import { useSelector,useDispatch} from 'react-redux';
 import {RootState} from '../store/store'
+import menuSlice from '../store/menuSlice';
 
 
 
@@ -29,28 +30,32 @@ export function UserInfo(){
     interface UserMovies{movieID:number,image:string,title:string,summary:string,language:string,rate:string,year:string,date:string}
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
+    const userId = useSelector<RootState,string>(state=>{return state.userId.id})
+    const userInfo = useSelector<RootState,any>(state =>{return state.userId})
+    const dispatch = useDispatch()
+
     const [userID,setUserID] = useState(sessionStorage.getItem('user_id'))
-    const [userInfo, setUserInfo] = useState<UserInfo[]>([])
+   // const [userInfo, setUserInfo] = useState<UserInfo[]>([])
     const [userGenre,setUserGenre] = useState<UserGenre[]>([])
     const [userLanguage,setUserLanguage] = useState<UserLanguage[]>([])
     const [userYear,setUserYear] = useState<UserYear[]>([])
     const [userMovies,setUserMovie] = useState<UserMovies[]>([])
     
     
-    const getUserInfo = async()=>{
-        await axios.post(`${url}/api/get/user/info`,{userID:userID}).then((res)=>{
-            if(res.data.success){
-                setUserInfo(res.data.data)
-            }else{
+    // const getUserInfo = async()=>{
+    //     await axios.post(`${url}/api/get/user/info`,{userID:userId}).then((res)=>{
+    //         if(res.data.success){
+    //             setUserInfo(res.data.data)
+    //         }else{
 
-            }
-        }).catch((err)=>{
+    //         }
+    //     }).catch((err)=>{
 
-        })
-    }
+    //     })
+    // }
 
     const getUserGenre = async()=>{
-        await axios.post(`${url}/api/movieinfo/user/genre`,{userID:userID}).then((res)=>{
+        await axios.post(`${url}/api/movieinfo/user/genre`,{userID:userId}).then((res)=>{
             if(res.data.success){
                 setUserGenre(res.data.data)
             }else{
@@ -62,7 +67,7 @@ export function UserInfo(){
     }
 
     const getUserLanguage = async()=>{
-        await axios.post(`${url}/api/get/user/language`,{userID:userID}).then((res)=>{
+        await axios.post(`${url}/api/get/user/language`,{userID:userId}).then((res)=>{
             if(res.data.success){
                 setUserLanguage(res.data.data)
             }else{
@@ -74,7 +79,7 @@ export function UserInfo(){
     }
 
     const getUserlikeMoives = async()=>{
-        await axios.post(`${url}/api/get/user/movies`,{userID:userID}).then((res)=>{
+        await axios.post(`${url}/api/get/user/movies`,{userID:userId}).then((res)=>{
             if(res.data.success){
                 setUserMovie(res.data.data)
             }else{
@@ -86,7 +91,7 @@ export function UserInfo(){
     }
 
     const getUserYear = async()=>{
-        await axios.post(`${url}/api/get/user/year`,{userID:userID}).then((res)=>{
+        await axios.post(`${url}/api/get/user/year`,{userID:userId}).then((res)=>{
             if(res.data.success){
                 setUserYear(res.data.data)
             }else{
@@ -97,21 +102,27 @@ export function UserInfo(){
         })
     }
 
+    useEffect(()=>{ // 시간 만료로 로그아웃되었을때 홈화면으로 돌아감 
+        if(userId === null){
+            dispatch(menuSlice.actions.search())
+        }
+    })
+
     useEffect(()=>{
-        getUserInfo()
+       // getUserInfo()
         getUserGenre()
         getUserLanguage()
         getUserlikeMoives()
         getUserYear()
     },[])
 
-    useEffect(()=>{
-        setUserID(sessionStorage.getItem('user_id'))
-    },[sessionStorage.getItem('user_id')])
+    // useEffect(()=>{
+    //     setUserID(sessionStorage.getItem('user_id'))
+    // },[sessionStorage.getItem('user_id')])
 
-    useEffect(()=>{
-        console.log(  {userGenre},{userYear},{userLanguage},{userInfo},{userMovies})
-    },[userMovies])
+    // useEffect(()=>{
+    //     console.log(  {userGenre},{userYear},{userLanguage},{userInfo},{userMovies})
+    // },[userMovies])
 
 
     return  <Box>
@@ -123,10 +134,19 @@ export function UserInfo(){
                             <Card sx={{mt:6, minWidth:800}} elevation={3}>
                                 <Box component='h2' sx={{mt:4,mb:5,ml:4}}>USER INFO</Box>
                                 <Box sx={{ml:10,mb:2}}>
-                                    USER ID: {userInfo[0]?.id}  
+                                    USER ID: {userInfo?.id}  
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
-                                    USER Name: {userInfo[0]?.name}
+                                    USER Name: {userInfo?.name}
+                                </Box>
+                                <Box sx={{ml:10,mb:2}}>
+                                    USER Email: {userInfo?.email}
+                                </Box>
+                                <Box sx={{ml:10,mb:2}}>
+                                    USER Age: {userInfo?.age}
+                                </Box>
+                                <Box sx={{ml:10,mb:2}}>
+                                    USER PhoneNumber: {userInfo?.phonenumber}
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
                                     USER Genre: {userGenre[0]?.genre},{userGenre[1]?.genre}
