@@ -15,6 +15,8 @@ import searchDataSlice from './searchDateSlice';
 import userIdSlice from './userIdSlice';
 import serverUrlSlice from './urlSlice';
 import menuSlice from './menuSlice';
+import  RegisterMenuSlice from './RegisterMenuSlice';
+import RegisterAgreeSlice  from './RegisterAgreeSlice';
 
 
 //slice의 reducer들 통합 
@@ -22,14 +24,16 @@ const rootReducer = combineReducers({
   search:searchDataSlice.reducer,
   userId:userIdSlice.reducer,
   serverUrl:serverUrlSlice.reducer,
-  menu:menuSlice.reducer
+  menu:menuSlice.reducer,
+  registermenu:RegisterMenuSlice.reducer,
+  agreement:RegisterAgreeSlice.reducer
 });
 
 const persistConfig: any = {
   key: "root",
   storage, // 사용할 스토리지를 정의해요.
-  whitelist: ["search","menu","userId"], //브라우저 새로고침 후에도  유지 할 데이터를 정의해요  state들은 원래 새로고침하면 초기상태로 돌아감 
-  //blacklist: ["userId"] // 제외 할 데이터를 정의해요
+  whitelist: ["search","menu","userId","agreement"], //브라우저 새로고침 후에도  유지 할 데이터를 정의해요  state들은 원래 새로고침하면 초기상태로 돌아감 
+  blacklist: ["registermenu"] // 제외 할 데이터를 정의해요
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
