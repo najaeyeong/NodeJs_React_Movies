@@ -33,9 +33,7 @@ export function Home(){
 
     const getUserData = ()=>{
       axios.get(`${url}/api/accessToken`).then((res)=>{
-        console.log(res.data)
         if(res.data.success){
-          console.log(res)
           dispatch(userIdSlice.actions.login(res.data.data[0]))//login   store에 정보 변경 
         }else{
           if(res.data.err.name === 'TokenExpiredError'){//토큰기간 말료
@@ -44,22 +42,20 @@ export function Home(){
           }else if(res.data.err.name === 'JsonWebTokenError' ){ //토큰없음
             dispatch(userIdSlice.actions.logout())//logout  store에 정보 삭제 
           }
-          console.log(res)
+
           //refresh 토큰 으로 확인 
           //setLogin(false)
         }
       }).catch((err)=>{
-        console.log(err)
+        console.log("user data get error ");
       })
     }
   
     const getAccessToken = ()=>{
       axios.get(`${url}/api/refreshToken`).then((res)=>{
         if(res.data.success){
-          console.log(res)
           getUserData()
         }else{
-          console.log(res)
           dispatch(userIdSlice.actions.logout())//logout store에 정보 삭제 
         }
       }).catch((err)=>{

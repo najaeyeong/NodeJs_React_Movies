@@ -5,13 +5,9 @@ import { Link} from "react-router-dom"
 //mui
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import { CardActionArea } from '@mui/material';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+
 
 //redux store
 import { useSelector,useDispatch} from 'react-redux';

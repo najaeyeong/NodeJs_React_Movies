@@ -27,11 +27,11 @@ function App() {
                   <Route path={"/home/movie/:id"} element={<Detail/>}/>
                   <Route path={"/register"} element={<Register/>}/>
                   <Route path={"/login"} element={<Login/>}/>
-
               </Routes>
           </Router>
           </PersistGate>
       </Provider>
+
     </div> 
 
   );

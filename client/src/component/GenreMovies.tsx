@@ -113,11 +113,10 @@ export function GenreMovies(){
                 setFirstGenreMovies(res.data.data)
             }else{
                 //alert("First Genre movie list false")
-                console.log(res)
                 setUserData(false)
             }
         }).catch((err)=>{
-            console.log(err)
+            //console.log(err)
             alert("First GenreMovie list error 관리자에 문의")
         })
     }
@@ -126,14 +125,13 @@ export function GenreMovies(){
         await Axios.post(`${url}/api/get/movies/user/second/genre`,{userID:userID}).then((res)=>{
             if(res.data.success){
                 setSecondGenreMovies(res.data.data)
-                console.log(secondGenreMovies)
             }else{
                 //alert("Second Genre movie list false")
-                console.log(res)
+                //console.log(res)
                 setUserData(false)
             }
         }).catch((err)=>{
-            console.log(err)
+            //console.log(err)
             alert("Second GenreMovie list error 관리자에 문의")
         })
     }
@@ -142,14 +140,14 @@ export function GenreMovies(){
         await Axios.post(`${url}/api/get/movies/user/genre`,{userID:userID}).then((res)=>{
             if(res.data.success){
                 setGenreMovies(res.data.data)
-                console.log(genreMovies)
+                //console.log(genreMovies)
             }else{
                 //alert("Genre movie list false")
-                console.log(res)
+                //console.log(res)
                 setUserData(false)
             }
         }).catch((err)=>{
-            console.log(err)
+            //console.log(err)
             alert("GenreMovie list error 관리자에 문의")
         })
     }

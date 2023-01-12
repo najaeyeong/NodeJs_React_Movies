@@ -8,6 +8,7 @@ const serverUrlSlice = createSlice({
     reducers:{
       // dev:(state,action)=>{state.url = "http://localhost:3001"},
       // prod:(state,action)=>{state.url = `https://movietest2.herokuapp.com`}
+      // https:(state,action)=>{state.url = `https://localhost:8080`}
     }
   })
 

@@ -34,7 +34,7 @@ export function BestMovies(){
     }
 
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
-    //const url = "https://movietest2.herokuapp.com"
+
     const [movies,setMovies] = useState<Moive[]>([])
 
     const settings = {
@@ -85,7 +85,6 @@ export function BestMovies(){
       }
 
     const getBestMovies = async()=>{
-        console.log(url)
         await Axios.get(`${url}/api/get/movies/best`).then((res)=>{
             if(res.data.success){
                 setMovies(res.data.data)
