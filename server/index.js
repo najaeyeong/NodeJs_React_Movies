@@ -1,3 +1,14 @@
+
+const expressSanitizer = require("express-sanitizer");
+const https = require("https");
+const fs = require("fs");
+const options = {
+  key: fs.readFileSync("./src/config/cert.key"),
+  cert: fs.readFileSync("./src/config/cert.crt"),
+};
+
+
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -36,12 +47,17 @@ app.use(express.json())
 app.use(cookieParser()); // server client 통신에 쿠키 사용
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//https
+app.use(express.urlencoded({ extended: true }));
+app.use(expressSanitizer());
 
 //login
-app.post('/api/login', ctrl.process.login)//로그인
+//app.post('/api/login', ctrl.process.login)//로그인
+app.post('/api/get/salt',ctrl.process.getSalt)//salt 반환
+app.post('/api/get/token',ctrl.process.getToken)//token(access,refresh) 반환  
 app.get('/api/logout',ctrl.process.logout)// 토큰 제거
-app.get('/api/accessToken',ctrl.process.accessToken)// access token 발급
-app.get('/api/refreshToken',ctrl.process.refreshToken)//refresh token 발급
+app.get('/api/accessToken',ctrl.process.accessToken)// access token으로 회원정보 반환
+app.get('/api/refreshToken',ctrl.process.refreshToken)//refresh token으로 access token 재발급
 app.get('/api/loginSuccess',ctrl.process.loginSuccess) // access token 사용 user데이터 반환
 app.post('/api/register', ctrl.process.register) //회원가입
 app.post(`/api/get/user/info`, ctrl.process.read) // 회원정보 조회
@@ -104,7 +120,16 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, './build/index.html'));
   });
 
-app.listen(PORT1 , ()=> {console.log(`${PORT1} server` )})
+app.listen(PORT1 , ()=> {console.log(`${PORT1} server` )}) //http 서버 실행 
+
+
+
+// https 의존성으로 certificate와 private key로 새로운 서버를 시작
+https.createServer(options, app).listen(8080, () => {
+  console.log(`HTTPS server started on port 8080`);
+});
+
+
 
 //같은것 선택 컨트롤 + D , 알트 + 마우스 클릭 
 
