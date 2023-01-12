@@ -55,6 +55,16 @@ const process = {
         const response = await user.refreshToken()
         return res.json(response);
     },
+    getSalt: async (req,res)=>{
+        const user = new User(req,res)
+        const response = await user.getSalt()
+        return res.json(response);
+    },
+    getToken: async (req,res)=>{
+        const user = new User(req,res)
+        const response = await user.getToken()
+        return res.json(response);
+    }
 
 }
 

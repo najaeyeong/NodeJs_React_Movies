@@ -38,10 +38,21 @@ class UserStorage{
             })
         }
         return new Promise((resolve,reject)=>{
-            const sql = "insert into users(id, name, psword, email, age, phonenumber) values(?,?,?,?,?,?);";
-            db.query(sql,[userInfo.id, userInfo.name, userInfo.psword, userInfo.email, userInfo.age, userInfo.phonenumber],(err)=>{
-                if(err) reject(`${err}`);
-                else resolve({success:true, message:'save success'});
+            const sql = `insert into users(id, name, psword,salt, email, phonenumber, gender,
+                        birthdate,personalAgree,locationAgree,receiveAgree) values(?,?,?,?,?,?,?,?,?,?,?);`;
+            db.query(sql,[userInfo.id, 
+                userInfo.name, 
+                userInfo.psword,
+                userInfo.salt, 
+                userInfo.email, 
+                userInfo.phonenumber,
+                userInfo.gender,
+                userInfo.birthdate,
+                userInfo.personalAgree,
+                userInfo.locationAgree,
+                userInfo.receiveAgree],(err)=>{
+                if(err){console.log(err);  reject(`${err}`);
+                }else resolve({success:true, message:'save success'});
         });
 
     }) ;

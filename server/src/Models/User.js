@@ -36,45 +36,7 @@ class User {
             const response = await UserStorage.read(body.id)
             if(response.data[0]?.id){
                 if(response.data[0].id === body.id && response.data[0].psword === body.psword){ //정보일치
-                    //토큰발급
-                    try {
-                        //AccessToken 발급
-                        const accessToken =jwt.sign({
-                            id:response.data[0].id,
-                            name:response.data[0].name,
-                            email:response.data[0].email,
-                            age:response.data[0].age,
-                            phonenumber:response.data[0].phonenumber,
-                        },process.env.ACCESS_SECRET,{
-                            expiresIn:'10s',
-                            issuer:'About Tech'
-                        })
-                        //Refresh token 발급
-                        const refreshToken = jwt.sign({
-                            id:response.data[0].id,
-                            name:response.data[0].name,
-                            email:response.data[0].email,
-                            age:response.data[0].age,
-                            phonenumber:response.data[0].phonenumber,
-                        },process.env.REFRESH_SECRET,{
-                            expiresIn:'1m',
-                            issuer:'About Tech'
-                        })
-                        //토큰 전송  쿠키사용
-                        res.cookie("accessToken", accessToken,{
-                            secure: false, //https와 http 프로토콜의 차이를 명시하는 것  http - false
-                            httpOnly: true  //javascript, http 중 어디서 접근이 가능할지 정하는 것 true - javascript에서 접근 불가 
-                        })
-                        res.cookie("refreshToken", refreshToken,{
-                            secure: false,
-                            httpOnly: true 
-                        })
-                        //res.status(200).json('login successful')
-                        return {success: true ,message: 'login successful',data:response.data[0]}
-                    } catch (error) {
-                        //res.status(500).json('login failed')
-                        return {success: false,message: 'login failed'}
-                    }
+                    this.getToken()
                 }
                 return {success: false , message: 'Login failed : 틀린 password error'};
             }
@@ -84,6 +46,75 @@ class User {
             return {success: false, err: err};
         }
     }
+
+//get salt 발급
+    async getSalt(){
+        const req = this.req
+        const res = this.res
+        try {
+            const response = await UserStorage.read(req.body.id)
+            if(response.data[0]?.id){
+                const salt = response.data[0]?.salt
+                const psword = response.data[0]?.psword
+                return{success: true,message:'get salt successed', data: {salt:salt,psword:psword}}
+            }
+            return {success: false, message: 'Login failed : 존재하지 않는 id error'};
+        } catch (error) {
+            console.log(error)
+            return {success: false, message: 'get salt error'};
+        }
+    }
+//토큰 발급
+    async getToken(){
+        const req = this.req
+        const res = this.res
+        const response = await UserStorage.read(req.body.id)
+        try {
+            //AccessToken 발급
+            const accessToken =jwt.sign({
+                id:response.data[0].id,
+                name:response.data[0].name,
+                email:response.data[0].email,
+                birthdate:response.data[0].birthdate,
+                gender:response.data[0].gender,
+                registerDate:response.data[0].registerDate,
+                phonenumber:response.data[0].phonenumber,
+            },process.env.ACCESS_SECRET,{
+                expiresIn:'10s',
+                issuer:'About Tech'
+            })
+            //Refresh token 발급
+            const refreshToken = jwt.sign({
+                id:response.data[0].id,
+                name:response.data[0].name,
+                email:response.data[0].email,
+                birthdate:response.data[0].birthdate,
+                gender:response.data[0].gender,
+                registerDate:response.data[0].registerDate,
+                phonenumber:response.data[0].phonenumber,
+            },process.env.REFRESH_SECRET,{
+                expiresIn:'1m',
+                issuer:'About Tech'
+            })
+            //토큰 전송  쿠키사용
+            res.cookie("accessToken", accessToken,{
+                secure: false, //https와 http 프로토콜의 차이를 명시하는 것  http - false
+                httpOnly: true  //javascript, http 중 어디서 접근이 가능할지 정하는 것 true - javascript에서 접근 불가 
+            })
+            res.cookie("refreshToken", refreshToken,{
+                secure: false,
+                httpOnly: true 
+            })
+            //res.status(200).json('login successful')
+            return {success: true ,message: 'login successful',data:response.data[0]}
+        }catch (error) {
+            console.log(error)
+            //res.status(500).json('login failed')
+            return {success: false,message: 'login failed',error:error}
+        }
+    }
+
+    //accessToken을 받아 유저정보 반환
     async accessToken(){
         const req = this.req//req
         const res = this.res
@@ -102,6 +133,7 @@ class User {
         }
      }
 
+     //refreshToken을 받아 accessTOKEN 재발급 
      async refreshToken(){
         const req = this.req //req
         const res = this.res
