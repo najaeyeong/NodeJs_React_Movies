@@ -80,7 +80,7 @@ class User {
                 registerDate:response.data[0].registerDate,
                 phonenumber:response.data[0].phonenumber,
             },process.env.ACCESS_SECRET,{
-                expiresIn:'10s',
+                expiresIn:'1m',
                 issuer:'About Tech'
             })
             //Refresh token 발급
@@ -93,7 +93,7 @@ class User {
                 registerDate:response.data[0].registerDate,
                 phonenumber:response.data[0].phonenumber,
             },process.env.REFRESH_SECRET,{
-                expiresIn:'1m',
+                expiresIn:'24h',
                 issuer:'About Tech'
             })
             //토큰 전송  쿠키사용

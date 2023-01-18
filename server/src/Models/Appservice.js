@@ -28,7 +28,7 @@ class AppService{
         const secretKey = config.NCP_secretKey
 
         //crypto 활용
-        const hmac2 = crypto.createHmac('sha256',secretKey);//HmacSHA256로 암호화 
+        const hmac2 = crypto.createHmac('sha256',secretKey);//HmacSHA256로 암호화  hash 단방향 암호화 
         message.push(method);
         message.push(space);
         message.push(url2);
@@ -38,7 +38,7 @@ class AppService{
         message.push(accessKey);
         //message 배열에 위의 내용들을 담아준 후에
         const signature = hmac2.update(message.join('')).digest('base64');
-        //message.join('') 으로 만들어진 string 을 hmac 에 담고, base64로 인코딩한다
+        //message.join('') 으로 만들어진 string 을 hmac 에 담고, base64로 인코딩한다 (base64 형태로 정리)
         //return signature.toString(); // toString()이 없었어서 에러가 자꾸 났었는데, 반드시 고쳐야함.
 
         //CryptoJS 활용 
@@ -52,7 +52,7 @@ class AppService{
         hmac.update(accessKey);
         const hash = hmac.finalize();
         console.log(hash.toString(CryptoJS.enc.Base64),signature)
-        return hash.toString(CryptoJS.enc.Base64)
+        return hash.toString(CryptoJS.enc.Base64) //base64 형태로 인코등(정리)해서 보냄 
     } 
 
 
@@ -84,7 +84,7 @@ class AppService{
                     message.push(time);
                     message.push(newLine);
                     message.push(accessKey);
-                    const signature = hmac2.update(message.join('')).digest('base64');
+                    const signature = hmac2.update(message.join('')).digest('base64');;
                     const data = {
                         "type":"SMS",
                         "contentType":"COMM",

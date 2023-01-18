@@ -448,3 +448,8 @@
 2023-01-12 12:06:11 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
 2023-01-12 12:09:02 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: false, msg: 존재하는 아이디 입니다.
 2023-01-12 12:09:16 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2023-01-12 12:43:51 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2023-01-12 12:49:23 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2023-01-12 12:54:19 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2023-01-12 13:08:23 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success
+2023-01-18 15:41:30 [nodeJS-login] info: POST / REGISTER 200 RESPONSE: true, msg: save success

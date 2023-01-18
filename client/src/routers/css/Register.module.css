@@ -28,12 +28,7 @@
   .form input:focus{
     background: #e7e3e3;
   }
-  #year {
-    width: 5px;
-  }
-  #day{
-    width: 5px;
-  }
+
   .form #button {
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;

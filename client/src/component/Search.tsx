@@ -27,7 +27,6 @@ import {update_genre,update_rate,update_year,update_sort,update_term,update_sear
 
 
 
-
 export function Search(){
     interface GenreList{
         genre:string

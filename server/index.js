@@ -53,14 +53,14 @@ app.use(expressSanitizer());
 
 //login
 //app.post('/api/login', ctrl.process.login)//로그인
-app.post('/api/get/salt',ctrl.process.getSalt)//salt 반환
-app.post('/api/get/token',ctrl.process.getToken)//token(access,refresh) 반환  
-app.get('/api/logout',ctrl.process.logout)// 토큰 제거
-app.get('/api/accessToken',ctrl.process.accessToken)// access token으로 회원정보 반환
-app.get('/api/refreshToken',ctrl.process.refreshToken)//refresh token으로 access token 재발급
-app.get('/api/loginSuccess',ctrl.process.loginSuccess) // access token 사용 user데이터 반환
-app.post('/api/register', ctrl.process.register) //회원가입
-app.post(`/api/get/user/info`, ctrl.process.read) // 회원정보 조회
+app.post('/api/get/salt',ctrl.processUser.getSalt)//salt 반환
+app.post('/api/get/token',ctrl.processUser.getToken)//token(access,refresh) 반환  
+app.get('/api/logout',ctrl.processUser.logout)// 토큰 제거
+app.get('/api/accessToken',ctrl.processUser.accessToken)// access token으로 회원정보 반환
+app.get('/api/refreshToken',ctrl.processUser.refreshToken)//refresh token으로 access token 재발급
+app.get('/api/loginSuccess',ctrl.processUser.loginSuccess) // access token 사용 user데이터 반환
+app.post('/api/register', ctrl.processUser.register) //회원가입
+app.post(`/api/get/user/info`, ctrl.processUser.read) // 회원정보 조회
 
 //register
 app.post(`/api/phonenumber`,service_ctrl.process.PhoneConfirm) //본인인증 sms발송 
