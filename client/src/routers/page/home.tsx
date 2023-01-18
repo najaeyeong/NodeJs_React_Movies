@@ -9,6 +9,9 @@ import Footer from '../../component/Footer';
 import UserInfo from '../../component/UserInfo';
 import axios from 'axios';
 
+//암복화
+import Crypto from '../../config/Crypto';
+
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -31,22 +34,34 @@ export function Home(){
     const [movies,setMovies] = useState<any[]>([])
     const [movieCount,setMovieCount] = useState<number>(0)
 
-    const getUserData = ()=>{
+    const getUserData = async ()=>{
       axios.get(`${url}/api/accessToken`).then((res)=>{
-        if(res.data.success){
-          dispatch(userIdSlice.actions.login(res.data.data[0]))//login   store에 정보 변경 
-        }else{
-          if(res.data.err.name === 'TokenExpiredError'){//토큰기간 말료
-            //refresh
-            getAccessToken()
-          }else if(res.data.err.name === 'JsonWebTokenError' ){ //토큰없음
-            dispatch(userIdSlice.actions.logout())//logout  store에 정보 삭제 
+        const key = res.data.key // 비대칭암호화된 대칭키
+        const Data = res.data.data //대칭 암호화된 json정보
+        const ClientPrivatekey = process.env.REACT_APP_ClientPrivateKey //비대칭 개인키
+        const decodedKey = Crypto.decodeRSA(ClientPrivatekey,key) //개인키로 복호화된 대칭키
+        const decode = Crypto.decodeAES256(decodedKey,Data) //대칭키로 복호화된 json정보
+        const decodedData = JSON.parse(decode)//json정보 복구
+        try {
+          if(decodedData.success){
+            dispatch(userIdSlice.actions.login(decodedData.data[0]))//login   store에 정보 변경 
+          }else{
+            if(decodedData.err.name === 'TokenExpiredError'){//토큰기간 말료
+              //refresh
+              getAccessToken()
+            }else if(decodedData.err.name === 'JsonWebTokenError' ){ //토큰없음
+              dispatch(userIdSlice.actions.logout())//logout  store에 정보 삭제 
+            }
+  
+            //refresh 토큰 으로 확인 
+            //setLogin(false)
           }
-
-          //refresh 토큰 으로 확인 
-          //setLogin(false)
+        } catch (error) {
+          console.log(error);
+          console.log("복호화 error")
         }
       }).catch((err)=>{
+        console.log(err)
         console.log("user data get error ");
       })
     }

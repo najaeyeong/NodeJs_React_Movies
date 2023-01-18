@@ -9,9 +9,11 @@ export type  userId = string|null  ;
 interface userInfo{
   id:string,
   name:string,
-  age:number,
   email:string,
-  phonenumber:string
+  gender:string,
+  birthdate:string,
+  phonenumber:string,
+  registrationDate:Date
 }
 //userID 관련 store slice
 const userIdSlice = createSlice({
@@ -19,26 +21,34 @@ const userIdSlice = createSlice({
     initialState:{id:null,
                   name:null,
                   email:null,
-                  age:null,
-                  phonenumber:null
+                  gender:null,
+                  birthdate:null,
+                  phonenumber:null,
+                  registrationDate:null
      } as any,
     reducers:{
       login:(state,action:PayloadAction<userInfo>)=>{
             state.id = action.payload.id
             state.name = action.payload.name
             state.email = action.payload.email
-            state.age = action.payload.age
+            state.gender = action.payload.gender
+            state.birthdate = action.payload.birthdate
             state.phonenumber = action.payload.phonenumber
+            state.registrationDate = action.payload.registrationDate
           },
       logout:(state)=>{
         state.id = null
         state.name = null
         state.email = null
-        state.age = null
+        state.gender=null
+        state.birthdate=null
         state.phonenumber = null
+        state.registrationDate=null
       }
     }
   })
 
   export default userIdSlice;
   export const {login,logout}  = userIdSlice.actions;
+
+  //홈화면에서 받아옴 

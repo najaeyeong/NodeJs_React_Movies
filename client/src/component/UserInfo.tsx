@@ -136,13 +136,19 @@ export function UserInfo(){
                                     USER Name: {userInfo?.name}
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
+                                    USER Gender: {userInfo?.gender}
+                                </Box>
+                                <Box sx={{ml:10,mb:2}}>
+                                    USER BirthDate: {userInfo?.birthdate}
+                                </Box>
+                                <Box sx={{ml:10,mb:2}}>
                                     USER Email: {userInfo?.email}
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
-                                    USER Age: {userInfo?.age}
+                                    USER PhoneNumber: {userInfo?.phonenumber}
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
-                                    USER PhoneNumber: {userInfo?.phonenumber}
+                                    USER RegistrationDate: {userInfo?.registrationDate}
                                 </Box>
                                 <Box sx={{ml:10,mb:2}}>
                                     USER Genre: {userGenre[0]?.genre},{userGenre[1]?.genre}
