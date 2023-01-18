@@ -318,6 +318,8 @@ const createHashPwCryptojs = (psword:string)=>{
         if(!confirmRN) return inputRandomNumber.current?.focus()
 
         let birthdate:string
+        updateDay()
+        updateMonth()
         //성별 생년 주민등록번호 조합
         if(nationality === "local"){
             if(gender === "M"){ //남자 
@@ -419,17 +421,29 @@ const createHashPwCryptojs = (psword:string)=>{
 			return true;
 		}
     }
-
+    const updateDay= useCallback(()=>{
+        console.log(day)
+        if(day.length !== 2){setBirthday("0"+ day)}
+        else{setBirthday(day)}
+    },[day])
+    const updateMonth = useCallback(()=>{
+        console.log(month)
+        if(month.length !== 2){setBirthMonth("0"+month)}
+        else{setBirthMonth(month)}
+    },[month])
     //생년월일 문자열 (일,월) 작성
-    useEffect(()=>{
-        if(confirmBirthdate){
-            setBirthMonth("0"+month)
-            setBirthday("0"+ day)
-        }else{
-            setBirthMonth("")
-            setBirthday("")
-        }
-    },[confirmBirthdate])
+    // useEffect(()=>{
+    //     if(confirmBirthdate){
+    //         console.log(day,month)
+    //         if(month.length !== 2){setBirthMonth("0"+month)}
+    //         else{setBirthMonth(month)}
+    //         if(day.length !== 2){setBirthday("0"+ day)}
+    //         else{setBirthday(day)}
+    //     }else{
+    //         setBirthMonth("")
+    //         setBirthday("")
+    //     }
+    // },[month,day])
 
     //생년월일 유효성겁사 
     useEffect(()=>{
