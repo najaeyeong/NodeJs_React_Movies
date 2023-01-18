@@ -5,6 +5,8 @@ const logger = require("../../config/logger")
 const User = require('../../Models/User')
 //UserStorage 의 user 를 static 으로 설정하면 바로 class 에서 불러 사용할수 있다.
 //static 아닐시  const 변수 = UserStorage    , UserStorage.user 로 변수에 넣어서 사용 
+const Crypto = require('../../config/crypto')
+
 
 const output = {
     home : (req, res) => {
@@ -21,7 +23,7 @@ const output = {
     }
 }
 
-const process = { 
+const processUser = { 
     login : async (req, res) => {
         const user = new User(req,res)
         const response = await user.login2();
@@ -48,7 +50,19 @@ const process = {
     accessToken: async (req,res)=>{
         const user = new User(req,res)
         const response = await user.accessToken()
-        return res.json(response); 
+        //대칭키 생성 
+        const key = Crypto.prototype.getRandomString(32)
+
+        //대칭키 암호화
+        const EncodedResoponse = Crypto.prototype.encodeAES56(key,response)
+
+        //키 비대칭 암호화 
+        const EncodedKey = Crypto.prototype.encodeRSA(process.env.ClinetPublicKey , key)
+        
+        //비대칭 암호화된 대칭키, 대칭 암호화된 데이타 
+        const Res = {key:EncodedKey,data:EncodedResoponse}
+
+        return res.json(Res); 
     },
     refreshToken: async (req,res)=>{
         const user = new User(req,res)
@@ -70,5 +84,5 @@ const process = {
 
 module.exports = {
     output,
-    process
+    processUser
 }
