@@ -58,10 +58,10 @@ class UserStorage{
     }) ;
     }
 
-    static async read(id){
+    static async read(body){
         return new Promise((resolve,reject)=>{
             const sql = `select * from crud.users where id = ?`
-            db.query(sql,[id],(err,result)=>{
+            db.query(sql,[body.id],(err,result)=>{
                 if(err) reject(`${err}`)
                 else resolve({success: true, message: 'success', data: result})
             })

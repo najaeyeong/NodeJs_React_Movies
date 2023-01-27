@@ -12,7 +12,7 @@
 
     "@emotion/styled": "^11.10.4",
 
-    "@mui/icons-material": "^5.10.9",
+    "@mui/icons-material": "^5.11.0",
 
     "@mui/lab": "^5.0.0-alpha.103",
 
@@ -58,6 +58,8 @@
 
     "os": "^0.1.2",
 
+    "passport": "^0.6.0",
+
     "react": "^18.2.0",
 
     "react-app-rewired": "^2.2.1",
@@ -97,6 +99,7 @@
   "browser": {
 
     "crypto": false,
+
     "stream": false
 
   },

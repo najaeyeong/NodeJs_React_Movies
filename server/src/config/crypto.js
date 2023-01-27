@@ -33,7 +33,7 @@ class Crypto{
         });
         return cipher.toString(CryptoJS.enc.Utf8);
     };
-    encodeAES56(key, data){
+    encodeAES256(key, data){
         const Data = JSON.stringify(data);
         const cipher = CryptoJS.AES.encrypt(Data, CryptoJS.enc.Utf8.parse(key), {
             iv: CryptoJS.enc.Utf8.parse(""),
@@ -43,7 +43,7 @@ class Crypto{
         return cipher.toString();
     }
     //대칭키 생성
-    getRandomString(num){
+    getRandomAES256(num){
     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
     let result = '';
     const charactersLength = characters.length;

@@ -1,7 +1,6 @@
 "use strict"
 const jwt = require('jsonwebtoken')
 
-
 //await  는 항상 promise를 반환하는 애 앞에 , async(비동기) 함수 안에서 사용된다. 
 const UserStorage = require("./Userstorage")
 
@@ -33,7 +32,7 @@ class User {
         const body = this.req.body
         const res = this.res
         try{
-            const response = await UserStorage.read(body.id)
+            const response = await UserStorage.read(body)
             if(response.data[0]?.id){
                 if(response.data[0].id === body.id && response.data[0].psword === body.psword){ //정보일치
                     this.getToken()
@@ -52,7 +51,7 @@ class User {
         const req = this.req
         const res = this.res
         try {
-            const response = await UserStorage.read(req.body.id)
+            const response = await UserStorage.read(req.body)
             if(response.data[0]?.id){
                 const salt = response.data[0]?.salt
                 const psword = response.data[0]?.psword
@@ -68,10 +67,10 @@ class User {
     async getToken(){
         const req = this.req
         const res = this.res
-        const response = await UserStorage.read(req.body.id)
+        const response = await UserStorage.read(req.body)
         try {
             //AccessToken 발급
-            const accessToken =jwt.sign({
+            const accessToken = jwt.sign({
                 id:response.data[0].id,
                 name:response.data[0].name,
                 email:response.data[0].email,
@@ -105,6 +104,7 @@ class User {
                 secure: false,
                 httpOnly: true 
             })
+            
             //res.status(200).json('login successful')
             return {success: true ,message: 'login successful',data:response.data[0]}
         }catch (error) {
@@ -121,7 +121,7 @@ class User {
         try {
             const token = req.cookies.accessToken;
             const userData = jwt.verify(token,process.env.ACCESS_SECRET);
-            const response = await UserStorage.read(userData.id)
+            const response = await UserStorage.read(userData)
             if(response.success){
                 return response;
             }else{
@@ -140,7 +140,7 @@ class User {
         try {
             const token = req.cookies.refreshToken;
             const userDate = jwt.verify(token,process.env.REFRESH_SECRET);
-            const response = await UserStorage.read(userDate.id); //user 정보 
+            const response = await UserStorage.read(userDate); //user 정보 
             // accessToken 재발급 
             const accessToken =jwt.sign({
                 id:response.data[0].id,
@@ -189,7 +189,7 @@ class User {
      async read(){
         const body = this.req.body
         try{
-            const response = await UserStorage.read(body.id);
+            const response = await UserStorage.read(body);
             return response;
         }catch(err){
             return {success : false ,message:'error' , err : err}

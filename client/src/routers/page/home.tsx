@@ -10,7 +10,7 @@ import UserInfo from '../../component/UserInfo';
 import axios from 'axios';
 
 //암복화
-import Crypto from '../../config/Crypto';
+import Crypto from '../../Modules/config/Crypto';
 
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
