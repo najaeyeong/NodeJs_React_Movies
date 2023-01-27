@@ -5,18 +5,26 @@ import CryptoJS from 'crypto-js'
 
 //mui
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 
 //redux store
 import {useSelector} from "react-redux"
 import {RootState} from '../../store/store'
+import { Button } from "@mui/material";
+
 
 
 export default function Login(){
 
-
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
     const [id,setId] = useState("")
     const [psword,setPsword] = useState('')
+
+//Naver Oauth2 로그인 설정 정보
+    const naver_callback = process.env.REACT_APP_NAVER_CALLBACK_URI ||''
+    const naver_client_id = process.env.REACT_APP_NAVER_CLIENT_ID
+    const naver_state = Math.random().toString(36).substr(3, 14);
+    let naver_api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + naver_client_id + '&redirect_uri=' + encodeURI(naver_callback) + '&state=' + naver_state;
 
 //비밀번호 hash 
     const hashPW = (psword:string,salt:string)=>{
@@ -72,6 +80,19 @@ export default function Login(){
         })
     }
 
+    const ButtonStyles = {
+        m:2,
+        display:'inline',
+        fontWeight: 'bold',
+        borderRadius: '10%',
+        "&:hover": {
+            borderRadius: 4,
+            backgroundColor: "gray",
+          },
+    }
+
+
+
     return <>
     
         <div className={styles.login_page}>
@@ -86,7 +107,13 @@ export default function Login(){
                     }/>
                     <Box sx={{ml:2, mb:2}} ></Box>
                     <p id={styles.button}  onClick={LoginSubmit}>login</p>
+                    <Box>
+                        <Box sx={{m:1}}> 
+                            <Link  href={naver_api_url}><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></Link>
+                        </Box>
+                    </Box>
                     <p className={styles.message}>Not registered? <a href="/register">Create an account</a></p>
+
                 </form>
             </div>
         </div>

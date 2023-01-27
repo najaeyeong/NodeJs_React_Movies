@@ -28,6 +28,7 @@ const review_ctrl = require('./src/routes/control/review.ctrl')
 const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
 const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
+const oauth2_ctrl = require('./src/routes/control/oauthCallback.ctrl')
 
 // require("dotenv/config");
  const PORT1 = process.env.PORT1 || 3001;
@@ -58,9 +59,11 @@ app.post('/api/get/token',ctrl.processUser.getToken)//token(access,refresh) 반�
 app.get('/api/logout',ctrl.processUser.logout)// 토큰 제거
 app.get('/api/accessToken',ctrl.processUser.accessToken)// access token으로 회원정보 반환
 app.get('/api/refreshToken',ctrl.processUser.refreshToken)//refresh token으로 access token 재발급
-app.get('/api/loginSuccess',ctrl.processUser.loginSuccess) // access token 사용 user데이터 반환
 app.post('/api/register', ctrl.processUser.register) //회원가입
 app.post(`/api/get/user/info`, ctrl.processUser.read) // 회원정보 조회
+//oauth2.0 
+app.get('/login/naver')//네이버로그인 창
+app.get('/login/naver/callback',oauth2_ctrl.processOauth.naver)//naver callback
 
 //register
 app.post(`/api/phonenumber`,service_ctrl.process.PhoneConfirm) //본인인증 sms발송 
