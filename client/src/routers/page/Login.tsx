@@ -2,17 +2,18 @@ import styles from "../css/Register.module.css"
 import {useState} from "react"
 import axios from 'axios'
 import CryptoJS from 'crypto-js'
+import { useLocation } from 'react-router-dom';
 
 //mui
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
+
 //redux store
 import {useSelector} from "react-redux"
 import {RootState} from '../../store/store'
 import { Button } from "@mui/material";
-
-
+import getGoogleUrl from "../../Modules/auth/getGoogleUrl" // google 로그인 인증 url 생성모듈
 
 export default function Login(){
 
@@ -25,7 +26,13 @@ export default function Login(){
     const naver_client_id = process.env.REACT_APP_NAVER_CLIENT_ID
     const naver_state = Math.random().toString(36).substr(3, 14);
     let naver_api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + naver_client_id + '&redirect_uri=' + encodeURI(naver_callback) + '&state=' + naver_state;
-
+//google 관련 변수
+    // const location = useLocation();
+    // let from = ((location.state as any)?.from?.pathname as string) || '/';
+    let google_state = Math.random().toString(36).substr(3, 14);
+    let google_api_url = getGoogleUrl(google_state)
+//kakao 관련 변수 
+    let kakao_api_url 
 //비밀번호 hash 
     const hashPW = (psword:string,salt:string)=>{
         const iterations = 3280; // 3280번 hash반복
@@ -80,6 +87,15 @@ export default function Login(){
         })
     }
 
+//auth token 발급
+    const GetAuthToken = async ()=>{
+        await axios.get(`${url}/auth/google`).then(async ()=>{
+
+        }).catch(err=>{
+
+        })
+    }
+
     const ButtonStyles = {
         m:2,
         display:'inline',
@@ -91,8 +107,10 @@ export default function Login(){
           },
     }
 
+    
 
-
+    //'https://developers.naver.com/proxyapi/rawgit/naver/naver-openapi-guide/master/ko/login/bi/images/image01.png'
+    //'http://static.nid.naver.com/oauth/small_g_in.PNG'
     return <>
     
         <div className={styles.login_page}>
@@ -109,7 +127,30 @@ export default function Login(){
                     <p id={styles.button}  onClick={LoginSubmit}>login</p>
                     <Box>
                         <Box sx={{m:1}}> 
-                            <Link  href={naver_api_url}><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></Link>
+                            <Link  href={naver_api_url}><img
+                            height= '50'  
+                            src={require("../../images/naver_image/btnW_official.png")}
+                            onMouseOver={(e)=>{e.currentTarget.src = require("../../images/naver_image/btnD_official.png")}}
+                            onMouseOut={(e)=>{e.currentTarget.src = require("../../images/naver_image/btnW_official.png")}}
+                            alt="naver"/>
+                            </Link>
+                        </Box>
+                        <Box sx={{m:1}}> 
+                            <Button  onClick={()=>{GetAuthToken()}}><img
+                            height= '56'  
+                            src={require("../../images/kakao_image/kakao_login_medium_narrow.png")}
+                            alt="kakao"/>
+                            </Button>
+                        </Box>
+                        <Box sx={{m:1}}> 
+                            <Link  href={google_api_url}>
+                                <img  id={styles.google}
+                                    height='57'
+                                    src = { require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png")}
+                            onMouseOver={(e)=>{e.currentTarget.src = require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_pressed_web@2x.png")}}
+                            onMouseOut={(e)=>{e.currentTarget.src = require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png")}}
+                            alt="google"/>
+                            </Link>
                         </Box>
                     </Box>
                     <p className={styles.message}>Not registered? <a href="/register">Create an account</a></p>
