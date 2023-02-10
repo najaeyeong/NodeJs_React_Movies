@@ -138,7 +138,7 @@ export default function Login(){
                         <Box sx={{m:1}}> 
                             <Button  onClick={()=>{GetAuthToken()}}><img
                             height= '56'  
-                            src={require("../../images/kakao_image/kakao_login_medium_narrow.png")}
+                            src={require("../../images/kakao_image/kakao_login.png")}
                             alt="kakao"/>
                             </Button>
                         </Box>
@@ -146,9 +146,9 @@ export default function Login(){
                             <Link  href={google_api_url}>
                                 <img  id={styles.google}
                                     height='57'
-                                    src = { require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png")}
-                            onMouseOver={(e)=>{e.currentTarget.src = require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_pressed_web@2x.png")}}
-                            onMouseOut={(e)=>{e.currentTarget.src = require("../../images/google_image/google_signin_buttons/web/2x/btn_google_signin_light_normal_web@2x.png")}}
+                                    src = { require("../../images/google_image/btn_googleW.png")}
+                            onMouseOver={(e)=>{e.currentTarget.src = require("../../images/google_image/btn_googleD.png")}}
+                            onMouseOut={(e)=>{e.currentTarget.src = require("../../images/google_image/btn_googleW.png")}}
                             alt="google"/>
                             </Link>
                         </Box>
