@@ -110,7 +110,7 @@ const processOauth = {
 
       },
 
-    getGoogleOauthToken : async ({ code,})=> {
+    getGoogleOauthToken : async ({ code })=> {
         const rootURl = 'https://oauth2.googleapis.com/token';
         const options = {
             client_id: process.env.google_id,
@@ -152,8 +152,93 @@ const processOauth = {
               console.log(err);
               throw Error(err);
             }
-          }
-      
+          },
+    
+    kakao : async (req,res)=>{
+        //코드 받고, 토큰 받고, 유저정보 받고 
+            const code = req.query.code;
+            const {access_token,token_type}= await processOauth.getKakaoOauthToken({code})
+            const user = await processOauth.getKakaoUser({access_token})
+            console.log(user);
+        //db저장 
+            let gender 
+            if(user.kakao_account.gender === 'male'){
+                gender = "M"
+            }else{
+                gender = "W"
+            }
+            const data = {
+                id:user.kakao_account.email,
+                psword:user.id,
+                name:user.kakao_account.profile.nickname,
+                email:user.kakao_account.email,
+                birthdate:null,
+                gender:gender,
+                phonenumber:null,
+                personalAgree:'true',
+                locationAgree:'false',
+                receiveAgree:'false',
+                salt:'kakao'
+                }
+                console.log(data);
+            const user1 = new User(data)
+            const response = await user1.register();
+        //로그인 - 토큰발급
+            const data1={
+                body:{
+                    id:user.kakao_account.email
+                }
+            }
+            // 신규가입이든 기존회원이든 조회 또는 가입 이 끝나면 토큰발급 진행 
+            if(response){
+                const user1 = new User(data1,res)
+                await user1.getToken();//토큰발급 
+                res.redirect("/home/movie");
+            }
+
+    },
+    getKakaoOauthToken : async ({code})=>{
+        const rootURl = 'https://kauth.kakao.com/oauth/token';
+        const options = {
+            client_id: process.env.kakao_id, //"REST API 부분을 넣어준다."
+            client_secret: process.env.kakao_secret, // 보안
+            code:code,
+            redirect_uri: process.env.kakao_redirectURI ,
+            grant_type: 'authorization_code',
+        };
+        try {
+            const {data} = await axios.post(
+                rootURl,
+                qs.stringify(options),
+                {
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+                }
+            }) 
+            //console.log(data.data)
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getKakaoUser : async ({access_token})=>{
+        const rootURI = "https://kapi.kakao.com/v2/user/me"
+        const options = {
+            headers : {
+                Authorization: `Bearer ${access_token}`
+            }
+        }
+        try {
+            //get으로 해야함 , post로 하면 error(targetID가 없다고 나옴 어트민키사용하는걸로 판단해서)
+            const data = await axios.get( rootURI,options)
+
+            return data.data
+            
+        } catch (error) {
+            console.log(error);
+            console.log("error");
+        }
+    }
 }
 
 module.exports = {

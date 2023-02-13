@@ -32,7 +32,10 @@ export default function Login(){
     let google_state = Math.random().toString(36).substr(3, 14);
     let google_api_url = getGoogleUrl(google_state)
 //kakao 관련 변수 
-    let kakao_api_url 
+    const kakao_client_id = process.env.REACT_APP_KAKAO_CLIENT_ID
+    const kakao_client_redirect = process.env.REACT_APP_KAKAO_CALLBACK_URI
+    let kakao_api_url = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_client_id}&redirect_uri=${kakao_client_redirect}&response_type=code`;
+
 //비밀번호 hash 
     const hashPW = (psword:string,salt:string)=>{
         const iterations = 3280; // 3280번 hash반복
@@ -87,30 +90,7 @@ export default function Login(){
         })
     }
 
-//auth token 발급
-    const GetAuthToken = async ()=>{
-        await axios.get(`${url}/auth/google`).then(async ()=>{
 
-        }).catch(err=>{
-
-        })
-    }
-
-    const ButtonStyles = {
-        m:2,
-        display:'inline',
-        fontWeight: 'bold',
-        borderRadius: '10%',
-        "&:hover": {
-            borderRadius: 4,
-            backgroundColor: "gray",
-          },
-    }
-
-    
-
-    //'https://developers.naver.com/proxyapi/rawgit/naver/naver-openapi-guide/master/ko/login/bi/images/image01.png'
-    //'http://static.nid.naver.com/oauth/small_g_in.PNG'
     return <>
     
         <div className={styles.login_page}>
@@ -136,7 +116,7 @@ export default function Login(){
                             </Link>
                         </Box>
                         <Box sx={{m:1}}> 
-                            <Button  onClick={()=>{GetAuthToken()}}><img
+                            <Button href={kakao_api_url} ><img
                             height= '56'  
                             src={require("../../images/kakao_image/kakao_login.png")}
                             alt="kakao"/>

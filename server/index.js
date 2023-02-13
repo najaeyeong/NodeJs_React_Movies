@@ -16,7 +16,6 @@ dotenv.config();
 //dotenv를 설치후에 파일을 만들어 줘야한다 .
 const db = require('./src/config/db')
 
-
 //direct
 const ctrl = require('./src/routes/control/home.ctrl')
 const service_ctrl = require('./src/routes/control/Appservice.ctrl')
@@ -63,6 +62,8 @@ app.use(expressSanitizer());
     app.get('/login/naver/callback',oauth2_ctrl.processOauth.naver)//naver callback  code 받고 code 보내서 token받아 token으로 정보 받아오는
   //oauth google
     app.get('/login/google/callback',oauth2_ctrl.processOauth.google)//google callback code 받고 code 보내서 token받아 token으로 정보 받아오는
+  //oauth kakao
+    app.get('/login/kakao/callback', oauth2_ctrl.processOauth.kakao)//kakao callback code 받고 code 보내서 token받아 token으로 정보 받아오는
 
 //register
     app.post(`/api/phonenumber`,service_ctrl.process.PhoneConfirm) //본인인증 sms발송 
