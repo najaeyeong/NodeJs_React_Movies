@@ -24,6 +24,7 @@ const movierate_ctrl = require('./src/routes/control/movierate.ctrl')
 const movieinfo_ctrl = require('./src/routes/control/movieinfo.ctrl')
 const movieinfo_genre_ctrl = require('./src/routes/control/moviegenre.ctrl')
 const oauth2_ctrl = require('./src/routes/control/oauthCallback.ctrl')
+const board_ctrl = require('./src/routes/control/board.ctrl')
 
 // require("dotenv/config");
  const PORT1 = process.env.PORT1 || 3001;
@@ -34,10 +35,10 @@ app.get("/", (req, res) => {
 });
 
 //app.use('/',router)
-app.use(cors({ //client,server간 origin이 다른경우 통신하기위해 
+app.use(cors({ //client,server간 origin이 다른경우 통신하기위해 (출처가 다른 url끼리 통신할수 있도록 허용하기위해 사용)
   origin:'http://localhost:3001',
-  methods:['GET', 'POST','PUT','DELETE','OPTIONS'],
-  credentials:true // c-s 통신에서 쿠키 사용 위해 
+  methods:['GET', 'POST'],
+  credentials:true // c-s 통신에서 쿠키,토큰 사용 위해 
 }))
 app.use(express.json())
 app.use(cookieParser()); // server client 통신에 쿠키 사용
@@ -116,7 +117,8 @@ app.use(expressSanitizer());
 
     app.post('/app/get/movies/recommend', movieinfo_ctrl.process.read_recommend) //!
 
-
+//board
+    app.post('/api/get/board',board_ctrl.processBoard.get)//게시판 게시글 리스트 반환 
 
 //기타
 app.get('*', function (req, res) {
