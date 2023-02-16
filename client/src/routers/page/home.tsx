@@ -11,6 +11,7 @@ import axios from 'axios';
 
 //암복화
 import Crypto from '../../Modules/config/Crypto';
+import Board from '../../component/Board/Board.tsx';
 
 //mui
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,7 +24,7 @@ import store from '../../store/store'
 import {useSelector,useDispatch} from "react-redux"
 import {RootState} from '../../store/store'
 import userIdSlice from '../../store/userIdSlice';
-
+import menuSlice from '../../store/menuSlice';
 
 export function Home(){
     const url = useSelector<RootState,string>(state=>{return state.serverUrl.url})
@@ -81,8 +82,11 @@ export function Home(){
     
     useEffect(()=>{
       getUserData()
+      if(window.sessionStorage.getItem("menu") === null){
+        dispatch(menuSlice.actions.search())
+      }
+      console.log(menu);
     })
-    
     useEffect(()=>{
       window.scrollTo(0, 0)
       //getMovies()
@@ -94,13 +98,28 @@ export function Home(){
     return<Provider store={store}>
             <MenuBar />
             <>
-              {(menu === "search")
+              {(menu === 'search')
                   ?<Search/>
                   :<>
-                    {(menu==="userInfo")
-                        ?<UserInfo/>
-                        :<>not</>
-                    }
+                  <Box>
+                    <Grid container spacing={3}  direction="row" justifyContent="flex-start" alignItems="stretch">
+                      <Grid item xs>
+                          <Box></Box>
+                      </Grid>
+                      <Grid item xs={8}>
+                      {(menu==="userInfo")
+                          ?<UserInfo/>
+                          :<>{(menu === "board")
+                                ?<><Board/></>
+                                :<></>}
+                           </>
+                      }
+                      </Grid>
+                      <Grid item xs>
+                          <Box></Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
                   </>
               }
             </>

@@ -7,7 +7,8 @@ const menuSlice = createSlice({
     initialState:{menu:"search"},
     reducers:{
       userInfo:(state)=>{state.menu = "userInfo"},
-      search:(state)=>{state.menu = "search"}
+      search:(state)=>{state.menu = "search"},
+      board:(state)=>{state.menu = "board"}
     }
   })
 

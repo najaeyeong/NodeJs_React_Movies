@@ -121,75 +121,64 @@ export function UserInfo(){
     // },[userMovies])
 
 
-    return  <Box>
-                <Grid container spacing={3}  direction="row" justifyContent="flex-start" alignItems="stretch">
-                    <Grid item xs>
-                        <Box></Box>
-                    </Grid>
-                    <Grid item xs={8}>
-                            <Card sx={{mt:6, minWidth:800}} elevation={3}>
-                                <Box component='h2' sx={{mt:4,mb:5,ml:4}}>USER INFO</Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER ID: {userInfo?.id}  
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Name: {userInfo?.name}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Gender: {userInfo?.gender}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER BirthDate: {userInfo?.birthdate}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Email: {userInfo?.email}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER PhoneNumber: {userInfo?.phonenumber}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER RegistrationDate: {userInfo?.registrationDate}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Genre: {userGenre[0]?.genre},{userGenre[1]?.genre}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Language: {userLanguage[0]?.language},{userLanguage[1]?.language}
-                                </Box>
-                                <Box sx={{ml:10,mb:2}}>
-                                    USER Year: {userYear[0]?.year},{userYear[1]?.year}
-                                </Box>
-                                <Box component='h3' sx={{ml:5,mt:10,mb:2}}>
-                                    USER's Favorite Movie
-                                </Box>
-                                <Box sx = {{ml:10}}>
-                                    {userMovies.map((m)=>{
-                                        return <Card>
-                                                <CardActionArea component={Link} 
-                                                                to={`/home/movie/${m.movieID}`} 
-                                                                onClick={()=>{sessionStorage.removeItem('movie_summary'); 
-                                                                            sessionStorage.setItem('movie_summary',m.summary)}}>
-                                                    <Grid container spacing={2} direction="row" key={m.movieID} sx={{mb:2}}>
-                                                        <Grid item component='img' sx={{width:100, mr:2 }} src={m.image}></Grid>
-                                                        <Grid item sx={{fontSize:20}}>
-                                                            <Box sx={{fontWeight: 'bold'}}>{m.title}</Box>
-                                                            <Box>{m.year}</Box>
-                                                            <Box>{m.language}</Box>
-                                                            <Box>{m.rate}</Box>  
-                                                            <Box>{m.date}</Box>
-                                                        </Grid>
-                                                    </Grid>
-                                                </CardActionArea>
-                                            </Card>
-                                        })}
-                                </Box>
+    return  <Card sx={{mt:6, minWidth:800}} elevation={3}>
+                <Box component='h2' sx={{mt:4,mb:5,ml:4}}>USER INFO</Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER ID: {userInfo?.id}  
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Name: {userInfo?.name}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Gender: {userInfo?.gender}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER BirthDate: {userInfo?.birthdate}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Email: {userInfo?.email}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER PhoneNumber: {userInfo?.phonenumber}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER RegistrationDate: {userInfo?.registrationDate}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Genre: {userGenre[0]?.genre},{userGenre[1]?.genre}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Language: {userLanguage[0]?.language},{userLanguage[1]?.language}
+                </Box>
+                <Box sx={{ml:10,mb:2}}>
+                    USER Year: {userYear[0]?.year},{userYear[1]?.year}
+                </Box>
+                <Box component='h3' sx={{ml:5,mt:10,mb:2}}>
+                    USER's Favorite Movie
+                </Box>
+                <Box sx = {{ml:10}}>
+                    {userMovies.map((m)=>{
+                        return <Card>
+                                <CardActionArea component={Link} 
+                                                to={`/home/movie/${m.movieID}`} 
+                                                onClick={()=>{sessionStorage.removeItem('movie_summary'); 
+                                                            sessionStorage.setItem('movie_summary',m.summary)}}>
+                                    <Grid container spacing={2} direction="row" key={m.movieID} sx={{mb:2}}>
+                                        <Grid item component='img' sx={{width:100, mr:2 }} src={m.image}></Grid>
+                                        <Grid item sx={{fontSize:20}}>
+                                            <Box sx={{fontWeight: 'bold'}}>{m.title}</Box>
+                                            <Box>{m.year}</Box>
+                                            <Box>{m.language}</Box>
+                                            <Box>{m.rate}</Box>  
+                                            <Box>{m.date}</Box>
+                                        </Grid>
+                                    </Grid>
+                                </CardActionArea>
                             </Card>
-                    </Grid>
-                    <Grid item xs>
-                        <Box></Box>
-                    </Grid>
-                </Grid>
-            </Box>
+                        })}
+                </Box>
+            </Card>
+
 }
 
 export default UserInfo;

@@ -66,7 +66,7 @@ export default function MenuBar() {
 
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar sx={{width:"100%"}} position="static">
+        <AppBar sx={{width:"100%", minWidth:500}} position="static">
           <Toolbar>
             <IconButton
               size="large"
@@ -78,29 +78,36 @@ export default function MenuBar() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Button style={{ textDecoration: 'none', color:"inherit" }} onClick={()=>{sessionStorage.removeItem('genre');
-                                                                                  sessionStorage.removeItem('sort');
-                                                                                  sessionStorage.removeItem('rating');
-                                                                                  sessionStorage.removeItem('term');
-                                                                                  sessionStorage.removeItem('year');
-                                                                                  sessionStorage.removeItem('page');
-                                                                                  sessionStorage.removeItem('lastpagenumber')
-                                                                                  sessionStorage.removeItem('backlist')
-                                                                                  window.location.replace("/home/movie");
-                                                                                  dispatch(menuSlice.actions.search())}}>home</Button>
-              {/* <Link style={{ textDecoration: 'none', color:"inherit" }} to={'/'} onClick={()=>{sessionStorage.removeItem('genre');
-                                                                                              sessionStorage.removeItem('sort');
-                                                                                              sessionStorage.removeItem('rating');
-                                                                                              sessionStorage.removeItem('term');
-                                                                                              sessionStorage.removeItem('year')}} > Home </Link> */}
+              <Button style={{ textDecoration: 'none', color:"inherit" }} 
+                      onClick={()=>{sessionStorage.removeItem('genre');
+                                  sessionStorage.removeItem('sort');
+                                  sessionStorage.removeItem('rating');
+                                  sessionStorage.removeItem('term');
+                                  sessionStorage.removeItem('year');
+                                  sessionStorage.removeItem('page');
+                                  sessionStorage.removeItem('lastpagenumber')
+                                  sessionStorage.removeItem('backlist')
+                                  window.location.replace("/home/movie");
+                                  dispatch(menuSlice.actions.search())
+                                  window.sessionStorage.removeItem("menu")}}>home
+              </Button>
+              <Button style={{ textDecoration: 'none', color:"inherit" }} 
+                  onClick={()=>{
+                    dispatch(menuSlice.actions.board());
+                    window.sessionStorage.setItem("menu","board");
+              }}>
+                Board
+              </Button>
             </Typography>
             {(logined)?<>
-                        <Button color="inherit" onClick={()=>{dispatch(menuSlice.actions.userInfo())}}>{userId}</Button>
+                        <Button color="inherit" onClick={()=>{
+                          dispatch(menuSlice.actions.userInfo());
+                          window.sessionStorage.setItem("menu","userInfo");}}>{userId}</Button>
                         <Button color="inherit" onClick={()=>{ //setUserId(null); 
                           //sessionStorage.removeItem("user_id");
                           logout();
                           dispatch(userIdSlice.actions.logout());
-                          dispatch(menuSlice.actions.search()) }}>Logout</Button>
+                          dispatch(menuSlice.actions.search())}}>Logout</Button>
                       </>
                       :<>
                         <Button color="inherit" href='/login'>Login</Button>
