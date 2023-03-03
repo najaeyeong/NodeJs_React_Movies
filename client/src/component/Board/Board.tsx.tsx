@@ -20,6 +20,7 @@ import { FormControl, InputLabel, MenuItem, TextField } from '@mui/material';
 //redux store
 import { useSelector} from 'react-redux';
 import {RootState} from '../../store/store'
+//dir
 import BoardDetail from './BoardDetail';
 import BoardCreate from './BoardCreate';
 
@@ -48,10 +49,7 @@ interface Data {
     Visited:number
 }
 
-let rows : Data[] = [
-
-    
-    ]
+let rows : Data[] = []
 
 
 
@@ -61,11 +59,12 @@ export function Board(){
     const [rowsPerPage, setRowsPerPage] = useState(10); // 페이지에 표현할 글 갯수
     const [create,setCreate] = useState<boolean>(false) // 글작성 페이지 오픈
     const [detail,setDetail] = useState<boolean>(false) // 글내용 페이지 오픈
-    const [number,setNumber] = useState<number>() // 현재 클릭한 글 번호
+    const [number,setNumber] = useState<number>(0) // 현재 클릭한 글 번호
     const [selectedOption,setSelectedOption] = useState<string>('title') // 제목 ,글쓴이 옵션
     const [searchKeyword,setSearchKeyword] = useState<string>('') // 검색어 
     const [count,setCount] = useState<number>(0)
     const [Rows,setRows] = useState<Data[]>(rows)
+    
     const getBoardList =  async(page:number,rowperpage:number)=>{
         const data = {
             page:page,
@@ -87,10 +86,9 @@ export function Board(){
                     })
                 }
                 setCount(res.data.data2[0].count)
-                console.log(rows,res.data.data2[0].count,count);
             }
         }).catch((error)=>{
-            console.log("get Board list error",error);
+            console.log("get Board list error");
         })
         setRows(rows)
     }
@@ -105,6 +103,7 @@ export function Board(){
     const handleChangeCreate = (event:unknown)=>{
         setCreate(!create)
     }
+
     const handleChangeSelectOption = (event:SelectChangeEvent<string>)=>{
         setSelectedOption(event.target.value)
     }
@@ -114,14 +113,14 @@ export function Board(){
 
     useEffect( ()=>{
         getBoardList(page,rowsPerPage)
-    },[page,rowsPerPage])
+    },[page,rowsPerPage,create,detail])
 
     return <>
     {create 
-        ?<><BoardCreate/></> 
+        ?<><BoardCreate create={create} setCreate={setCreate}/></> 
         :<>
             {detail 
-                ?<><BoardDetail/></>
+                ?<><BoardDetail number={number} detail={detail} setDetail={setDetail}/></>
                 :<>
 
                 <Box component={'form'} sx={{mt:10,mb:1,mr:1,display: 'flex', flexDirection: 'row', justifyContent: 'flex-end',minWidth:800}}>
@@ -177,7 +176,7 @@ export function Board(){
                         {Rows
                         .map((row) => {
                             return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.Number}>
+                            <TableRow onClick={()=>{setDetail(true);setNumber(row.Number)}} hover role="checkbox" tabIndex={-1} key={row.Number}>
                                 {columns.map((column) => {
                                 const value = row[column.id].toLocaleString();
                                 return (

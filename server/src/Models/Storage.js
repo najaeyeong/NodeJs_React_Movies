@@ -1,13 +1,12 @@
 
-
 const db = require("../config/db");
 
-class Boardstorage{
+class Storage{
 
-    static async read(column,where,value){
+    static async read(column,table,where,value){
 
         return new Promise(async(resolve,reject) => {
-            const sqlselect = `select ${column} from crud.board ${where}` 
+            const sqlselect = `select ${column} from ${table} ${where}` 
             await db.query(sqlselect,value, (err, result) => {  
                 if(err) {
                     console.log(err)
@@ -19,11 +18,11 @@ class Boardstorage{
         })
     }
 
-    static async create(table,column,values){
-
+/** table-string , colums-string ,values-string, value-array */
+    static async create(table,columns,values,value){
         return new Promise( async (resolve, reject) => {
-            const sql = `INSERT INTO ${table}${column}`
-            await db.query(sql,values,(err,result) =>{
+            const sql = `INSERT INTO ${table}(${columns})${values}`
+            await db.query(sql,value,(err,result) =>{
                 if(err) {
                     console.log(err)
                     reject(`${err}`) }
@@ -34,10 +33,10 @@ class Boardstorage{
         })
     }
 
-    static async update(set,where,value){
+    static async update(table,set,where,value){
 
         return new Promise( async (resolve, reject) => {
-            const sql = `update crud.board set ${set} where ${where}`
+            const sql = `update ${table}  ${set} ${where}`
             await db.query(sql,value,(err, result)=>{
                 if(err){
                     console.log(err)
@@ -49,9 +48,17 @@ class Boardstorage{
         })
     }
 
-  
+    static async delete(table,where,value){
+        const sqlDelete = `delete from ${table} ${where} `
+        return new Promise((resolve, reject) => {
+                db.query(sqlDelete,value, (err, result)  => {
+                    if(err){ reject(`${err}`)}
+                    else{ resolve({success: true, message  : 'delete success'})}
 
+                })
+            })
+    }
 
 }
 
-module.exports = Boardstorage
+module.exports = Storage

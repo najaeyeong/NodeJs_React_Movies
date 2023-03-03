@@ -2,7 +2,17 @@
 const expressSanitizer = require("express-sanitizer");
 const https = require("https");
 const fs = require("fs");
-
+const multer = require("multer");
+const _storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // 파일이 저장되는 경로입니다.
+  },
+  filename: function (req, file, cb) {
+    file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
+    cb(null, Date.now()+"-"+file.originalname ) // 저장되는 파일명
+  },
+})
+const upload = multer({storage:_storage})
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -118,7 +128,14 @@ app.use(expressSanitizer());
     app.post('/app/get/movies/recommend', movieinfo_ctrl.process.read_recommend) //!
 
 //board
-    app.post('/api/get/board',board_ctrl.processBoard.get)//게시판 게시글 리스트 반환 
+    app.post('/api/get/board',board_ctrl.processBoard.getList)//게시판 게시글 리스트 반환 
+    app.post('/api/get/board/details',board_ctrl.processBoard.getDetail)// 게시글 상세 정보 반환
+    app.put('/api/put/board/details/visited',board_ctrl.processBoard.putVisited)//게시글 조회수 수정 및 반환
+    app.post('/api/post/board/details',upload.fields([{name:"files"}]),board_ctrl.processBoard.createDetails)
+    app.put('/api/put/details',upload.fields([{name:"newFiles"}]),board_ctrl.processBoard.updateDetails)
+    app.post('/api/get/board/details/files',board_ctrl.processBoard.getDetailsFiles)
+    app.delete('/api/delete/details/files',board_ctrl.processBoard.deleteDetailsFiles)
+    app.post('/api/post/board/file/downloads',board_ctrl.processBoard.getDetailsFileDownloads)
 
 //기타
 app.get('*', function (req, res) {
