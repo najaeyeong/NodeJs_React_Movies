@@ -1,4 +1,4 @@
-/**google 인증 url 생성 (from - 시작 주소?) */
+/**google 인증 url 생성 (from - random state) */
 export const getGoogleUrl = (from: string) => {
     const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
   

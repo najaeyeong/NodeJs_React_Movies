@@ -2,7 +2,7 @@ import styles from "../css/Register.module.css"
 import {useState} from "react"
 import axios from 'axios'
 import CryptoJS from 'crypto-js'
-import { useLocation } from 'react-router-dom';
+
 
 //mui
 import Box from '@mui/material/Box';

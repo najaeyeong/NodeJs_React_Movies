@@ -1,0 +1,13 @@
+원격 데스크톱 연결
+67
+210.116.103.67:33890
+이름: jlit2010
+pw: jlit_2010_!@#$_001
+
+log  :  system(c:) window system32 sinevt log
+DATA(E:) Log_Backup  2022
+
+68
+210.116.103.68:33890
+이름: jlit2013
+pw: jlit_2013_!@#$_001

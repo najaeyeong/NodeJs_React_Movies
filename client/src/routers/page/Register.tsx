@@ -22,6 +22,7 @@ import RegisterMenuSlice from '../../store/RegisterMenuSlice';
 export default function Register(){
     const RegisterMenu = useSelector<RootState,string>(state=>{return state.registermenu.menu})
 
+    //뒤로가기 막기
     useEffect(() => {
         const preventGoBack = () => {
           // change start

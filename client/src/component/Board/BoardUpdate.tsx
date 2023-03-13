@@ -11,7 +11,7 @@ import { useSelector} from 'react-redux';
 import {RootState} from '../../store/store'
 //dir
 import AcceptFile from "../Dropzone/AcceptFile";
-import ColorButton from "../Button/ColorButton";
+import ColorButton from "../Button/PurpleButton";
 
 
 

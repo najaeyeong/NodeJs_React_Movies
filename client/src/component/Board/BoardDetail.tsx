@@ -95,6 +95,7 @@ const downloadsFile = async (e:any,file_origin_name:string,file_name:string,file
         file_name:file_name,
         file_path:file_path
     }
+    //
     await axios({
         method: 'post',
         url: `${url}/api/post/board/file/downloads`,

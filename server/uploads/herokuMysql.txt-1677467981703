@@ -1,0 +1,28 @@
+HEROKU  MYSQL  
+유저이름 :bd7207f968389c
+PW : bc8f07d7 (Reset)
+
+mysql://
+bd7207f968389c
+:
+bc8f07d7
+@
+us-cdbr-east-06.cleardb.net
+/
+heroku_b4f2e40008aca92
+?
+reconnect=true
+
+
+mysql://
+아이디
+:
+비밀번호
+@
+host
+/
+데이터베이스이름
+?
+reconnect=true
+
+mysql://bd7207f968389c:bc8f07d7@us-cdbr-east-06.cleardb.net/heroku_b4f2e40008aca92?reconnect=true

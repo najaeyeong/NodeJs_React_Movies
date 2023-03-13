@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.21752a6c.css",
-    "main.js": "/static/js/main.02e4469b.js",
+    "main.js": "/static/js/main.349af426.js",
     "static/media/btnW_official.png": "/static/media/btnW_official.2414b3179dc87f8631a1.png",
     "static/media/btnD_official.png": "/static/media/btnD_official.b8641e88f510c69528fb.png",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -10,10 +10,10 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.21752a6c.css.map": "/static/css/main.21752a6c.css.map",
-    "main.02e4469b.js.map": "/static/js/main.02e4469b.js.map"
+    "main.349af426.js.map": "/static/js/main.349af426.js.map"
   },
   "entrypoints": [
     "static/css/main.21752a6c.css",
-    "static/js/main.02e4469b.js"
+    "static/js/main.349af426.js"
   ]
 }

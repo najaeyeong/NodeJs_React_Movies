@@ -12,7 +12,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 //DIR
 import AcceptFile from '../Dropzone/AcceptFile'
-import ColorButton from "../Button/ColorButton";
+import PurpleButton from "../Button/PurpleButton";
 //redux store
 import { useSelector} from 'react-redux';
 import {RootState} from '../../store/store'
@@ -119,9 +119,9 @@ export function BoardCreate(props:BoardCreateProps){
 
                 <Box sx={{width:'90%', display: 'flex',  flexDirection: 'row-reverse'}}>
                     <Box sx={{m:1}}>
-                        <ColorButton variant="contained" startIcon={<CancelIcon/>} onClick={()=>{props.setCreate(!props.create)}}>
+                        <PurpleButton variant="contained" startIcon={<CancelIcon/>} onClick={()=>{props.setCreate(!props.create)}}>
                             Cancel
-                        </ColorButton>
+                        </PurpleButton>
                     </Box>
                     <Box sx={{m:1}}>
                         <Button variant="contained" startIcon={<SaveIcon/>} onClick={save}>
